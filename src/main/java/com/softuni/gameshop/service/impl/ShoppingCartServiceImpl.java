@@ -31,11 +31,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void removeFromCart(Long id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-        UserEntity user = userRepository.findByUsername(currentUsername).get();
-
+        UserEntity user = this.getCurrentUser();
         ShoppingCart shoppingCart = user.getShoppingCart();
+
         if (shoppingCart != null) {
             Optional<CartItem> itemToRemove = shoppingCart.getCartItems().stream()
                     .filter(cartItem -> cartItem.getId().equals(id))
@@ -57,11 +55,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void addToCart(Long gameId) {
         Optional<Game> optGame = this.gameRepository.findById(gameId);
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-        UserEntity user = this.userRepository.findByUsername(currentUsername).get();
-
+        UserEntity user = this.getCurrentUser();
         ShoppingCart shoppingCart = user.getShoppingCart();
 
         if (shoppingCart == null) {
@@ -72,7 +66,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         for (CartItem cartItem : shoppingCart.getCartItems()) {
             if (cartItem.getGame().getId().equals(optGame.get().getId())) {
-                // Update the quantity if the game is already in the cart
                 cartItem.setQuantity(cartItem.getQuantity() + 1);
                 cartItem.setShoppingCart(shoppingCart);
                 shoppingCartRepository.save(shoppingCart);
@@ -80,28 +73,31 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             }
         }
 
-        // If the game is not in the cart, create a new CartItem
         CartItem cartItem = new CartItem();
         cartItem.setGame(optGame.get());
-        cartItem.setQuantity(1);  // Initial quantity is 1
+        cartItem.setQuantity(1);
         shoppingCart.getCartItems().add(cartItem);
         cartItem.setShoppingCart(shoppingCart);
         shoppingCartRepository.save(shoppingCart);
-
     }
 
     @Override
     public List<CartItem> getCartItems() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-
-        UserEntity user = this.userRepository.findByUsername(currentUsername).get();
+        UserEntity user = this.getCurrentUser();
         ShoppingCart shoppingCart = user.getShoppingCart();
         if (shoppingCart == null){
             return new ArrayList<>();
         }
         return shoppingCart.getCartItems();
 
+    }
+
+    @Override
+    public UserEntity getCurrentUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+
+        return this.userRepository.findByUsername(currentUsername).get();
     }
 
     @Override
