@@ -21,6 +21,10 @@
     </thead>
     <tbody>
     <tr th:each="item : ${cartItems}">
+      <td>
+        <img th:src="@{${item.game.imageURL}}" alt="Game Image" width="50" height="50">
+        <span th:text="${item.game.title}"></span>
+      </td>
       <td th:text="${item.game.title}"></td>
       <td th:text="${item.game.price}"></td>
       <td th:text="${item.quantity}"></td>
