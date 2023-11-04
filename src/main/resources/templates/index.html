@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div>
+    <nav th:replace="~{fragments/navigation}"></nav>
+</div>
+<br>
+<div class="container mt-5 text-center text-white">
+    <h1>Welcome to GameShop ,</h1>
+    <th:block sec:authorize="isAuthenticated()">
+        <th:block sec:authentication="name"></th:block>
+    </th:block>
+    <th:block sec:authorize="!isAuthenticated()">
+        Anonymous!
+    </th:block>
+    <th:block sec:authorize="!isAuthenticated()">
+        <p><a href="/login">Login</a> to browse our latest games!</p>
+    </th:block>
+
+</div>
+</body>
+</html>

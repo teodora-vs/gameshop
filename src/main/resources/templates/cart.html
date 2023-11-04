@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div>
+  <nav th:replace="~{fragments/navigation}"></nav>
+</div>
+<br>
+<div class="container text-white">
+  <h1>Shopping Cart</h1>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Game</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${cartItems}">
+      <td th:text="${item.game.title}"></td>
+      <td th:text="${item.game.price}"></td>
+      <td th:text="${item.quantity}"></td>
+      <td th:text="${item.getTotal()}"></td>
+      <td>
+        <form th:action="@{'/cart/remove/' + ${item.id}}" th:method="POST">
+          <button type="submit" class="btn-danger">Remove</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div>
+    <p>Total Price: $<span th:text="${totalPrice}"></span></p>
+    <a href="/checkout" class="btn btn-success">Proceed to Checkout</a>
+  </div>
+</div>
+</body>
+</html>

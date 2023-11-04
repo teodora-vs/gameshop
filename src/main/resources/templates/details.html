@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div>
+    <nav th:replace="~{fragments/navigation}"></nav>
+</div>
+<div class="container text-white">
+    <br>
+    <div th:object="${game}" style="overflow: hidden; padding-top: 50px">
+        <div>
+            <h2 th:text="*{title}"></h2>
+            <br>
+            <img th:src="*{imageURL}" class="img-fluid" style="max-width: 100%;height: 400px;float: left; margin-right: 20px;"alt="Game Image">
+        </div>
+        <div>
+            <p><strong>Description:</strong> <span th:text="*{description}"></span></p>
+            <p><strong>Genre:</strong> <span th:text="*{genreName}"></span></p>
+            <p><strong>Release Year:</strong> <span th:text="*{releaseYear}"></span></p>
+            <p><strong>Price:</strong> $<span th:text="*{price}"></span></p>
+            <a th:href="*{videoURL}" target="_blank" class="btn btn-primary">Watch Trailer</a>
+            <a th:href="@{'/add-to-cart/' + ${game.id}}" class="btn btn-success">Add to cart</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
