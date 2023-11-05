@@ -1,7 +1,6 @@
 package com.softuni.gameshop.service;
 
-import com.softuni.gameshop.model.CartItem;
-import com.softuni.gameshop.model.Game;
+import com.softuni.gameshop.model.DTO.CartItemDTO;
 import com.softuni.gameshop.model.UserEntity;
 
 import java.util.List;
@@ -11,7 +10,7 @@ public interface ShoppingCartService {
 
     void addToCart(Long gameId);
 
-    List<CartItem> getCartItems();
+    List<CartItemDTO> getCartItems();
 
     UserEntity getCurrentUser();
 

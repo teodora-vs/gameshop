@@ -19,7 +19,7 @@ public class UserRolesInitializer implements CommandLineRunner {
         UserRoleEnum[] roleEnums = UserRoleEnum.values();
 
         for (UserRoleEnum roleEnum : roleEnums) {
-            UserRole existingRole = userRoleRepository.findUserRoleByRoleName(roleEnum);
+            UserRole existingRole = userRoleRepository.findByRoleName(roleEnum);
             if (existingRole == null) {
                 UserRole role = new UserRole().setRoleName(roleEnum);
                 userRoleRepository.save(role);

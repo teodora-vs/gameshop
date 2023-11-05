@@ -6,7 +6,7 @@ import jakarta.validation.constraints.*;
 
 public class AddGameDTO {
 
-    @NotBlank
+    @NotBlank(message = "")
     @Size(min = 4, max = 32, message = "Size must be between 4 and 32 symbols!")
     private String title;
 
@@ -18,14 +18,14 @@ public class AddGameDTO {
     @Min(value = 1990, message = "Year must be greater than 1990")
     private Integer releaseYear;
 
-    @NotNull
+    @NotNull(message = "Price is required!")
     @Positive(message = "Price must be a positive number!")
     private Double price;
 
-    @NotBlank
+    @NotBlank(message = "Image URL is required!")
     private String imageURL;
 
-    @NotNull
+    @NotNull(message = "Genre is required!")
     private GenreNamesEnum genre;
 
     @Pattern(regexp = "^((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$", message = "Invalid youtube url provided")

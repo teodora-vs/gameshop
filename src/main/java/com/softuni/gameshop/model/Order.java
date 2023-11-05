@@ -19,9 +19,58 @@ public class Order {
     @ManyToOne
     private UserEntity user;
 
-    @ManyToMany
-    private List<Game> games;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<CartItem> cartItems;
+
+    @Column(nullable = false)
+    private String address;
 
     public Order() {
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Order setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
+    public Order setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
+        return this;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public Order setUser(UserEntity user) {
+        this.user = user;
+        return this;
+    }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public Order setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+        return this;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public Order setAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
 }

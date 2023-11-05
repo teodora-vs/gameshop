@@ -12,9 +12,6 @@ public class CartItem {
     @ManyToOne
     private Game game;
 
-    @ManyToOne
-    private ShoppingCart shoppingCart;
-
     @Column
     private Integer quantity;
 
@@ -37,15 +34,6 @@ public class CartItem {
 
     public CartItem setGame(Game game) {
         this.game = game;
-        return this;
-    }
-
-    public ShoppingCart getShoppingCart() {
-        return shoppingCart;
-    }
-
-    public CartItem setShoppingCart(ShoppingCart shoppingCart) {
-        this.shoppingCart = shoppingCart;
         return this;
     }
 

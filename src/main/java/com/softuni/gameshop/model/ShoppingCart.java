@@ -16,8 +16,8 @@ public class ShoppingCart {
     @OneToOne
     private UserEntity user;
 
-    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<CartItem> cartItems = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<CartItem> cartItems;
 
     public ShoppingCart() {
     }

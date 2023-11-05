@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div>
+  <nav th:replace="~{fragments/navigation}"></nav>
+</div>
+<br>
+<div class="container mt-5 text-white">
+  <h2 class="text-center">My Orders</h2>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Order Date</th>
+      <th>Address</th>
+      <th>Order Details</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+      <td th:text="${order.id}"></td>
+      <td th:text="${order.orderDate}"></td>
+      <td th:text="${order.address}"></td>
+      <td>
+        <a th:href="@{'/my-orders/' + ${order.id}}" class="btn btn-info">View Details</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

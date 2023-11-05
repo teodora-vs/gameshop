@@ -1,6 +1,7 @@
 package com.softuni.gameshop.web;
 
 import com.softuni.gameshop.model.CartItem;
+import com.softuni.gameshop.model.DTO.CartItemDTO;
 import com.softuni.gameshop.model.Game;
 import com.softuni.gameshop.service.ShoppingCartService;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,7 @@ public class ShoppingCartController {
 
     @GetMapping("/cart")
     public String viewCart(Model model) {
-        List<CartItem> cartItems = shoppingCartService.getCartItems();
+        List<CartItemDTO> cartItems = shoppingCartService.getCartItems();
         double totalPrice = shoppingCartService.calculateTotalPrice();
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("totalPrice", totalPrice);
@@ -37,9 +38,7 @@ public class ShoppingCartController {
 
     @PostMapping("/cart/remove/{id}")
     public String deleteCartItem(@PathVariable Long id) {
-        // Implement delete logic here
         shoppingCartService.removeFromCart(id);
-        // Redirect to the cart view or other appropriate page
         return "redirect:/cart";
     }
 

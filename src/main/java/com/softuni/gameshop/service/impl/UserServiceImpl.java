@@ -4,6 +4,8 @@ package com.softuni.gameshop.service.impl;
 import com.softuni.gameshop.model.DTO.UserRegisterDTO;
 import com.softuni.gameshop.model.ShoppingCart;
 import com.softuni.gameshop.model.UserEntity;
+import com.softuni.gameshop.model.UserRole;
+import com.softuni.gameshop.model.enums.UserRoleEnum;
 import com.softuni.gameshop.repository.UserRepository;
 import com.softuni.gameshop.repository.UserRoleRepository;
 import com.softuni.gameshop.service.UserService;
@@ -11,6 +13,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,7 +33,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean register(UserRegisterDTO userRegisterDTO) {
-
         if (userRegisterDTO == null || !userRegisterDTO.getPassword().equals(userRegisterDTO.getConfirmPassword())){
             return false;
         }
@@ -47,6 +50,8 @@ public class UserServiceImpl implements UserService {
 
         return true;
     }
+
+
 
     public Optional<UserEntity> getByUsername(String username){
         return this.userRepository.findByUsername(username);
