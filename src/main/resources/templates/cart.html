@@ -9,7 +9,12 @@
 <br>
 <div class="container text-white">
   <h1>Shopping Cart</h1>
-  <table class="table table-striped">
+  <div th:if="${cartItems.size() == 0}" class="text-center align-items-center justify-content-center">
+    <h3 class="mt-5">Your shopping cart is empty. </h3>
+    <h5 class="mt-5">Click <a href="/home">here</a> to browse our latest games!</h5>
+  </div>
+
+  <table th:unless="${cartItems.size() == 0}" class="table table-striped">
     <thead>
     <tr>
       <th>Game</th>
@@ -22,8 +27,10 @@
     <tbody>
     <tr th:each="item : ${cartItems}">
       <td>
-        <img th:src="@{${item.game.imageURL}}" alt="Game Image" width="40" height="50">
-        <span class="pl-3" th:text="${item.game.title}"></span>
+        <a th:href="@{'/games/' + ${item.game.id}}">
+          <img th:src="@{${item.game.imageURL}}" alt="Game Image" width="40" height="50">
+          <span class="pl-3" th:text="${item.game.title}"></span>
+        </a>
       </td>
       <td th:text="${item.game.price}"></td>
       <td th:text="${item.quantity}"></td>
@@ -36,7 +43,7 @@
     </tr>
     </tbody>
   </table>
-  <div>
+  <div th:unless="${cartItems.size() == 0}" class="float-right">
     <p>Total Price: $<span th:text="${totalPrice}"></span></p>
     <a href="/order" class="btn btn-success">Proceed to Checkout</a>
   </div>
