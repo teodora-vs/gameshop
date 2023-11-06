@@ -22,7 +22,8 @@ public class SecurityConfiguration {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/", "/login", "/register", "/login-error").permitAll()
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers("/admin").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/games/add").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/games/delete/**").hasRole(UserRoleEnum.ADMIN.name())
                         .anyRequest().authenticated()
         )
                 .formLogin(

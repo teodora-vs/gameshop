@@ -10,4 +10,6 @@ public interface UserService {
     boolean register(UserRegisterDTO userRegisterDTO);
 
     Optional<UserEntity> getByUsername(String username);
+
+    void addAdmin();
 }

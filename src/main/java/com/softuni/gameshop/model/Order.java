@@ -25,6 +25,10 @@ public class Order {
     @Column(nullable = false)
     private String address;
 
+    @Column
+    private Double totalPrice;
+
+
     public Order() {
     }
 
@@ -70,6 +74,15 @@ public class Order {
 
     public Order setAddress(String address) {
         this.address = address;
+        return this;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public Order setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
         return this;
     }
 

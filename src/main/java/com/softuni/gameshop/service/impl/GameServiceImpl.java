@@ -50,6 +50,12 @@ public class GameServiceImpl implements GameService {
        return gameRepository.findAll(pageable).map(this::mapAsCard);
     }
 
+    @Override
+    public void deleteGame(Long id) {
+        this.gameRepository.deleteById(id);
+
+    }
+
     public GameCardDTO mapAsCard(Game game){
         return modelMapper.map(game, GameCardDTO.class);
     }

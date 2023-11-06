@@ -10,8 +10,6 @@ public class CartItemDTO {
 
     private Game game;
 
-    private ShoppingCart shoppingCart;
-
     private Integer quantity;
 
     public CartItemDTO() {
@@ -35,14 +33,6 @@ public class CartItemDTO {
         return this;
     }
 
-    public ShoppingCart getShoppingCart() {
-        return shoppingCart;
-    }
-
-    public CartItemDTO setShoppingCart(ShoppingCart shoppingCart) {
-        this.shoppingCart = shoppingCart;
-        return this;
-    }
 
     public Integer getQuantity() {
         return quantity;

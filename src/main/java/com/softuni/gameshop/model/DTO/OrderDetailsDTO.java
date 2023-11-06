@@ -13,6 +13,17 @@ public class OrderDetailsDTO {
 
     private List<OrderItemDTO> orderItems;
 
+    private Double totalPrice;
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public OrderDetailsDTO setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+        return this;
+    }
+
     public OrderDetailsDTO() {
     }
 

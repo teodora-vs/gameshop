@@ -4,7 +4,7 @@ import com.softuni.gameshop.model.enums.UserRoleEnum;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name ="user_roles")
+@Table(name ="roles")
 public class UserRole {
 
     @Id

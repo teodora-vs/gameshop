@@ -12,4 +12,6 @@ public interface GameService {
     GameDetailsDTO getGameDetails(Long offerId) ;
 
     Page<GameCardDTO> getAllGames(Pageable pageable);
+
+    void deleteGame(Long id);
 }

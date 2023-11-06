@@ -1,18 +1,16 @@
 package com.softuni.gameshop.web;
 
-import com.softuni.gameshop.model.DTO.AddGameDTO;
+import com.softuni.gameshop.model.DTO.GameCardDTO;
 import com.softuni.gameshop.model.DTO.GameDetailsDTO;
-import com.softuni.gameshop.model.enums.GenreNamesEnum;
 import com.softuni.gameshop.service.GameService;
-import jakarta.validation.Valid;
-import org.hibernate.ObjectNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RequestMapping("/games")
 @Controller
 public class GameController {
 
@@ -22,38 +20,21 @@ public class GameController {
         this.gameService = gameService;
     }
 
-    @ModelAttribute("addGameDTO")
-    public AddGameDTO initAddGameDTO() {
-        return new AddGameDTO();
-    }
+    @GetMapping("/home")
+    public String home(Model model,
+                       @PageableDefault(
+                               size = 3,
+                               sort = "releaseYear", direction = Sort.Direction.DESC
+                       ) Pageable pageable){
 
-    @ModelAttribute("genres")
-    public GenreNamesEnum[] genres() {
-        return GenreNamesEnum.values();
-    }
+        Page<GameCardDTO> allGames = gameService.getAllGames(pageable);
+        model.addAttribute("games", allGames);
 
-    @GetMapping("/add")
-    public String addGame() {
-        return "game-add";
-    }
-
-    @PostMapping("/add")
-    public String addGame(@Valid AddGameDTO addGameDTO,
-                           BindingResult bindingResult,
-                           RedirectAttributes redirectAttributes) {
-
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("addGameDTO", addGameDTO);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addGameDTO", bindingResult);
-            return "redirect:/games/add";
-        }
-
-        Long id = gameService.addGame(addGameDTO);
-        return "redirect:/home";
+        return "home";
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/games/{id}")
     public String details(@PathVariable("id") Long id, Model model) {
 
         GameDetailsDTO gameDetailsDTO = gameService.getGameDetails(id);

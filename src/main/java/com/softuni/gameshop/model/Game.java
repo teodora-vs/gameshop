@@ -2,6 +2,8 @@ package com.softuni.gameshop.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "games")
 public class Game {
@@ -30,6 +32,9 @@ public class Game {
 
     @Column(nullable = false)
     private String videoURL;
+
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CartItem> cartItems;
 
     public Game() {
     }

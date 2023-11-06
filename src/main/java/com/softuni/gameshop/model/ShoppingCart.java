@@ -48,4 +48,12 @@ public class ShoppingCart {
         this.cartItems = cartItems;
         return this;
     }
+
+    public Double getTotal() {
+        double sum = 0;
+        for (CartItem cartItem: cartItems) {
+            sum += cartItem.getTotal();
+        }
+        return sum;
+    }
 }

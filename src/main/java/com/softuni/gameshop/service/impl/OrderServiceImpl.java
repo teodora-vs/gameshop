@@ -49,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderDate(LocalDate.now());
         order.setUser(user);
         order.setAddress(orderDTO.getAddress());
+        order.setTotalPrice(shoppingCart.getTotal());
         order.setCartItems(new ArrayList<>(shoppingCart.getCartItems())); // Clone the cart items
 
         // Clear the cart items from the original shopping cart
@@ -96,9 +97,9 @@ public class OrderServiceImpl implements OrderService {
             orderItemDTO.setTotal(cartItem.getTotal());
             orderItemDTOS.add(orderItemDTO);
         }
-        OrderDetailsDTO map = modelMapper.map(order, OrderDetailsDTO.class);
-        map.setOrderItems(orderItemDTOS);
-        return map;
+        OrderDetailsDTO orderDetailsDTO = modelMapper.map(order, OrderDetailsDTO.class);
+        orderDetailsDTO.setOrderItems(orderItemDTOS);
+        return orderDetailsDTO;
     }
 
     @Override
