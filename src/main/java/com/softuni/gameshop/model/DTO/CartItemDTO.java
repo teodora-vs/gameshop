@@ -4,6 +4,8 @@ import com.softuni.gameshop.model.Game;
 import com.softuni.gameshop.model.ShoppingCart;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 public class CartItemDTO {
 
     private Long id;
@@ -43,7 +45,8 @@ public class CartItemDTO {
         return this;
     }
 
-    public double getTotal(){
-        return this.game.getPrice() * quantity;
+    public BigDecimal getTotal(){
+        BigDecimal total = this.game.getPrice().multiply(BigDecimal.valueOf(quantity));
+        return total;
     }
 }

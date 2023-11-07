@@ -2,7 +2,7 @@ package com.softuni.gameshop.config;
 
 import com.softuni.gameshop.model.enums.UserRoleEnum;
 import com.softuni.gameshop.repository.UserRepository;
-import com.softuni.gameshop.service.impl.UserDetailsServiceImpl;
+import com.softuni.gameshop.service.impl.GameShopUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                                     .loginPage("/login")
                                     .usernameParameter("username")
                                     .passwordParameter("password")
-                                    .defaultSuccessUrl("/home",true)
+                                    .defaultSuccessUrl("/",true)
                                     .failureForwardUrl("/login-error");
                         }
                 ).logout(
@@ -49,7 +49,7 @@ public class SecurityConfiguration {
 
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
-        return new UserDetailsServiceImpl(userRepository);
+        return new GameShopUserDetailsService(userRepository);
     }
 
     @Bean

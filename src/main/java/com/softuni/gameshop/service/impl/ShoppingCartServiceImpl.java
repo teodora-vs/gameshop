@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -90,14 +91,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public List<CartItemDTO> getCartItems() {
         UserEntity user = this.getCurrentUser();
-        Long id = user.getShoppingCart().getId();
-        Optional<ShoppingCart> byId = shoppingCartRepository.findById(id);
+        ShoppingCart shoppingCart = user.getShoppingCart();
+        if (shoppingCart == null){
+            user.setShoppingCart(new ShoppingCart());
+        }
         List<CartItem> cartItems = user.getShoppingCart().getCartItems();
 
         List<CartItemDTO> cartItemsDTOs = new ArrayList<>();
         for (CartItem item: cartItems) {
-            CartItemDTO map = modelMapper.map(item, CartItemDTO.class);
-            cartItemsDTOs.add(map);
+            if (!item.getGame().isDeleted()){
+                CartItemDTO map = modelMapper.map(item, CartItemDTO.class);
+                cartItemsDTOs.add(map);
+            }
         }
         return cartItemsDTOs;
     }
@@ -111,11 +116,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public double calculateTotalPrice() {
-        Double sum = 0.00;
+    public BigDecimal calculateTotalPrice() {
+        BigDecimal sum = new BigDecimal(0);
         List<CartItemDTO> cartItems = getCartItems();
         for (CartItemDTO item: cartItems) {
-            sum += item.getTotal();
+            sum = sum.add(item.getTotal());
         }
         return sum;
     }

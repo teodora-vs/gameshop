@@ -2,6 +2,7 @@ package com.softuni.gameshop.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
@@ -24,7 +25,7 @@ public class Game {
     private Integer releaseYear;
 
     @Column(nullable = false)
-    private Double price;
+    private BigDecimal price;
     // Other fields, getters, and setters
 
     @Column(nullable = false)
@@ -84,11 +85,11 @@ public class Game {
         return this;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public Game setPrice(Double price) {
+    public Game setPrice(BigDecimal price) {
         this.price = price;
         return this;
     }

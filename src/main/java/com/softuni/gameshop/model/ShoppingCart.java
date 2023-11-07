@@ -1,8 +1,8 @@
 package com.softuni.gameshop.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Fetch;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class ShoppingCart {
     private UserEntity user;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<CartItem> cartItems;
+    private List<CartItem> cartItems = new ArrayList<>();
 
     public ShoppingCart() {
     }
@@ -49,10 +49,10 @@ public class ShoppingCart {
         return this;
     }
 
-    public Double getTotal() {
-        double sum = 0;
+    public BigDecimal getTotal() {
+        BigDecimal sum = new BigDecimal(0);
         for (CartItem cartItem: cartItems) {
-            sum += cartItem.getTotal();
+            sum = sum.add(cartItem.getTotal());
         }
         return sum;
     }

@@ -2,6 +2,8 @@ package com.softuni.gameshop.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 public class CartItem {
 
@@ -46,7 +48,8 @@ public class CartItem {
         return this;
     }
 
-    public double getTotal(){
-        return this.game.getPrice() * quantity;
+    public BigDecimal getTotal(){
+        BigDecimal total = this.game.getPrice().multiply(BigDecimal.valueOf(quantity));
+        return total;
     }
 }

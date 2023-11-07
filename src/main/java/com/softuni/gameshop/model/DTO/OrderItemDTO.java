@@ -2,12 +2,14 @@ package com.softuni.gameshop.model.DTO;
 
 import com.softuni.gameshop.model.Game;
 
+import java.math.BigDecimal;
+
 public class OrderItemDTO {
 
     private Game game;
     private int quantity;
-    private Double price; // The price per item
-    private Double total; // Total price for this item
+    private BigDecimal price; // The price per item
+    private BigDecimal total; // Total price for this item
 
     public OrderItemDTO() {
     }
@@ -30,20 +32,20 @@ public class OrderItemDTO {
         return this;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public OrderItemDTO setPrice(Double price) {
+    public OrderItemDTO setPrice(BigDecimal price) {
         this.price = price;
         return this;
     }
 
-    public Double getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public OrderItemDTO setTotal(Double total) {
+    public OrderItemDTO setTotal(BigDecimal total) {
         this.total = total;
         return this;
     }

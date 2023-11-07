@@ -7,20 +7,26 @@
     <nav th:replace="~{fragments/navigation}"></nav>
 </div>
 <br>
-<div class="container mt-5 text-center text-white">
-    <h1>Welcome to GameShop ,</h1>
+<div style=" background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px; " class="container mt-5 text-center text-white">
+    <h1>Welcome to GameShop,</h1>
+
     <th:block sec:authorize="isAuthenticated()">
-        <th:block sec:authentication="name"></th:block>
+        <p style="font-size: 24px"><span th:text="${#authentication.name}"></span>!</p>
+        <p style="font-size: 24px">Click <a href="/games">here</a> to browse our latest games!</p>
     </th:block>
+
     <th:block sec:authorize="!isAuthenticated()">
-        Anonymous!
-    </th:block>
-    <th:block sec:authorize="!isAuthenticated()">
-        <br>
+        <p>Anonymous!</p>
         <h3 class="pt-3"><a href="/register">Register</a> to browse our latest games!</h3>
         <h5 class="pt-4">Already have an account? <a href="/login">Login</a> here.</h5>
     </th:block>
 
+    <th:block sec:authorize="hasRole('ADMIN')">
+        <h3 class="pt-3">Click <a href="/orders">here</a> to see all orders.</h3>
+    </th:block>
 </div>
+
 </body>
 </html>

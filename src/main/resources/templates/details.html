@@ -7,13 +7,15 @@
 <div>
     <nav th:replace="~{fragments/navigation}"></nav>
 </div>
-    <div th:object="${game}" class="container mt-5 text-white">
+    <div th:object="${game}" class="container mt-5 text-white game-details-container" style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
+    padding: 20px; /* Add padding to the container */
+    border-radius: 10px; ">
         <div class="row">
             <div class="col-md-6">
                 <img th:src="*{imageURL}" class="img-fluid" alt="Game Image" tyle="max-width: 100%;height: 800px;">
             </div>
             <div class="col-md-6">
-                <h2 th:text="*{title}"></h2>
+                <h2 class="mb-3" th:text="*{title}"></h2>
                 <p><strong>Genre:</strong> <span th:text="*{genreName}"></span></p>
                 <p><strong>Release Year:</strong> <span th:text="*{releaseYear}"></span></p>
                 <p><strong>Price:</strong> $<span th:text="*{price}"></span></p>
@@ -24,6 +26,11 @@
                 <form sec:authorize="hasRole('ADMIN')" th:action="@{'/games/delete/' + ${game.id}}" th:method="POST">
                     <button class="btn btn-danger" type="submit">Delete</button>
                 </form>
+                <section id="map"></section>
+                <section id="video">
+                    <iframe id="frame" th:src="'https://www.youtube.com/embed/' + *{videoURL}">
+                    </iframe>
+                </section>
             </div>
         </div>
     </div>

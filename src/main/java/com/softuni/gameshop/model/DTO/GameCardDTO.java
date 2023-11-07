@@ -2,6 +2,8 @@ package com.softuni.gameshop.model.DTO;
 
 import com.softuni.gameshop.model.enums.GenreNamesEnum;
 
+import java.math.BigDecimal;
+
 public class GameCardDTO {
     private Long id;
 
@@ -11,7 +13,7 @@ public class GameCardDTO {
 
     private Integer releaseYear;
 
-    private Double price;
+    private BigDecimal price;
 
     private String imageURL;
 
@@ -54,11 +56,11 @@ public class GameCardDTO {
         return this;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public GameCardDTO setPrice(Double price) {
+    public GameCardDTO setPrice(BigDecimal price) {
         this.price = price;
         return this;
     }

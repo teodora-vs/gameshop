@@ -1,10 +1,7 @@
 package com.softuni.gameshop.service.impl;
 
 import com.softuni.gameshop.model.CartItem;
-import com.softuni.gameshop.model.DTO.MyOrdersDTO;
-import com.softuni.gameshop.model.DTO.OrderDTO;
-import com.softuni.gameshop.model.DTO.OrderDetailsDTO;
-import com.softuni.gameshop.model.DTO.OrderItemDTO;
+import com.softuni.gameshop.model.DTO.*;
 import com.softuni.gameshop.model.Order;
 import com.softuni.gameshop.model.ShoppingCart;
 import com.softuni.gameshop.model.UserEntity;
@@ -12,6 +9,7 @@ import com.softuni.gameshop.repository.OrderRepository;
 import com.softuni.gameshop.repository.ShoppingCartRepository;
 import com.softuni.gameshop.repository.UserRepository;
 import com.softuni.gameshop.service.OrderService;
+import jakarta.persistence.Column;
 import jakarta.transaction.Transactional;
 import org.aspectj.weaver.ast.Or;
 import org.modelmapper.ModelMapper;
@@ -22,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -44,18 +43,16 @@ public class OrderServiceImpl implements OrderService {
         UserEntity user = this.getCurrentUser();
         ShoppingCart shoppingCart = user.getShoppingCart();
 
-        // Create a new order and set its properties
         Order order = new Order();
         order.setOrderDate(LocalDate.now());
         order.setUser(user);
+        order.setPhoneNumber(orderDTO.getPhoneNumber());
         order.setAddress(orderDTO.getAddress());
         order.setTotalPrice(shoppingCart.getTotal());
-        order.setCartItems(new ArrayList<>(shoppingCart.getCartItems())); // Clone the cart items
+        order.setCartItems(new ArrayList<>(shoppingCart.getCartItems()));
 
-        // Clear the cart items from the original shopping cart
         shoppingCart.getCartItems().clear();
 
-        // Save the changes
         shoppingCartRepository.save(shoppingCart);
         orderRepository.save(order);
     }
@@ -106,6 +103,47 @@ public class OrderServiceImpl implements OrderService {
     public OrderDetailsDTO getOrderDetailsById(Long orderId) {
         Order order = getOrderById(orderId);
         return convertToOrderDetailsDTO(order);
+    }
+
+    public List<AdminOrderDTO> getAllOrdersForAdmin(){
+        List<Order> all = this.orderRepository.findAll();
+        List <AdminOrderDTO> adminOrderDTOs = new ArrayList<>();
+        for (Order order: all) {
+            AdminOrderDTO adminOrderDTO = new AdminOrderDTO();
+            adminOrderDTO.setId(order.getId());
+            adminOrderDTO.setOrderDate(order.getOrderDate());
+            adminOrderDTO.setAddress(order.getAddress());
+            adminOrderDTO.setPhoneNumber(order.getPhoneNumber());
+            adminOrderDTO.setUser(order.getUser());
+            adminOrderDTOs.add(adminOrderDTO);
+        }
+
+        return adminOrderDTOs;
+    }
+
+    public AdminOrderDetailsDTO getOrderDetailsForAdmin(Long orderId) {
+        Optional<Order> byId = this.orderRepository.findById(orderId);
+
+        List<CartItem> cartItems = byId.get().getCartItems();
+        List <OrderItemDTO> orderItemDTOS = new ArrayList<>();
+        for (CartItem cartItem: cartItems) {
+            OrderItemDTO orderItemDTO = new OrderItemDTO();
+            orderItemDTO.setGame(cartItem.getGame());
+            orderItemDTO.setPrice(cartItem.getGame().getPrice());
+            orderItemDTO.setQuantity(cartItem.getQuantity());
+            orderItemDTO.setTotal(cartItem.getTotal());
+            orderItemDTOS.add(orderItemDTO);
+        }
+        Order order = getOrderById(orderId);
+        AdminOrderDetailsDTO adminOrderDetailsDTO = new AdminOrderDetailsDTO();
+        adminOrderDetailsDTO.setId(order.getId());
+        adminOrderDetailsDTO.setOrderDate(order.getOrderDate());
+        adminOrderDetailsDTO.setAddress(order.getAddress());
+        adminOrderDetailsDTO.setPhoneNumber(order.getPhoneNumber());
+        adminOrderDetailsDTO.setUser(order.getUser());
+        adminOrderDetailsDTO.setTotalPrice(order.getTotalPrice());
+        adminOrderDetailsDTO.setOrderItems(orderItemDTOS);
+        return adminOrderDetailsDTO;
     }
 
 }

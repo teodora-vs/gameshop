@@ -7,20 +7,32 @@
     <nav th:replace="~{fragments/navigation}"></nav>
 </div>
 <br>
-<div class="container">
-    <h1>Admin Orders</h1>
-    <table class="table table-bordered">
+<div class="container text-white">
+    <h1 class="mb-3">All Orders</h1>
+    <table class="table table-bordered text-white" style=" background-color: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border-radius: 10px; ">
         <thead>
         <tr>
             <th>Order ID</th>
             <th>Order Date</th>
-            <th>User</th>
+            <th>Receiver</th>
             <th>Address</th>
-            <th>Actions</th>
+            <th>Phone Number</th>
+            <th>Details</th>
         </tr>
         </thead>
         <tbody>
-        <!-- Orders will be listed here -->
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.orderDate}"></td>
+            <td th:text="${order.user.getFullName()}"></td>
+            <td th:text="${order.address}"></td>
+            <td th:text="${order.phoneNumber}"></td>
+            <td>
+                <a th:href="@{'/orders/' + ${order.id}}" class="btn btn-info">View Details</a>
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>

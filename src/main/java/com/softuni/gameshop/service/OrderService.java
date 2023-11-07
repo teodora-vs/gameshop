@@ -1,8 +1,6 @@
 package com.softuni.gameshop.service;
 
-import com.softuni.gameshop.model.DTO.MyOrdersDTO;
-import com.softuni.gameshop.model.DTO.OrderDTO;
-import com.softuni.gameshop.model.DTO.OrderDetailsDTO;
+import com.softuni.gameshop.model.DTO.*;
 import com.softuni.gameshop.model.Order;
 import com.softuni.gameshop.model.UserEntity;
 
@@ -15,6 +13,10 @@ public interface OrderService {
 
     OrderDetailsDTO convertToOrderDetailsDTO(Order order);
     OrderDetailsDTO getOrderDetailsById(Long orderId);
+
+    List<AdminOrderDTO> getAllOrdersForAdmin();
+
+    AdminOrderDetailsDTO getOrderDetailsForAdmin(Long orderId);
 
     List<MyOrdersDTO> getMyOrders();
 

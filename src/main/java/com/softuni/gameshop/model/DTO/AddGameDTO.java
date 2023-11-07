@@ -4,6 +4,8 @@ import com.softuni.gameshop.model.enums.GenreNamesEnum;
 import com.softuni.gameshop.validation.YearNotInFuture;
 import jakarta.validation.constraints.*;
 
+import java.math.BigDecimal;
+
 public class AddGameDTO {
 
     @NotBlank(message = "")
@@ -20,7 +22,7 @@ public class AddGameDTO {
 
     @NotNull(message = "Price is required!")
     @Positive(message = "Price must be a positive number!")
-    private Double price;
+    private BigDecimal price;
 
     @NotBlank(message = "Image URL is required!")
     private String imageURL;
@@ -70,11 +72,11 @@ public class AddGameDTO {
         return this;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public AddGameDTO setPrice(Double price) {
+    public AddGameDTO setPrice(BigDecimal price) {
         this.price = price;
         return this;
     }

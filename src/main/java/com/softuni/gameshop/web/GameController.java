@@ -20,7 +20,7 @@ public class GameController {
         this.gameService = gameService;
     }
 
-    @GetMapping("/home")
+    @GetMapping("/games")
     public String home(Model model,
                        @PageableDefault(
                                size = 3,
@@ -30,7 +30,7 @@ public class GameController {
         Page<GameCardDTO> allGames = gameService.getAllGames(pageable);
         model.addAttribute("games", allGames);
 
-        return "home";
+        return "games";
     }
 
 

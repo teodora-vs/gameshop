@@ -8,8 +8,10 @@
 </div>
 <br>
 <div class="container text-white">
-  <h1>Shopping Cart</h1>
-  <table class="table table-striped">
+  <h1 class="mb-3">Shopping Cart</h1>
+  <table style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
+    padding: 20px; /* Add padding to the container */
+    border-radius: 10px; " class="table table-striped">
     <thead>
     <tr>
       <th>Game</th>
@@ -33,14 +35,18 @@
     </tbody>
   </table>
   <div>
-    <p>Total Price: $<span th:text="${totalPrice}"></span></p>
+    <p style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
+    padding: 20px; /* Add padding to the container */
+    border-radius: 10px; " class="float-right pr-5">Total Price: $<span th:text="${totalPrice}"></span></p>
   </div>
 </div>
-<div class="container mt-2 text-white">
+<div class="container mt-4 text-white">
   <div class="row justify-content-center">
-    <div class="col-md-4">
+    <div style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
+    padding: 20px; /* Add padding to the container */
+    border-radius: 10px; " class="col-md-4">
       <h4 class="text-center mb-2 text-white">Done shopping?</h4>
-      <h5 class="text-center mb-4 text-white">Please enter your shipping address.</h5>
+      <h5 class="text-center mb-4 text-white">Please enter your shipping address and your mobile phone number.</h5>
       <form th:method="POST" th:action="@{/order}" th:object="${orderDTO}">
         <div class="form-group">
           <label for="street">City and Street name</label>
@@ -50,7 +56,15 @@
              th:errors="${orderDTO.address}">
         </div>
         <div class="form-group">
+          <label for="street">Phone number</label>
+          <input type="text" id="number" name="phoneNumber" class="form-control" value="+359">
+          <p th:if="${#fields.hasErrors('phoneNumber')}"
+             class="errors alert alert-danger"
+             th:errors="${orderDTO.phoneNumber}">
+        </div>
+        <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block">Place Order</button>
+        </div>
       </form>
     </div>
   </div>

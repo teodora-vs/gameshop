@@ -1,5 +1,6 @@
 package com.softuni.gameshop.model.DTO;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,15 +12,17 @@ public class OrderDetailsDTO {
 
     private String address;
 
+    private String phoneNumber;
+
     private List<OrderItemDTO> orderItems;
 
-    private Double totalPrice;
+    private BigDecimal totalPrice;
 
-    public Double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public OrderDetailsDTO setTotalPrice(Double totalPrice) {
+    public OrderDetailsDTO setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
         return this;
     }
@@ -60,6 +63,15 @@ public class OrderDetailsDTO {
 
     public OrderDetailsDTO setOrderItems(List<OrderItemDTO> orderItems) {
         this.orderItems = orderItems;
+        return this;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public OrderDetailsDTO setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
         return this;
     }
 }

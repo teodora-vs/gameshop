@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -24,13 +25,13 @@ public class ShoppingCartController {
     @GetMapping("/add-to-cart/{id}")
     public String addToCart(@PathVariable Long id) {
         shoppingCartService.addToCart(id);
-        return "redirect:/home";
+        return "redirect:/games";
     }
 
     @GetMapping("/cart")
     public String viewCart(Model model) {
         List<CartItemDTO> cartItems = shoppingCartService.getCartItems();
-        double totalPrice = shoppingCartService.calculateTotalPrice();
+        BigDecimal totalPrice = shoppingCartService.calculateTotalPrice();
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("totalPrice", totalPrice);
         return "cart";

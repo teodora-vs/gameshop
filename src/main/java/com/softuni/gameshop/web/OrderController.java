@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -36,7 +37,7 @@ public class OrderController {
     @GetMapping("/order")
     public String order(Model model){
         List<CartItemDTO> cartItems = shoppingCartService.getCartItems();
-        double totalPrice = shoppingCartService.calculateTotalPrice();
+        BigDecimal totalPrice = shoppingCartService.calculateTotalPrice();
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("totalPrice", totalPrice);
         return "order";
