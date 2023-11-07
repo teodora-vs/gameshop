@@ -20,6 +20,8 @@ public class GameDetailsDTO {
 
     private String videoURL;
 
+    private Boolean isDeleted;
+
     public GameDetailsDTO() {
     }
 
@@ -92,6 +94,15 @@ public class GameDetailsDTO {
 
     public GameDetailsDTO setVideoURL(String videoURL) {
         this.videoURL = videoURL;
+        return this;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public GameDetailsDTO setDeleted(Boolean deleted) {
+        isDeleted = deleted;
         return this;
     }
 }

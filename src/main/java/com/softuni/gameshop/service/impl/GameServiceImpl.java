@@ -14,6 +14,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 public class GameServiceImpl implements GameService {
 
@@ -47,13 +51,19 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Page<GameCardDTO> getAllGames(Pageable pageable) {
-       return gameRepository.findAll(pageable).map(this::mapAsCard);
+        Page<Game> undeletedGamesPage = gameRepository.findByIsDeletedFalse(pageable);
+        return undeletedGamesPage.map(this::mapAsCard);
     }
 
     @Override
     public void deleteGame(Long id) {
-        this.gameRepository.deleteById(id);
+        Optional<Game> gameOptional = gameRepository.findById(id);
 
+        if (gameOptional.isPresent()) {
+            Game game = gameOptional.get();
+            game.setDeleted(true);
+            gameRepository.save(game);
+        }
     }
 
     public GameCardDTO mapAsCard(Game game){

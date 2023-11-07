@@ -33,8 +33,8 @@ public class Game {
     @Column(nullable = false)
     private String videoURL;
 
-    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<CartItem> cartItems;
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean isDeleted;
 
     public Game() {
     }
@@ -108,6 +108,15 @@ public class Game {
 
     public Game setVideoURL(String videoURL) {
         this.videoURL = videoURL;
+        return this;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public Game setDeleted(boolean deleted) {
+        isDeleted = deleted;
         return this;
     }
 }

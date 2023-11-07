@@ -7,44 +7,26 @@
 <div>
     <nav th:replace="~{fragments/navigation}"></nav>
 </div>
-<div class="container text-white">
-    <br>
-<!--    <div th:object="${game}" style="overflow: hidden; padding-top: 50px">-->
-<!--        <div>-->
-<!--            <h2 th:text="*{title}"></h2>-->
-<!--            <br>-->
-<!--            <img th:src="*{imageURL}" class="img-fluid" style="max-width: 100%;height: 400px;float: left; margin-right: 20px;"alt="Game Image">-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <p><strong>Description:</strong> <span th:text="*{description}"></span></p>-->
-<!--            <p><strong>Genre:</strong> <span th:text="*{genreName}"></span></p>-->
-<!--            <p><strong>Release Year:</strong> <span th:text="*{releaseYear}"></span></p>-->
-<!--            <p><strong>Price:</strong> $<span th:text="*{price}"></span></p>-->
-<!--            <a th:href="*{videoURL}" target="_blank" class="btn btn-primary">Watch Trailer</a>-->
-<!--            <a th:href="@{'/add-to-cart/' + ${game.id}}" class="btn btn-success">Add to cart</a>-->
-<!--        </div>-->
-<!--    </div>-->
-
     <div th:object="${game}" class="container mt-5 text-white">
         <div class="row">
             <div class="col-md-6">
-                <img th:src="*{imageURL}" class="img-fluid" alt="Game Image">
+                <img th:src="*{imageURL}" class="img-fluid" alt="Game Image" tyle="max-width: 100%;height: 800px;">
             </div>
             <div class="col-md-6">
                 <h2 th:text="*{title}"></h2>
                 <p><strong>Genre:</strong> <span th:text="*{genreName}"></span></p>
                 <p><strong>Release Year:</strong> <span th:text="*{releaseYear}"></span></p>
                 <p><strong>Price:</strong> $<span th:text="*{price}"></span></p>
-                <p><strong>Description:</strong> <span th:text="*{description}"></span></p>
+                <p class="mb-4"><strong>Description:</strong> <span th:text="*{description}"></span></p>
+                <p th:if="*{deleted}" class="text-danger">Out of Stock</p>
                 <a th:href="*{videoURL}" class="btn btn-primary" target="_blank">Watch Trailer</a>
-                <a sec:authorize="hasRole('USER')" th:href="@{'/add-to-cart/' + ${game.id}}" class="btn btn-success">Add to cart</a>
+                <a th:unless="${game.deleted}" sec:authorize="hasRole('USER')" th:href="@{'/add-to-cart/' + ${game.id}}" class="btn btn-success">Add to cart</a>
                 <form sec:authorize="hasRole('ADMIN')" th:action="@{'/games/delete/' + ${game.id}}" th:method="POST">
                     <button class="btn btn-danger" type="submit">Delete</button>
                 </form>
             </div>
         </div>
     </div>
-
 </div>
 </body>
 </html>
