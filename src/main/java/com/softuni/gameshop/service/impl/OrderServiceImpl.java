@@ -91,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
         List <OrderItemDTO> orderItemDTOS = new ArrayList<>();
         for (CartItem cartItem: cartItems) {
             OrderItemDTO orderItemDTO = new OrderItemDTO();
-            orderItemDTO.setName(cartItem.getGame().getTitle());
+            orderItemDTO.setGame(cartItem.getGame());
             orderItemDTO.setPrice(cartItem.getGame().getPrice());
             orderItemDTO.setQuantity(cartItem.getQuantity());
             orderItemDTO.setTotal(cartItem.getTotal());

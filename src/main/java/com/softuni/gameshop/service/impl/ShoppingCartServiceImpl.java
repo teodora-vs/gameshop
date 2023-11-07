@@ -102,17 +102,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return cartItemsDTOs;
     }
 
-//    @Override
-//    public List<CartItem> getCartItems() {
-//        UserEntity user = this.getCurrentUser();
-//        ShoppingCart shoppingCart = user.getShoppingCart();
-//        if (shoppingCart == null){
-//            return new ArrayList<>();
-//        }
-//        return shoppingCart.getCartItems();
-//    }
-
-
     @Override
     public UserEntity getCurrentUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -1,8 +1,10 @@
 package com.softuni.gameshop.model.DTO;
 
+import com.softuni.gameshop.model.Game;
+
 public class OrderItemDTO {
 
-    private String name; // The name of the game
+    private Game game;
     private int quantity;
     private Double price; // The price per item
     private Double total; // Total price for this item
@@ -10,12 +12,12 @@ public class OrderItemDTO {
     public OrderItemDTO() {
     }
 
-    public String getName() {
-        return name;
+    public Game getGame() {
+        return game;
     }
 
-    public OrderItemDTO setName(String name) {
-        this.name = name;
+    public OrderItemDTO setGame(Game game) {
+        this.game = game;
         return this;
     }
 

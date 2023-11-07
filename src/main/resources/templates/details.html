@@ -35,7 +35,6 @@
                 <p><strong>Genre:</strong> <span th:text="*{genreName}"></span></p>
                 <p><strong>Release Year:</strong> <span th:text="*{releaseYear}"></span></p>
                 <p><strong>Price:</strong> $<span th:text="*{price}"></span></p>
-                <p><strong>Description:</strong></p>
                 <p><strong>Description:</strong> <span th:text="*{description}"></span></p>
                 <a th:href="*{videoURL}" class="btn btn-primary" target="_blank">Watch Trailer</a>
                 <a sec:authorize="hasRole('USER')" th:href="@{'/add-to-cart/' + ${game.id}}" class="btn btn-success">Add to cart</a>

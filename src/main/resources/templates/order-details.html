@@ -31,7 +31,10 @@
           </thead>
           <tbody>
           <tr th:each="item : ${orderDetails.orderItems}">
-            <td th:text="${item.name}"></td>
+            <td><a th:href="@{'/games/' + ${item.game.id}}">
+              <img th:src="@{${item.game.imageURL}}" alt="Game Image" width="40" height="50">
+              <span class="pl-3" th:text="${item.game.title}"></span>
+            </a></td>
             <td th:text="${item.quantity}"></td>
             <td th:text="${item.total}"></td>
           </tr>

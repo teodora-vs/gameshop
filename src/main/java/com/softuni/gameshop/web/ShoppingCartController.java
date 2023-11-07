@@ -41,11 +41,5 @@ public class ShoppingCartController {
         shoppingCartService.removeFromCart(id);
         return "redirect:/cart";
     }
-
-
-//    @GetMapping("/remove-from-cart/{gameId}")
-//    public String removeFromCart(@PathVariable Long gameId) {
-//        shoppingCartService.removeFromCart(gameId);
-//        return "redirect:/cart";
-//    }
+    
 }
