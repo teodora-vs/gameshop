@@ -81,6 +81,11 @@ public class OrderServiceImpl implements OrderService {
         return this.orderRepository.findById(id).get();
     }
 
+    @Override
+    public OrderDetailsDTO getOrderDetailsById(Long orderId) {
+        Order order = getOrderById(orderId);
+        return convertToOrderDetailsDTO(order);
+    }
 
     @Override
     public OrderDetailsDTO convertToOrderDetailsDTO(Order order) {
@@ -99,22 +104,19 @@ public class OrderServiceImpl implements OrderService {
         return orderDetailsDTO;
     }
 
-    @Override
-    public OrderDetailsDTO getOrderDetailsById(Long orderId) {
-        Order order = getOrderById(orderId);
-        return convertToOrderDetailsDTO(order);
-    }
 
     public List<AdminOrderDTO> getAllOrdersForAdmin(){
         List<Order> all = this.orderRepository.findAll();
         List <AdminOrderDTO> adminOrderDTOs = new ArrayList<>();
         for (Order order: all) {
+            Optional<Order> byId = orderRepository.findById(order.getId());
+            String receiver = byId.get().getUser().getFullName();
             AdminOrderDTO adminOrderDTO = new AdminOrderDTO();
             adminOrderDTO.setId(order.getId());
             adminOrderDTO.setOrderDate(order.getOrderDate());
             adminOrderDTO.setAddress(order.getAddress());
             adminOrderDTO.setPhoneNumber(order.getPhoneNumber());
-            adminOrderDTO.setUser(order.getUser());
+            adminOrderDTO.setReceiver(receiver);
             adminOrderDTOs.add(adminOrderDTO);
         }
 
@@ -140,7 +142,7 @@ public class OrderServiceImpl implements OrderService {
         adminOrderDetailsDTO.setOrderDate(order.getOrderDate());
         adminOrderDetailsDTO.setAddress(order.getAddress());
         adminOrderDetailsDTO.setPhoneNumber(order.getPhoneNumber());
-        adminOrderDetailsDTO.setUser(order.getUser());
+        adminOrderDetailsDTO.setReceiver(order.getUser().getFullName());
         adminOrderDetailsDTO.setTotalPrice(order.getTotalPrice());
         adminOrderDetailsDTO.setOrderItems(orderItemDTOS);
         return adminOrderDetailsDTO;

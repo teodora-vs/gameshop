@@ -20,7 +20,7 @@ public class AdminOrderDetailsDTO {
 
     private BigDecimal totalPrice;
 
-    private UserEntity user;
+    private String receiver;
 
     public AdminOrderDetailsDTO() {
     }
@@ -79,12 +79,12 @@ public class AdminOrderDetailsDTO {
         return this;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public AdminOrderDetailsDTO setUser(UserEntity user) {
-        this.user = user;
+    public AdminOrderDetailsDTO setReceiver(String receiver) {
+        this.receiver = receiver;
         return this;
     }
 }

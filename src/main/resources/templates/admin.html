@@ -26,7 +26,7 @@
         <tr th:each="order : ${orders}">
             <td th:text="${order.id}"></td>
             <td th:text="${order.orderDate}"></td>
-            <td th:text="${order.user.getFullName()}"></td>
+            <td th:text="${order.receiver}"></td>
             <td th:text="${order.address}"></td>
             <td th:text="${order.phoneNumber}"></td>
             <td>

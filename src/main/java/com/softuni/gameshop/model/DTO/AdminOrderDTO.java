@@ -11,7 +11,7 @@ public class AdminOrderDTO {
 
     private LocalDate orderDate;
 
-    private UserEntity user;
+    private String receiver;
 
     private String address;
 
@@ -38,12 +38,12 @@ public class AdminOrderDTO {
         return this;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public AdminOrderDTO setUser(UserEntity user) {
-        this.user = user;
+    public AdminOrderDTO setReceiver(String receiver) {
+        this.receiver = receiver;
         return this;
     }
 

@@ -16,7 +16,7 @@
     border-radius: 10px; " class="card-body text-white">
           <p class="card-text"><strong>Order ID:</strong> <span th:text="${orderDetails.id}"></span></p>
           <p class="card-text"><strong>Order Date:</strong> <span th:text="${orderDetails.orderDate}"></span></p>
-          <p class="card-text"><strong>Receiver:</strong> <span th:text="${orderDetails.user.getFullName()}"></span></p>
+          <p class="card-text"><strong>Receiver:</strong> <span th:text="${orderDetails.receiver}"></span></p>
           <p class="card-text"><strong>Shipping Address:</strong> <span th:text="${orderDetails.address}"></span></p>
           <p class="card-text"><strong>Phone Number:</strong> <span th:text="${orderDetails.phoneNumber}"></span></p>
           <p class="card-text"><strong>Total Price:</strong> <span th:text="${orderDetails.totalPrice}"></span></p>
