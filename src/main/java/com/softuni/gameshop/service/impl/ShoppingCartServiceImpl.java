@@ -92,18 +92,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCartRepository.save(shoppingCart);
     }
 
-    private void createIfNotExists() {
-        UserEntity user = this.getCurrentUser();
-        ShoppingCart shoppingCart = user.getShoppingCart();
-
-        if (shoppingCart == null) {
-            shoppingCart = new ShoppingCart();
-            shoppingCart.setUser(user);
-            user.setShoppingCart(shoppingCart);
-            shoppingCartRepository.save(shoppingCart);
-        }
-    }
-
 
     @Override
     public List<CartItemDTO> getCartItems() {
@@ -143,7 +131,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public BigDecimal getCartTotalPrice() {
         UserEntity user = this.getCurrentUser();
-        createIfNotExists();
         ShoppingCart shoppingCart = user.getShoppingCart();
         return shoppingCart.getTotal();
     }

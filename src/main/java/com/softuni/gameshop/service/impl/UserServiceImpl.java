@@ -63,7 +63,6 @@ public class UserServiceImpl implements UserService {
         user.setUsername("admin");
         user.setEmail("admin@example.com");
         user.setFullName("Admin adminov");
-        user.setShoppingCart(null);
 
         // Check if the "ADMIN" role exists
         UserRole userRole = userRoleRepository.findByRoleName(UserRoleEnum.ADMIN);

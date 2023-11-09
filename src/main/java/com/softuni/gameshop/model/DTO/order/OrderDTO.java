@@ -9,7 +9,7 @@ public class OrderDTO {
     private String address;
 
     @NotBlank
-    @Pattern(regexp = "^\\+359\\d{9,}$", message = "Invalid phone number format")
+    @Pattern(regexp = "^[0-9]{9}$", message = "Invalid phone number format")
     private String phoneNumber;
 
     public OrderDTO() {

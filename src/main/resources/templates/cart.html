@@ -48,8 +48,8 @@
   </table>
   <div th:unless="${cartItems.size() == 0}" class="float-right">
 
- <p>Total Price: $<span th:text="${totalPrice}"></span>
-    <a href="/order" class="btn btn-success">Proceed to Checkout</a>
+    <p style="font-size: 22px;">Total Price: $<span th:text="${totalPrice}"></span></p>
+    <a href="/order" class="btn btn-success btn-lg">Proceed to Checkout</a>
   </div>
   </div>
 </div>
