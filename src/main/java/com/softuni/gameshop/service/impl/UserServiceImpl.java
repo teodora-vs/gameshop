@@ -6,18 +6,15 @@ import com.softuni.gameshop.model.ShoppingCart;
 import com.softuni.gameshop.model.UserEntity;
 import com.softuni.gameshop.model.UserRole;
 import com.softuni.gameshop.model.enums.UserRoleEnum;
+import com.softuni.gameshop.repository.ShoppingCartRepository;
 import com.softuni.gameshop.repository.UserRepository;
 import com.softuni.gameshop.repository.UserRoleRepository;
 import com.softuni.gameshop.service.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,12 +24,14 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final UserRoleRepository userRoleRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, ShoppingCartRepository shoppingCartRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
     }
 
     @Override
@@ -52,6 +51,10 @@ public class UserServiceImpl implements UserService {
         UserRole userRole = userRoleRepository.findByRoleName(UserRoleEnum.USER);
         user.setUserRoles(Collections.singletonList(userRole));
         user.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart = shoppingCartRepository.save(shoppingCart);
+
+        user.setShoppingCart(shoppingCart);
         this.userRepository.save(user);
 
         return true;
@@ -63,6 +66,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername("admin");
         user.setEmail("admin@example.com");
         user.setFullName("Admin adminov");
+        user.setShoppingCart(null);
 
         // Check if the "ADMIN" role exists
         UserRole userRole = userRoleRepository.findByRoleName(UserRoleEnum.ADMIN);

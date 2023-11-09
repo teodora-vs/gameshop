@@ -56,7 +56,7 @@ public class AdminController {
         }
 
         Long id = gameService.addGame(addGameDTO);
-        return "redirect:/home";
+        return "redirect:/games";
     }
 
     @PostMapping("/games/delete/{id}")
