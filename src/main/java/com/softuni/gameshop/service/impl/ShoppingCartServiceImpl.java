@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -68,6 +69,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (shoppingCart == null) {
             shoppingCart = new ShoppingCart();
             shoppingCart.setUser(user);
+            user.setShoppingCart(shoppingCart);
             shoppingCartRepository.save(shoppingCart);
         }
 
@@ -90,12 +92,28 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCartRepository.save(shoppingCart);
     }
 
+    private void createIfNotExists() {
+        UserEntity user = this.getCurrentUser();
+        ShoppingCart shoppingCart = user.getShoppingCart();
+
+        if (shoppingCart == null) {
+            shoppingCart = new ShoppingCart();
+            shoppingCart.setUser(user);
+            user.setShoppingCart(shoppingCart);
+            shoppingCartRepository.save(shoppingCart);
+        }
+    }
+
+
     @Override
     public List<CartItemDTO> getCartItems() {
         UserEntity user = this.getCurrentUser();
         ShoppingCart shoppingCart = user.getShoppingCart();
-        if (shoppingCart == null){
-            user.setShoppingCart(new ShoppingCart());
+        if (shoppingCart == null) {
+            shoppingCart = new ShoppingCart();
+            shoppingCart.setUser(user);
+            user.setShoppingCart(shoppingCart);
+            shoppingCartRepository.save(shoppingCart);
         }
         List<CartItem> cartItems = user.getShoppingCart().getCartItems();
         List<CartItem> itemsToRemove = new ArrayList<>();
@@ -125,6 +143,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public BigDecimal getCartTotalPrice() {
         UserEntity user = this.getCurrentUser();
+        createIfNotExists();
         ShoppingCart shoppingCart = user.getShoppingCart();
         return shoppingCart.getTotal();
     }

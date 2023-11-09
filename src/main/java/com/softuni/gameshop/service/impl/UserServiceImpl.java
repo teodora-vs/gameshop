@@ -51,10 +51,7 @@ public class UserServiceImpl implements UserService {
         UserRole userRole = userRoleRepository.findByRoleName(UserRoleEnum.USER);
         user.setUserRoles(Collections.singletonList(userRole));
         user.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart = shoppingCartRepository.save(shoppingCart);
 
-        user.setShoppingCart(shoppingCart);
         this.userRepository.save(user);
 
         return true;

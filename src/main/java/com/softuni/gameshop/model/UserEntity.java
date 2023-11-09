@@ -28,7 +28,7 @@ public class UserEntity {
     private String password;
 
     @OneToOne(mappedBy = "user")
-    private ShoppingCart shoppingCart = new ShoppingCart();
+    private ShoppingCart shoppingCart ;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
