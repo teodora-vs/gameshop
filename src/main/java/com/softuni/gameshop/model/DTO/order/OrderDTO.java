@@ -1,8 +1,7 @@
-package com.softuni.gameshop.model.DTO;
+package com.softuni.gameshop.model.DTO.order;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 public class OrderDTO {
 

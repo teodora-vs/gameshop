@@ -16,8 +16,6 @@
     border-radius: 10px; " class="card-body text-white">
           <p class="card-text"><strong>Order ID:</strong> <span th:text="${orderDetails.id}"></span></p>
           <p class="card-text"><strong>Order Date:</strong> <span th:text="${orderDetails.orderDate}"></span></p>
-          <p class="card-text"><strong>Shipping Address:</strong> <span th:text="${orderDetails.address}"></span></p>
-          <p class="card-text"><strong>Phone Number:</strong> <span th:text="${orderDetails.phoneNumber}"></span></p>
           <p class="card-text"><strong>Total Price:</strong> <span th:text="${orderDetails.totalPrice}"></span></p>
         </div>
       </div>
@@ -26,7 +24,7 @@
       <div style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
     padding: 20px; /* Add padding to the container */
     border-radius: 10px; " class="table-responsive">
-        <table class="table table-striped table-bordered text-white">
+        <table class="table table-responsive-md text-white">
           <thead>
           <tr>
             <th>Game</th>

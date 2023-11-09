@@ -1,6 +1,6 @@
 package com.softuni.gameshop.service;
 
-import com.softuni.gameshop.model.DTO.*;
+import com.softuni.gameshop.model.DTO.order.*;
 import com.softuni.gameshop.model.Order;
 import com.softuni.gameshop.model.UserEntity;
 

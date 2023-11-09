@@ -33,6 +33,7 @@
           <img th:src="@{${item.game.imageURL}}" alt="Game Image" width="40" height="50">
           <span class="pl-3" th:text="${item.game.title}"></span>
         </a>
+        <p th:if="${item.game.isDeleted}" class="text-danger">Out of Stock</p>
       </td>
       <td th:text="${item.game.price}"></td>
       <td th:text="${item.quantity}"></td>
@@ -46,8 +47,9 @@
     </tbody>
   </table>
   <div th:unless="${cartItems.size() == 0}" class="float-right">
-    <p>Total Price: $<span th:text="${totalPrice}"></span></p>
+    <p>Total Price: $<span th:text="${totalPrice}"></span><span class="text-danger" th:if="${totalPrice > 100}"> (10% Discount Applied) </span></p>
     <a href="/order" class="btn btn-success">Proceed to Checkout</a>
+  </div>
   </div>
 </div>
 </body>

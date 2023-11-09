@@ -1,8 +1,9 @@
 package com.softuni.gameshop.web;
 
-import com.softuni.gameshop.model.CartItem;
 import com.softuni.gameshop.model.DTO.*;
-import com.softuni.gameshop.model.Order;
+import com.softuni.gameshop.model.DTO.order.MyOrdersDTO;
+import com.softuni.gameshop.model.DTO.order.OrderDTO;
+import com.softuni.gameshop.model.DTO.order.OrderDetailsDTO;
 import com.softuni.gameshop.service.OrderService;
 import com.softuni.gameshop.service.ShoppingCartService;
 import jakarta.validation.Valid;

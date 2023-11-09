@@ -51,9 +51,15 @@ public class ShoppingCart {
 
     public BigDecimal getTotal() {
         BigDecimal sum = new BigDecimal(0);
-        for (CartItem cartItem: cartItems) {
+        for (CartItem cartItem : cartItems) {
+            if (!cartItem.getGame().isDeleted())
             sum = sum.add(cartItem.getTotal());
         }
+
+        if (sum.compareTo(new BigDecimal(100)) > 0) {
+            sum = sum.multiply(new BigDecimal(0.9));
+        }
+
         return sum;
     }
 }

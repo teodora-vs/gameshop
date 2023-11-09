@@ -1,9 +1,8 @@
 package com.softuni.gameshop.web;
 
-import com.softuni.gameshop.model.DTO.AddGameDTO;
-import com.softuni.gameshop.model.DTO.AdminOrderDTO;
-import com.softuni.gameshop.model.DTO.AdminOrderDetailsDTO;
-import com.softuni.gameshop.model.DTO.OrderDetailsDTO;
+import com.softuni.gameshop.model.DTO.game.AddGameDTO;
+import com.softuni.gameshop.model.DTO.order.AdminOrderDTO;
+import com.softuni.gameshop.model.DTO.order.AdminOrderDetailsDTO;
 import com.softuni.gameshop.model.enums.GenreNamesEnum;
 import com.softuni.gameshop.service.GameService;
 import com.softuni.gameshop.service.OrderService;
@@ -64,7 +63,7 @@ public class AdminController {
     public String deleteGame(@PathVariable Long id) {
         //TODO : fix
         this.gameService.deleteGame(id);
-        return "redirect:/home";
+        return "redirect:/games";
     }
 
     @GetMapping("/orders")

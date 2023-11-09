@@ -1,4 +1,4 @@
-package com.softuni.gameshop.model.DTO;
+package com.softuni.gameshop.model.DTO.order;
 
 import java.time.LocalDate;
 

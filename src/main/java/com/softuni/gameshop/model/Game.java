@@ -37,6 +37,8 @@ public class Game {
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isDeleted;
 
+    //TODO: ADD USER REVIEWS
+
     public Game() {
     }
 

@@ -1,7 +1,4 @@
-package com.softuni.gameshop.model.DTO;
-
-import com.softuni.gameshop.model.UserEntity;
-import org.springframework.security.core.userdetails.User;
+package com.softuni.gameshop.model.DTO.order;
 
 import java.time.LocalDate;
 

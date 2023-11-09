@@ -1,7 +1,7 @@
 package com.softuni.gameshop.service.impl;
 
 import com.softuni.gameshop.model.CartItem;
-import com.softuni.gameshop.model.DTO.*;
+import com.softuni.gameshop.model.DTO.order.*;
 import com.softuni.gameshop.model.Order;
 import com.softuni.gameshop.model.ShoppingCart;
 import com.softuni.gameshop.model.UserEntity;
@@ -9,9 +9,7 @@ import com.softuni.gameshop.repository.OrderRepository;
 import com.softuni.gameshop.repository.ShoppingCartRepository;
 import com.softuni.gameshop.repository.UserRepository;
 import com.softuni.gameshop.service.OrderService;
-import jakarta.persistence.Column;
 import jakarta.transaction.Transactional;
-import org.aspectj.weaver.ast.Or;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,7 +47,15 @@ public class OrderServiceImpl implements OrderService {
         order.setPhoneNumber(orderDTO.getPhoneNumber());
         order.setAddress(orderDTO.getAddress());
         order.setTotalPrice(shoppingCart.getTotal());
-        order.setCartItems(new ArrayList<>(shoppingCart.getCartItems()));
+
+        List<CartItem> orderedCartItems = new ArrayList<>();
+
+        for (CartItem cartItem: shoppingCart.getCartItems()) {
+            if (!cartItem.getGame().isDeleted()){
+                orderedCartItems.add(cartItem);
+            }
+        }
+        order.setCartItems(orderedCartItems);
 
         shoppingCart.getCartItems().clear();
 
@@ -106,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     public List<AdminOrderDTO> getAllOrdersForAdmin(){
-        List<Order> all = this.orderRepository.findAll();
+        List<Order> all = this.orderRepository.findAllByOrderDateDesc();
         List <AdminOrderDTO> adminOrderDTOs = new ArrayList<>();
         for (Order order: all) {
             Optional<Order> byId = orderRepository.findById(order.getId());

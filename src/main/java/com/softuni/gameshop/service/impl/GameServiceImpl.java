@@ -1,8 +1,8 @@
 package com.softuni.gameshop.service.impl;
 
-import com.softuni.gameshop.model.DTO.AddGameDTO;
-import com.softuni.gameshop.model.DTO.GameCardDTO;
-import com.softuni.gameshop.model.DTO.GameDetailsDTO;
+import com.softuni.gameshop.model.DTO.game.AddGameDTO;
+import com.softuni.gameshop.model.DTO.game.GameCardDTO;
+import com.softuni.gameshop.model.DTO.game.GameDetailsDTO;
 import com.softuni.gameshop.model.Game;
 import com.softuni.gameshop.model.Genre;
 import com.softuni.gameshop.repository.GameRepository;
@@ -14,9 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class GameServiceImpl implements GameService {

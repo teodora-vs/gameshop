@@ -1,4 +1,4 @@
-package com.softuni.gameshop.model.DTO;
+package com.softuni.gameshop.model.DTO.order;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,9 +10,6 @@ public class OrderDetailsDTO {
 
     private LocalDate orderDate;
 
-    private String address;
-
-    private String phoneNumber;
 
     private List<OrderItemDTO> orderItems;
 
@@ -48,14 +45,6 @@ public class OrderDetailsDTO {
         return this;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public OrderDetailsDTO setAddress(String address) {
-        this.address = address;
-        return this;
-    }
 
     public List<OrderItemDTO> getOrderItems() {
         return orderItems;
@@ -66,12 +55,4 @@ public class OrderDetailsDTO {
         return this;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public OrderDetailsDTO setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-        return this;
-    }
 }

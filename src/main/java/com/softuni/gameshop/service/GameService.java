@@ -1,8 +1,8 @@
 package com.softuni.gameshop.service;
 
-import com.softuni.gameshop.model.DTO.AddGameDTO;
-import com.softuni.gameshop.model.DTO.GameCardDTO;
-import com.softuni.gameshop.model.DTO.GameDetailsDTO;
+import com.softuni.gameshop.model.DTO.game.AddGameDTO;
+import com.softuni.gameshop.model.DTO.game.GameCardDTO;
+import com.softuni.gameshop.model.DTO.game.GameDetailsDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

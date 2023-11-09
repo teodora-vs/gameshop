@@ -27,6 +27,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final UserRepository userRepository;
     private final ShoppingCartRepository shoppingCartRepository;
 
+    //TODO add discount fetaure
+
     public ShoppingCartServiceImpl(GameRepository gameRepository, UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, ModelMapper modelMapper, ShoppingCartRepository shoppingCartRepository1) {
         this.gameRepository = gameRepository;
         this.userRepository = userRepository;
@@ -96,14 +98,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             user.setShoppingCart(new ShoppingCart());
         }
         List<CartItem> cartItems = user.getShoppingCart().getCartItems();
+        List<CartItem> itemsToRemove = new ArrayList<>();
 
         List<CartItemDTO> cartItemsDTOs = new ArrayList<>();
         for (CartItem item: cartItems) {
-            if (!item.getGame().isDeleted()){
+            if (item.getGame().isDeleted()){
+                itemsToRemove.add(item);
+            }else{
                 CartItemDTO map = modelMapper.map(item, CartItemDTO.class);
                 cartItemsDTOs.add(map);
             }
         }
+
+        cartItems.removeAll(itemsToRemove);
         return cartItemsDTOs;
     }
 

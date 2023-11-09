@@ -1,6 +1,4 @@
-package com.softuni.gameshop.model.DTO;
-
-import com.softuni.gameshop.model.UserEntity;
+package com.softuni.gameshop.model.DTO.order;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
