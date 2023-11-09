@@ -2,14 +2,14 @@ package com.softuni.gameshop.model.DTO.order;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrderDetailsDTO {
 
     private Long id;
 
-    private LocalDate orderDate;
-
+    private LocalDateTime orderDateTime;
 
     private List<OrderItemDTO> orderItems;
 
@@ -36,15 +36,14 @@ public class OrderDetailsDTO {
         return this;
     }
 
-    public LocalDate getOrderDate() {
-        return orderDate;
+    public LocalDateTime getOrderDateTime() {
+        return orderDateTime;
     }
 
-    public OrderDetailsDTO setOrderDate(LocalDate orderDate) {
-        this.orderDate = orderDate;
+    public OrderDetailsDTO setOrderDateTime(LocalDateTime orderDateTime) {
+        this.orderDateTime = orderDateTime;
         return this;
     }
-
 
     public List<OrderItemDTO> getOrderItems() {
         return orderItems;

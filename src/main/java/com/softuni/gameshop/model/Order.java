@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -16,7 +17,7 @@ public class Order {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDate orderDate;
+    private LocalDateTime orderDateTime;
 
     @ManyToOne
     private UserEntity user;
@@ -54,12 +55,12 @@ public class Order {
         return this;
     }
 
-    public LocalDate getOrderDate() {
-        return orderDate;
+    public LocalDateTime getOrderDateTime() {
+        return orderDateTime;
     }
 
-    public Order setOrderDate(LocalDate orderDate) {
-        this.orderDate = orderDate;
+    public Order setOrderDateTime(LocalDateTime orderDateTime) {
+        this.orderDateTime = orderDateTime;
         return this;
     }
 

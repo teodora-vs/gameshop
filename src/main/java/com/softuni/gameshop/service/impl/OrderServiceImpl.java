@@ -11,11 +11,13 @@ import com.softuni.gameshop.repository.UserRepository;
 import com.softuni.gameshop.service.OrderService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
         ShoppingCart shoppingCart = user.getShoppingCart();
 
         Order order = new Order();
-        order.setOrderDate(LocalDate.now());
+        order.setOrderDateTime(LocalDateTime.now());
         order.setUser(user);
         order.setPhoneNumber("+359" + orderDTO.getPhoneNumber());
         order.setAddress(orderDTO.getAddress());
@@ -117,13 +119,18 @@ public class OrderServiceImpl implements OrderService {
         for (Order order: all) {
             Optional<Order> byId = orderRepository.findById(order.getId());
             String receiver = byId.get().getUser().getFullName();
-            AdminOrderDTO adminOrderDTO = new AdminOrderDTO();
-            adminOrderDTO.setId(order.getId());
-            adminOrderDTO.setOrderDate(order.getOrderDate());
-            adminOrderDTO.setAddress(order.getAddress());
-            adminOrderDTO.setPhoneNumber(order.getPhoneNumber());
-            adminOrderDTO.setReceiver(receiver);
-            adminOrderDTOs.add(adminOrderDTO);
+//            AdminOrderDTO adminOrderDTO = new AdminOrderDTO();
+//            adminOrderDTO.setId(order.getId());
+//            adminOrderDTO.setOrderDateTime(order.getOrderDateTime());
+//            adminOrderDTO.setAddress(order.getAddress());
+//            adminOrderDTO.setPhoneNumber(order.getPhoneNumber());
+//            adminOrderDTO.setReceiver(receiver);
+//            adminOrderDTOs.add(adminOrderDTO);
+
+            AdminOrderDTO map = modelMapper.map(order, AdminOrderDTO.class);
+            map.setReceiver(receiver);
+
+            adminOrderDTOs.add(map);
         }
 
         return adminOrderDTOs;
@@ -143,15 +150,18 @@ public class OrderServiceImpl implements OrderService {
             orderItemDTOS.add(orderItemDTO);
         }
         Order order = getOrderById(orderId);
-        AdminOrderDetailsDTO adminOrderDetailsDTO = new AdminOrderDetailsDTO();
-        adminOrderDetailsDTO.setId(order.getId());
-        adminOrderDetailsDTO.setOrderDate(order.getOrderDate());
-        adminOrderDetailsDTO.setAddress(order.getAddress());
-        adminOrderDetailsDTO.setPhoneNumber(order.getPhoneNumber());
-        adminOrderDetailsDTO.setReceiver(order.getUser().getFullName());
-        adminOrderDetailsDTO.setTotalPrice(order.getTotalPrice());
-        adminOrderDetailsDTO.setOrderItems(orderItemDTOS);
-        return adminOrderDetailsDTO;
+//        AdminOrderDetailsDTO adminOrderDetailsDTO = new AdminOrderDetailsDTO();
+//        adminOrderDetailsDTO.setId(order.getId());
+//        adminOrderDetailsDTO.setOrderDate(order.getOrderDate());
+//        adminOrderDetailsDTO.setAddress(order.getAddress());
+//        adminOrderDetailsDTO.setPhoneNumber(order.getPhoneNumber());
+//        adminOrderDetailsDTO.setReceiver(order.getUser().getFullName());
+//        adminOrderDetailsDTO.setTotalPrice(order.getTotalPrice());
+//        adminOrderDetailsDTO.setOrderItems(orderItemDTOS);
+
+        AdminOrderDetailsDTO map = modelMapper.map(order, AdminOrderDetailsDTO.class);
+        map.setReceiver(order.getUser().getFullName());
+        return map;
     }
 
 }

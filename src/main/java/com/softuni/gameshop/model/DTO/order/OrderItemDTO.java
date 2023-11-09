@@ -8,8 +8,8 @@ public class OrderItemDTO {
 
     private Game game;
     private int quantity;
-    private BigDecimal price; // The price per item
-    private BigDecimal total; // Total price for this item
+    private BigDecimal price;
+    private BigDecimal total;
 
     public OrderItemDTO() {
     }

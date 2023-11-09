@@ -1,12 +1,13 @@
 package com.softuni.gameshop.model.DTO.order;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class MyOrdersDTO {
 
     private Long id;
 
-    private LocalDate orderDate;
+    private LocalDateTime orderDateTime;
 
     private String address;
 
@@ -22,12 +23,12 @@ public class MyOrdersDTO {
         return this;
     }
 
-    public LocalDate getOrderDate() {
-        return orderDate;
+    public LocalDateTime getOrderDateTime() {
+        return orderDateTime;
     }
 
-    public MyOrdersDTO setOrderDate(LocalDate orderDate) {
-        this.orderDate = orderDate;
+    public MyOrdersDTO setOrderDateTime(LocalDateTime orderDateTime) {
+        this.orderDateTime = orderDateTime;
         return this;
     }
 

@@ -23,7 +23,7 @@
     <tbody>
     <tr th:each="order : ${orders}">
       <td th:text="${order.id}"></td>
-      <td th:text="${order.orderDate}"></td>
+      <td th:text="${#temporals.format(order.orderDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
       <td th:text="${order.address}"></td>
       <td>
         <a th:href="@{'/my-orders/' + ${order.id}}" class="btn btn-info">View Details</a>
