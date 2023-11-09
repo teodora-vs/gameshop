@@ -3,6 +3,7 @@ package com.softuni.gameshop.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class ShoppingCart {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CartItem> cartItems = new ArrayList<>();
+
 
     public ShoppingCart() {
     }
@@ -52,14 +54,11 @@ public class ShoppingCart {
     public BigDecimal getTotal() {
         BigDecimal sum = new BigDecimal(0);
         for (CartItem cartItem : cartItems) {
-            if (!cartItem.getGame().isDeleted())
-            sum = sum.add(cartItem.getTotal());
+            if (!cartItem.getGame().isDeleted()) {
+                sum = sum.add(cartItem.getTotal());
+            }
         }
-
-        if (sum.compareTo(new BigDecimal(100)) > 0) {
-            sum = sum.multiply(new BigDecimal(0.9));
-        }
-
         return sum;
+
     }
 }

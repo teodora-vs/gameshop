@@ -47,7 +47,8 @@
     </tbody>
   </table>
   <div th:unless="${cartItems.size() == 0}" class="float-right">
-    <p>Total Price: $<span th:text="${totalPrice}"></span><span class="text-danger" th:if="${totalPrice > 100}"> (10% Discount Applied) </span></p>
+
+ <p>Total Price: $<span th:text="${totalPrice}"></span>
     <a href="/order" class="btn btn-success">Proceed to Checkout</a>
   </div>
   </div>

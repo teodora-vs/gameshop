@@ -109,8 +109,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 cartItemsDTOs.add(map);
             }
         }
-
         cartItems.removeAll(itemsToRemove);
+
         return cartItemsDTOs;
     }
 
@@ -123,13 +123,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public BigDecimal calculateTotalPrice() {
-        BigDecimal sum = new BigDecimal(0);
-        List<CartItemDTO> cartItems = getCartItems();
-        for (CartItemDTO item: cartItems) {
-            sum = sum.add(item.getTotal());
-        }
-        return sum;
+    public BigDecimal getCartTotalPrice() {
+        UserEntity user = this.getCurrentUser();
+        ShoppingCart shoppingCart = user.getShoppingCart();
+        return shoppingCart.getTotal();
     }
 
 

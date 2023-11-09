@@ -38,7 +38,7 @@ public class OrderController {
     @GetMapping("/order")
     public String order(Model model){
         List<CartItemDTO> cartItems = shoppingCartService.getCartItems();
-        BigDecimal totalPrice = shoppingCartService.calculateTotalPrice();
+        BigDecimal totalPrice = shoppingCartService.getCartTotalPrice();
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("totalPrice", totalPrice);
         return "order";

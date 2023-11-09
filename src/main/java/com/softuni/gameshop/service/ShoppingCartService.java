@@ -15,5 +15,5 @@ public interface ShoppingCartService {
 
     UserEntity getCurrentUser();
 
-    BigDecimal calculateTotalPrice();
+    BigDecimal getCartTotalPrice();
 }
