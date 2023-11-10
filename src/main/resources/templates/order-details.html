@@ -10,13 +10,14 @@
     <h1 class="mt-4">Order Details</h1>
 
     <div  th:if="${orderDetails}" class="mt-4 text-dark">
-      <div class="card">
+      <div class="">
         <div style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
     padding: 20px; /* Add padding to the container */
-    border-radius: 10px; " class="card-body text-white">
-          <p class="card-text"><strong>Order ID:</strong> <span th:text="${orderDetails.id}"></span></p>
-          <p class="card-text"><strong>Order Date:</strong> <span th:text="${#temporals.format(orderDetails.orderDateTime, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
-          <p class="card-text"><strong>Total Price:</strong> <span th:text="${orderDetails.totalPrice}"></span></p>
+    border-radius: 10px; " class=" text-white">
+          <p ><strong>Order ID:</strong> <span th:text="${orderDetails.id}"></span></p>
+          <p ><strong>Order Date:</strong> <span th:text="${#temporals.format(orderDetails.orderDateTime, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+          <p ><strong>Shipping Address:</strong> <span th:text="${orderDetails.address}"></span></p>
+          <p ><strong>Total Price:</strong> <span th:text="${orderDetails.totalPrice}"></span></p>
         </div>
       </div>
 

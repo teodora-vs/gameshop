@@ -119,13 +119,6 @@ public class OrderServiceImpl implements OrderService {
         for (Order order: all) {
             Optional<Order> byId = orderRepository.findById(order.getId());
             String receiver = byId.get().getUser().getFullName();
-//            AdminOrderDTO adminOrderDTO = new AdminOrderDTO();
-//            adminOrderDTO.setId(order.getId());
-//            adminOrderDTO.setOrderDateTime(order.getOrderDateTime());
-//            adminOrderDTO.setAddress(order.getAddress());
-//            adminOrderDTO.setPhoneNumber(order.getPhoneNumber());
-//            adminOrderDTO.setReceiver(receiver);
-//            adminOrderDTOs.add(adminOrderDTO);
 
             AdminOrderDTO map = modelMapper.map(order, AdminOrderDTO.class);
             map.setReceiver(receiver);
@@ -150,14 +143,6 @@ public class OrderServiceImpl implements OrderService {
             orderItemDTOS.add(orderItemDTO);
         }
         Order order = getOrderById(orderId);
-//        AdminOrderDetailsDTO adminOrderDetailsDTO = new AdminOrderDetailsDTO();
-//        adminOrderDetailsDTO.setId(order.getId());
-//        adminOrderDetailsDTO.setOrderDate(order.getOrderDate());
-//        adminOrderDetailsDTO.setAddress(order.getAddress());
-//        adminOrderDetailsDTO.setPhoneNumber(order.getPhoneNumber());
-//        adminOrderDetailsDTO.setReceiver(order.getUser().getFullName());
-//        adminOrderDetailsDTO.setTotalPrice(order.getTotalPrice());
-//        adminOrderDetailsDTO.setOrderItems(orderItemDTOS);
 
         AdminOrderDetailsDTO map = modelMapper.map(order, AdminOrderDetailsDTO.class);
         map.setReceiver(order.getUser().getFullName());

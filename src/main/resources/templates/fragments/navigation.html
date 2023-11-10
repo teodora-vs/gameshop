@@ -18,7 +18,7 @@
           <a class="nav-link" href="/games">Games</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
+          <a class="nav-link" sec:authorize="isAuthenticated()" href="return-policy">Return Policy</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" sec:authorize="!isAuthenticated()" href="/login">Login</a>

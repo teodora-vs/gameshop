@@ -21,7 +21,7 @@ public class SecurityConfiguration {
         return httpSecurity.authorizeHttpRequests(
                 authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/", "/login", "/register", "/login-error").permitAll()
+                        .requestMatchers("/", "/login", "/register", "/login-error", "/return-policy").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/games/add").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/games/delete/**").hasRole(UserRoleEnum.ADMIN.name())

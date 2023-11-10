@@ -11,6 +11,8 @@ public class OrderDetailsDTO {
 
     private LocalDateTime orderDateTime;
 
+    private String address;
+
     private List<OrderItemDTO> orderItems;
 
     private BigDecimal totalPrice;
@@ -42,6 +44,15 @@ public class OrderDetailsDTO {
 
     public OrderDetailsDTO setOrderDateTime(LocalDateTime orderDateTime) {
         this.orderDateTime = orderDateTime;
+        return this;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public OrderDetailsDTO setAddress(String address) {
+        this.address = address;
         return this;
     }
 

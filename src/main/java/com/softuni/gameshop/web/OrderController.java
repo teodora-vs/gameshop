@@ -71,4 +71,9 @@ public class OrderController {
         model.addAttribute("orderDetails", orderDetails);
         return "order-details";
     }
+
+    @GetMapping("/return-policy")
+    public String returnPolicy(){
+        return "return-policy";
+    }
 }
