@@ -49,13 +49,21 @@ public class AdminController {
                           BindingResult bindingResult,
                           RedirectAttributes redirectAttributes) {
 
+
+
+        if (this.gameService.exists(addGameDTO.getTitle())){
+            redirectAttributes.addFlashAttribute("addGameDTO", addGameDTO);
+            redirectAttributes.addFlashAttribute("gameExists",true);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addGameDTO", bindingResult);
+            return "redirect:/games/add";
+        }
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("addGameDTO", addGameDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addGameDTO", bindingResult);
             return "redirect:/games/add";
         }
 
-        Long id = gameService.addGame(addGameDTO);
         return "redirect:/games";
     }
 

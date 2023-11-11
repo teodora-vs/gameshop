@@ -10,7 +10,7 @@
 <div class="container text-white">
     <h1 class="mb-3">All Orders</h1>
 
-    <div th:if="${not #lists.isEmpty(orders)}">
+    <div th:if="${orders.size() > 0 }">
         <table class="table table-responsive-lg text-white" style="background-color: rgba(0, 0, 0, 0.9);
             padding: 20px;
             border-radius: 10px;">

@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
@@ -20,4 +21,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     @Query("SELECT g FROM Game g WHERE g.genre.name = :genreName")
     Page<Game> findByGenre(GenreNamesEnum genreName, Pageable pageable);
+
+    Optional<Game> findByTitle(String title);
+
 }

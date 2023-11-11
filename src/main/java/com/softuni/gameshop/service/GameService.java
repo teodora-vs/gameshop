@@ -17,4 +17,6 @@ public interface GameService {
     void deleteGame(Long id);
 
     Page<GameCardDTO> getGamesByGenre(GenreNamesEnum selectedGenre, Pageable pageable);
+
+    boolean exists(String title);
 }

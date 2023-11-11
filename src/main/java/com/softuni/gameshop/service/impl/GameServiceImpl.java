@@ -71,6 +71,15 @@ public class GameServiceImpl implements GameService {
         return byGenre.map(this::mapAsCard);
     }
 
+    @Override
+    public boolean exists(String title) {
+        if (this.gameRepository.findByTitle(title).isPresent()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     public GameCardDTO mapAsCard(Game game){
         return modelMapper.map(game, GameCardDTO.class);

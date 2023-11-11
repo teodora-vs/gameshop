@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 
 public class AddGameDTO {
 
-    @NotBlank(message = "")
-    @Size(min = 4, max = 32, message = "Size must be between 4 and 32 symbols!")
+    @NotBlank(message = "Title cannot be blank!")
     private String title;
 
     @NotBlank(message = "Description is required!")
