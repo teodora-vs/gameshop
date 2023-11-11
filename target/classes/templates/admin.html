@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div>
+    <nav th:replace="~{fragments/navigation}"></nav>
+</div>
+<br>
+<div class="container text-white">
+    <h1 class="mb-3">All Orders</h1>
+
+    <div th:if="${not #lists.isEmpty(orders)}">
+        <table class="table table-responsive-lg text-white" style="background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;">
+            <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Receiver</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Details</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}"></td>
+                <td th:text="${#temporals.format(order.orderDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="${order.receiver}"></td>
+                <td th:text="${order.address}"></td>
+                <td th:text="${order.phoneNumber}"></td>
+                <td>
+                    <a th:href="@{'/orders/' + ${order.id}}" class="btn btn-info">View Details</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:unless="${not #lists.isEmpty(orders)}">
+        <p class="alert alert-warning text-center">No orders available.</p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+</head>
+
+<body>
+<nav th:fragment="navbar"
+     class="navbar navbar-expand-lg bg-dark navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/"><img alt="joystick picture" src="/images/joystick.png" class="logo" style="width: 40px; height: 40px">GameShop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/games">Games</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" sec:authorize="isAuthenticated()" href="return-policy">Return Policy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" sec:authorize="!isAuthenticated()" href="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" sec:authorize="!isAuthenticated()" href="/register">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" sec:authorize="hasRole('USER')" href="/cart">Shopping Cart</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" sec:authorize="hasRole('USER')" href="/my-orders">My Orders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" sec:authorize="hasRole('ADMIN')" href="/orders">All Orders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" sec:authorize="hasRole('ADMIN')" href="/games/add">Add Game</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+          <form th:method="post"
+                th:action="@{/logout}">
+            <input type="submit" class="btn btn-link" value="Logout"/>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</body>
+</html>

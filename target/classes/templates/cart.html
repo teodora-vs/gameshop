@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div>
+  <nav th:replace="~{fragments/navigation}"></nav>
+</div>
+<br>
+<div class="container text-white">
+  <h1 class="mb-3">Shopping Cart</h1>
+  <div  th:if="${cartItems.size() == 0}" class="text-center align-items-center justify-content-center" style="background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 24px">
+    <h3 class="mt-4">Looks like your shopping cart is still empty. </h3>
+    <h5 class="mt-5 mb-4">Click <a href="/games">here</a> to browse our latest games!</h5>
+  </div>
+
+  <table style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
+    padding: 20px; /* Add padding to the container */
+    border-radius: 10px;" th:unless="${cartItems.size() == 0}" class="table table-striped">
+    <thead>
+    <tr>
+      <th>Game</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${cartItems}">
+      <td>
+        <a th:href="@{'/games/' + ${item.game.id}}">
+          <img th:src="@{${item.game.imageURL}}" alt="Game Image" width="40" height="50">
+          <span class="pl-3" th:text="${item.game.title}"></span>
+        </a>
+        <p th:if="${item.game.isDeleted}" class="text-danger">Out of Stock</p>
+      </td>
+      <td th:text="${item.game.price}"></td>
+      <td th:text="${item.quantity}"></td>
+      <td th:text="${item.getTotal()}"></td>
+      <td>
+        <form th:action="@{'/cart/remove/' + ${item.id}}" th:method="POST">
+          <button type="submit" class="btn-danger">Remove</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div th:unless="${cartItems.size() == 0}" class="float-right">
+
+    <p style="font-size: 22px;">Total Price: $<span th:text="${totalPrice}"></span></p>
+    <a href="/order" class="btn btn-success btn-lg">Proceed to Checkout</a>
+  </div>
+  </div>
+</div>
+</body>
+</html>
