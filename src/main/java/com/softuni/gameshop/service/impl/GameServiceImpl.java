@@ -5,6 +5,7 @@ import com.softuni.gameshop.model.DTO.game.GameCardDTO;
 import com.softuni.gameshop.model.DTO.game.GameDetailsDTO;
 import com.softuni.gameshop.model.Game;
 import com.softuni.gameshop.model.Genre;
+import com.softuni.gameshop.model.enums.GenreNamesEnum;
 import com.softuni.gameshop.repository.GameRepository;
 import com.softuni.gameshop.repository.GenreRepository;
 import com.softuni.gameshop.service.GameService;
@@ -49,7 +50,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Page<GameCardDTO> getAllGames(Pageable pageable) {
-        Page<Game> undeletedGamesPage = gameRepository.findByIsDeletedFalse(pageable);
+        Page<Game> undeletedGamesPage = gameRepository.findAllNotDeletedOrderByReleaseYearDesc(pageable);
         return undeletedGamesPage.map(this::mapAsCard);
     }
 
@@ -63,6 +64,22 @@ public class GameServiceImpl implements GameService {
             gameRepository.save(game);
         }
     }
+
+    @Override
+    public Page<GameCardDTO> getGamesByGenre(GenreNamesEnum selectedGenre, Pageable pageable) {
+        Page<Game> byGenre = this.gameRepository.findByGenre(selectedGenre, pageable);
+        return byGenre.map(this::mapAsCard);
+    }
+
+    @Override
+    public boolean exists(String title) {
+        if (this.gameRepository.findByTitle(title).isPresent()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     public GameCardDTO mapAsCard(Game game){
         return modelMapper.map(game, GameCardDTO.class);

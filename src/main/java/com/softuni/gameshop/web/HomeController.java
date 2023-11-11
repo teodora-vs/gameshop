@@ -11,4 +11,9 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/return-policy")
+    public String returnPolicy(){
+        return "return-policy";
+    }
+
 }

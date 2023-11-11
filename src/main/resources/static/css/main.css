@@ -6,3 +6,13 @@ body {
     background-size: cover;
     background-color: #3b3636;
 }
+
+.pagination .page-item .page-link.active {
+    background-color: #007bff !important;
+    color: #fff !important;
+}
+.my-bg {
+    background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
+    padding: 20px; /* Add padding to the container */
+    border-radius: 24px;
+}

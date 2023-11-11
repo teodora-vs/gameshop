@@ -1,44 +1,15 @@
 package com.softuni.gameshop.model.DTO.order;
 
+import com.softuni.gameshop.model.DTO.CartItemDTO;
 import com.softuni.gameshop.model.Game;
 
 import java.math.BigDecimal;
 
-public class OrderItemDTO {
+public class OrderItemDTO extends CartItemDTO {
 
-    private Game game;
-    private int quantity;
-    private BigDecimal price;
     private BigDecimal total;
 
     public OrderItemDTO() {
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    public OrderItemDTO setGame(Game game) {
-        this.game = game;
-        return this;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public OrderItemDTO setQuantity(int quantity) {
-        this.quantity = quantity;
-        return this;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public OrderItemDTO setPrice(BigDecimal price) {
-        this.price = price;
-        return this;
     }
 
     public BigDecimal getTotal() {

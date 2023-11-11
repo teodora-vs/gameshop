@@ -72,8 +72,5 @@ public class OrderController {
         return "order-details";
     }
 
-    @GetMapping("/return-policy")
-    public String returnPolicy(){
-        return "return-policy";
-    }
+
 }
