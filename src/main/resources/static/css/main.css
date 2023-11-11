@@ -6,3 +6,9 @@ body {
     background-size: cover;
     background-color: #3b3636;
 }
+
+.pagination .page-item .page-link.active {
+    background-color: #007bff !important;
+    color: #fff !important;
+}
+r

@@ -9,9 +9,11 @@
 <br>
 <div class="container text-white">
   <h1 class="mb-3">Shopping Cart</h1>
-  <div  th:if="${cartItems.size() == 0}" class="text-center align-items-center justify-content-center">
-    <h3 class="mt-5">Looks like your shopping cart is still empty. </h3>
-    <h5 class="mt-5">Click <a href="/games">here</a> to browse our latest games!</h5>
+  <div  th:if="${cartItems.size() == 0}" class="text-center align-items-center justify-content-center" style="background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 24px">
+    <h3 class="mt-4">Looks like your shopping cart is still empty. </h3>
+    <h5 class="mt-5 mb-4">Click <a href="/games">here</a> to browse our latest games!</h5>
   </div>
 
   <table style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */

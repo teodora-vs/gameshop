@@ -14,7 +14,7 @@ public class UserRegisterDTO {
     @Size(min = 4)
     private String fullName;
 
-    @NotBlank
+    @NotBlank(message = "Email cannot be blank")
     @Email
     private String email;
 

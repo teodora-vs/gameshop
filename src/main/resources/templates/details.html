@@ -26,11 +26,6 @@
                 <form sec:authorize="hasRole('ADMIN')" th:action="@{'/games/delete/' + ${game.id}}" th:method="POST">
                     <button class="btn btn-danger" type="submit">Delete</button>
                 </form>
-                <section id="map"></section>
-                <section id="video">
-                    <iframe id="frame" th:src="'https://www.youtube.com/embed/' + *{videoURL}">
-                    </iframe>
-                </section>
             </div>
         </div>
     </div>
