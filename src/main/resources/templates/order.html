@@ -9,9 +9,7 @@
 <br>
 <div class="container text-white">
   <h1 class="mb-3">Shopping Cart</h1>
-  <table style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
-    padding: 20px; /* Add padding to the container */
-    border-radius: 10px; " class="table table-striped">
+  <table class="table table-striped my-bg">
     <thead>
     <tr>
       <th>Game</th>
@@ -23,10 +21,15 @@
     <tbody>
     <tr th:each="item : ${cartItems}">
       <td>
-        <a th:href="@{'/games/' + ${item.game.id}}">
-          <img th:src="@{${item.game.imageURL}}" alt="Game Image" width="40" height="50">
-          <span class="pl-3" th:text="${item.game.title}"></span>
-        </a>
+        <div class="media">
+          <img th:src="@{${item.game.imageURL}}" alt="Game Image" width="35" height="50" class="mr-3">
+          <div class="media-body">
+            <a th:href="@{'/games/' + ${item.game.id}}">
+              <span class="font-weight-bold" th:text="${item.game.title}"></span>
+            </a>
+            <p th:if="${item.game.isDeleted}" class="text-danger">Out of Stock</p>
+          </div>
+        </div>
       </td>
       <td th:text="${item.game.price}"></td>
       <td th:text="${item.quantity}"></td>

@@ -65,18 +65,11 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
     }
 
-    public UserEntity getCurrentUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-
-        return this.userRepository.findByUsername(currentUsername).get();
-    }
-
     @Override
     public List<MyOrdersDTO> getMyOrders() {
         Long id =  getCurrentUser().getId();
         List<MyOrdersDTO> myOrdersDTOs= new ArrayList<>();
-        List<Order> byUserId = this.orderRepository.findByUserId(id);
+        List<Order> byUserId = this.orderRepository.findAllByUserIdOrderByOrderDateTimeDesc(id);
         for (Order order: byUserId) {
             MyOrdersDTO map = modelMapper.map(order, MyOrdersDTO.class);
             myOrdersDTOs.add(map);
@@ -98,25 +91,24 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDetailsDTO convertToOrderDetailsDTO(Order order) {
         List<CartItem> cartItems = order.getCartItems();
-        List <OrderItemDTO> orderItemDTOS = new ArrayList<>();
+        List <OrderItemDTO> orderItemDTOs = new ArrayList<>();
         for (CartItem cartItem: cartItems) {
             OrderItemDTO orderItemDTO = new OrderItemDTO();
             orderItemDTO.setGame(cartItem.getGame());
-            orderItemDTO.setPrice(cartItem.getGame().getPrice());
             orderItemDTO.setQuantity(cartItem.getQuantity());
             orderItemDTO.setTotal(cartItem.getTotal());
-            orderItemDTOS.add(orderItemDTO);
+            orderItemDTOs.add(orderItemDTO);
         }
         OrderDetailsDTO orderDetailsDTO = modelMapper.map(order, OrderDetailsDTO.class);
-        orderDetailsDTO.setOrderItems(orderItemDTOS);
+        orderDetailsDTO.setOrderItems(orderItemDTOs);
         return orderDetailsDTO;
     }
 
-
+    @Override
     public List<AdminOrderDTO> getAllOrdersForAdmin(){
-        List<Order> all = this.orderRepository.findAllByOrderDateDesc();
+        List<Order> allOrders = this.orderRepository.findAllByOrderDateTimeDesc();
         List <AdminOrderDTO> adminOrderDTOs = new ArrayList<>();
-        for (Order order: all) {
+        for (Order order: allOrders) {
             Optional<Order> byId = orderRepository.findById(order.getId());
             String receiver = byId.get().getUser().getFullName();
 
@@ -129,24 +121,20 @@ public class OrderServiceImpl implements OrderService {
         return adminOrderDTOs;
     }
 
+    @Override
     public AdminOrderDetailsDTO getOrderDetailsForAdmin(Long orderId) {
         Optional<Order> byId = this.orderRepository.findById(orderId);
 
-        List<CartItem> cartItems = byId.get().getCartItems();
-        List <OrderItemDTO> orderItemDTOS = new ArrayList<>();
-        for (CartItem cartItem: cartItems) {
-            OrderItemDTO orderItemDTO = new OrderItemDTO();
-            orderItemDTO.setGame(cartItem.getGame());
-            orderItemDTO.setPrice(cartItem.getGame().getPrice());
-            orderItemDTO.setQuantity(cartItem.getQuantity());
-            orderItemDTO.setTotal(cartItem.getTotal());
-            orderItemDTOS.add(orderItemDTO);
-        }
-        Order order = getOrderById(orderId);
-
-        AdminOrderDetailsDTO map = modelMapper.map(order, AdminOrderDetailsDTO.class);
-        map.setReceiver(order.getUser().getFullName());
+        AdminOrderDetailsDTO map = modelMapper.map(byId.get(), AdminOrderDetailsDTO.class);
+        map.setReceiver(byId.get().getUser().getFullName());
         return map;
+    }
+
+    public UserEntity getCurrentUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+
+        return this.userRepository.findByUsername(currentUsername).get();
     }
 
 }

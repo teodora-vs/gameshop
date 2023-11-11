@@ -12,6 +12,10 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query("SELECT o FROM Order o ORDER BY o.orderDateTime DESC")
-    List<Order> findAllByOrderDateDesc();
+    List<Order> findAllByOrderDateTimeDesc();
+
+    @Query("SELECT o FROM Order o WHERE o.user.id = :id ORDER BY o.orderDateTime DESC")
+    List<Order> findAllByUserIdOrderByOrderDateTimeDesc(Long id);
+
     List<Order> findByUserId(Long id);
 }

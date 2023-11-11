@@ -7,28 +7,25 @@
 <div>
     <nav th:replace="~{fragments/navigation}"></nav>
 </div>
-    <div th:object="${game}" class="container mt-5 text-white game-details-container" style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
-    padding: 20px; /* Add padding to the container */
-    border-radius: 10px; ">
+    <div th:object="${game}" class="container mt-3 text-white game-details-container my-bg" style="font-size: 20px">
         <div class="row">
             <div class="col-md-6">
-                <img th:src="*{imageURL}" class="img-fluid" alt="Game Image" tyle="max-width: 100%;height: 800px;">
+                <img th:src="*{imageURL}" class="img-fluid" alt="Game Image" style="max-width: 100%;height: 600px;">
             </div>
             <div class="col-md-6">
                 <h2 class="mb-3" th:text="*{title}"></h2>
                 <p><strong>Genre:</strong> <span th:text="*{genreName}"></span></p>
                 <p><strong>Release Year:</strong> <span th:text="*{releaseYear}"></span></p>
-                <p><strong>Price:</strong> $<span th:text="*{price}"></span></p>
-                <p class="mb-4"><strong>Description:</strong> <span th:text="*{description}"></span></p>
+                <p class="mb-3"><strong>Description:</strong><br><span th:text="*{description}"></span></p>
+                <p class="mb-3"><strong>Price:</strong> $<span th:text="*{price}"></span></p>
                 <p th:if="*{deleted}" class="text-danger">Out of Stock</p>
+                <a th:unless="${game.deleted}" sec:authorize="hasRole('USER')" th:href="@{'/add-to-cart/' + ${game.id}}" class="btn btn-success btn-lg mr-2">Add to cart</a>
                 <a th:href="*{videoURL}" class="btn btn-primary" target="_blank">Watch Trailer</a>
-                <a th:unless="${game.deleted}" sec:authorize="hasRole('USER')" th:href="@{'/add-to-cart/' + ${game.id}}" class="btn btn-success">Add to cart</a>
                 <form sec:authorize="hasRole('ADMIN')" th:action="@{'/games/delete/' + ${game.id}}" th:method="POST">
-                    <button class="btn btn-danger" type="submit">Delete</button>
+                    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                 </form>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.softuni.gameshop.model.DTO.order;
 
+import com.softuni.gameshop.model.DTO.CartItemDTO;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -64,5 +66,4 @@ public class OrderDetailsDTO {
         this.orderItems = orderItems;
         return this;
     }
-
 }

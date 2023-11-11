@@ -11,7 +11,7 @@ public class UserRegisterDTO {
     private String username;
 
     @NotBlank
-    @Size(min = 4)
+    @Size(min = 4, max = 32, message = "Full name must be between 4 and 32 symbols!")
     private String fullName;
 
     @NotBlank(message = "Email cannot be blank")
