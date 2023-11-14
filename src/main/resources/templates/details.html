@@ -7,25 +7,87 @@
 <div>
     <nav th:replace="~{fragments/navigation}"></nav>
 </div>
-    <div th:object="${game}" class="container mt-3 text-white game-details-container my-bg" style="font-size: 20px">
+    <div th:object="${game}" class="container mt-4 text-white game-details-container my-bg" style="font-size: 20px">
         <div class="row">
-            <div class="col-md-6">
-                <img th:src="*{imageURL}" class="img-fluid" alt="Game Image" style="max-width: 100%;height: 600px;">
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <img th:src="*{imageURL}" class="img-fluid mx-auto" alt="Game Image" style="max-width: 100%;height: 600px;">
             </div>
             <div class="col-md-6">
                 <h2 class="mb-3" th:text="*{title}"></h2>
+                <p><strong>Average Score:</strong>
+                    <span th:if="${averageScore != 0}" th:each="star : ${#numbers.sequence(1, 5)}"
+                          th:utext="${averageScore >= star - 0.5 ? '&#9733;' : '&#9734;'}"
+                          style="color: #ffc107;"></span>
+                    <span th:if="${averageScore == 0}" th:utext="${'&#9734;&#9734;&#9734;&#9734;&#9734;'}" style="color: #ccc;"></span>
+                </p>
                 <p><strong>Genre:</strong> <span th:text="*{genreName}"></span></p>
                 <p><strong>Release Year:</strong> <span th:text="*{releaseYear}"></span></p>
                 <p class="mb-3"><strong>Description:</strong><br><span th:text="*{description}"></span></p>
                 <p class="mb-3"><strong>Price:</strong> $<span th:text="*{price}"></span></p>
                 <p th:if="*{deleted}" class="text-danger">Out of Stock</p>
-                <a th:unless="${game.deleted}" sec:authorize="hasRole('USER')" th:href="@{'/add-to-cart/' + ${game.id}}" class="btn btn-success btn-lg mr-2">Add to cart</a>
+                <a th:unless="${game.deleted}" sec:authorize="hasRole('USER')" th:href="@{'/add-to-cart/' + ${game.id}}" class="btn btn-success mr-2">Add to cart</a>
                 <a th:href="*{videoURL}" class="btn btn-primary" target="_blank">Watch Trailer</a>
                 <form sec:authorize="hasRole('ADMIN')" th:action="@{'/games/delete/' + ${game.id}}" th:method="POST">
                     <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                 </form>
+                <form th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+                      th:action="@{'/games/edit/' + ${game.id}}"
+                      th:method="GET">
+                    <button class="btn btn-warning btn-sm" type="submit">Edit</button>
+                </form>
+            </div>
+            <div class="col-md-12 mt-4">
+                <div class="mt-4">
+                    <h4>Customer Reviews:</h4>
+                    <form th:if="${#authorization.expression('isAuthenticated()')}"
+                          th:action="@{'/games/' + ${game.id} + '/add-review'}"
+                          th:method="POST" th:object="${addReviewDTO}">
+                        <input type="hidden" name="gameId" th:value="${game.id}">
+                        <div class="form-group" style="margin-top: -20px">
+                            <div class="rate">
+                                <input type="radio" id="star5" name="stars" th:value="5" />
+                                <label for="star5" title="5 stars">5 stars</label>
+
+                                <input type="radio" id="star4" name="stars" th:value="4"  />
+                                <label for="star4" title="4 stars">4 stars</label>
+
+                                <input type="radio" id="star3" name="stars" th:value="3"  />
+                                <label for="star3" title="3 stars">3 stars</label>
+
+                                <input type="radio" id="star2" name="stars" th:value="2"  />
+                                <label for="star2" title="2 stars">2 stars</label>
+
+                                <input type="radio" id="star1" name="stars" th:value="1"/>
+                                <label for="star1" title="1 star">1 star</label>
+                            </div>
+                        </div>
+                            <textarea class="form-control" cols="30"
+                                      rows="4" name="textContent" placeholder="Write your review here"></textarea>
+                        <span th:if="${invalidStars}" class="text-danger">You must select a star score!</span>
+                        <span th:if="${invalidText}" class="text-danger">You cannot post an empty review!</span>
+                        <div>
+                            <button type="submit" class="btn btn-primary mt-3">Submit Review</button>
+                        </div>
+
+                    </form>
+                    <!-- Display existing reviews -->
+                    <div th:each="review : ${game.reviews}" class="border-top mt-4 pt-3">
+                        <div>
+                            <p style="font-size: 16px">
+                                Review by <span th:text="${review.author.fullName}"></span>
+                                on <span th:text="${#temporals.format(review.created, 'dd-MM-YYYY HH:mm:ss')}"></span>
+                                <br/>
+                                Rating:
+                                <span th:each="star : ${#numbers.sequence(1, 5)}"
+                                      class="text-warning"
+                                      th:utext="${star <= review.stars ? '&#9733;' : '&#9734;'}"></span>
+                            </p>
+                            <p th:text="${review.textContent}"></p>
+                        </div>
+                    </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 </html>

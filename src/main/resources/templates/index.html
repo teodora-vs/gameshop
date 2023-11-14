@@ -15,12 +15,12 @@
     </th:block>
 
     <th:block sec:authorize="hasRole('USER')">
-        <p style="font-size: 24px">Click <a href="/games">here</a> to browse our latest games!</p>
+        <p style="font-size: 24px">Click <a href="/games">here</a> to browse our latest PC games!</p>
     </th:block>
 
     <th:block sec:authorize="!isAuthenticated()">
         <p>Anonymous!</p>
-        <h3 class="pt-3"><a href="/register">Register</a> to browse our latest games!</h3>
+        <h3 class="pt-3"><a href="/register">Register</a> to browse our latest PC games!</h3>
         <h5 class="pt-4">Already have an account? <a href="/login">Login</a> here.</h5>
     </th:block>
 
@@ -29,6 +29,5 @@
         <h3 class="pt-3">Click <a href="/games/add">here</a> to add a new game.</h3>
     </th:block>
 </div>
-
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.softuni.gameshop.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,7 +38,9 @@ public class Game {
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isDeleted;
 
-    //TODO: ADD USER REVIEWS
+    @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
+    private List<Review> reviews;
+
 
     public Game() {
     }
@@ -120,6 +123,15 @@ public class Game {
 
     public Game setDeleted(boolean deleted) {
         isDeleted = deleted;
+        return this;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public Game setReviews(List<Review> reviews) {
+        this.reviews = reviews;
         return this;
     }
 }

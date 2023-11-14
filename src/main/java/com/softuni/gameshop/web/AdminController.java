@@ -1,6 +1,8 @@
 package com.softuni.gameshop.web;
 
 import com.softuni.gameshop.model.DTO.game.AddGameDTO;
+import com.softuni.gameshop.model.DTO.game.EditGameDTO;
+import com.softuni.gameshop.model.DTO.game.GameDetailsDTO;
 import com.softuni.gameshop.model.DTO.order.AdminOrderDTO;
 import com.softuni.gameshop.model.DTO.order.AdminOrderDetailsDTO;
 import com.softuni.gameshop.model.enums.GenreNamesEnum;
@@ -48,9 +50,6 @@ public class AdminController {
     public String addGame(@Valid AddGameDTO addGameDTO,
                           BindingResult bindingResult,
                           RedirectAttributes redirectAttributes) {
-
-
-
         if (this.gameService.exists(addGameDTO.getTitle())){
             redirectAttributes.addFlashAttribute("addGameDTO", addGameDTO);
             redirectAttributes.addFlashAttribute("gameExists",true);
@@ -63,8 +62,29 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addGameDTO", bindingResult);
             return "redirect:/games/add";
         }
-
+        this.gameService.addGame(addGameDTO);
         return "redirect:/games";
+    }
+
+    @GetMapping("/games/edit/{id}")
+    public String getEditGameForm(@PathVariable Long id, Model model) {
+        // Retrieve existing game details and populate the form
+        GameDetailsDTO gameDetailsDTO = this.gameService.getGameDetails(id);
+
+        // Map the GameDetailsDTO to EditGameDTO (you may need to create a mapper method)
+        EditGameDTO editGameDTO = this.gameService.convertToEditGameDTO(gameDetailsDTO);
+
+        // Add the EditGameDTO to the model
+        model.addAttribute("editGameDTO", editGameDTO);
+
+
+        return "game-edit";
+    }
+
+    @PostMapping("/games/edit/{id}")
+    public String editGame(@PathVariable Long id, @ModelAttribute EditGameDTO editGameDTO) {
+        this.gameService.editGame(id, editGameDTO);
+        return "redirect:/games/{id}"; // Redirect to the game details page after editing
     }
 
     @PostMapping("/games/delete/{id}")

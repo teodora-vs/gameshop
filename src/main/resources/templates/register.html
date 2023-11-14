@@ -19,29 +19,29 @@
                     <div class="mb-3">
                         <label for="username" class="form-label text-white">Username</label>
                         <input class="form-control" name="username" id="username" th:field="*{username}" th:errorclass="'is-invalid alert-danger'" placeholder="Enter your username">
-                        <small class="text-danger invalid-feedback">Username must be between 4 and 32 symbols!</small>
+                        <small class="text-danger my-text invalid-feedback">Username must be between 4 and 32 symbols!</small>
                     </div>
                     <div class="mb-3">
                         <label for="fullName" class="form-label text-white">Full Name</label>
                         <input class="form-control" id="fullName" name="username" th:field="*{fullName}" th:errorclass="'is-invalid alert-danger'" placeholder="Enter your full name">
-                        <small class="text-danger invalid-feedback">Full name must be at least 4 symbols!</small>
+                        <small class="text-danger my-text invalid-feedback">Full name must be at least 4 symbols!</small>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label text-white">Email</label>
                         <input type="email" class="form-control" name="email" id="email" th:field="*{email}" th:errorclass="'is-invalid alert-danger'" placeholder="Enter your email">
-                        <small class="text-danger invalid-feedback">Email cannot be blank!</small>
+                        <small class="text-danger my-text invalid-feedback">Email cannot be blank!</small>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label text-white">Password</label>
                         <input type="password" class="form-control" name="password" id="password" th:errorclass="'is-invalid alert-danger'" th:field="*{password}" placeholder="Enter your password">
-                        <small class="text-danger invalid-feedback">Password must be at least 4 symbols!</small>
+                        <small class="text-danger my-text invalid-feedback">Password must be at least 4 symbols!</small>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="confirmPassword" class="form-label text-white">Confirm Password</label>
                         <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" th:field="*{confirmPassword}" placeholder="Confirm your password">
-                        <small th:if="${passwordsDontMatch}" class="text-danger">Passwords don't match!</small>
+                        <small th:if="${passwordsDontMatch}" class="text-danger my-text">Passwords don't match!</small>
                     </div>
-                    <button type="submit" value="Register" class="btn btn-primary btn-block">Register</button>
+                    <button type="submit" value="Register" class=" btn btn-primary btn-block mb-5">Register</button>
                 </form>
             </div>
         </div>

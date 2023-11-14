@@ -1,8 +1,10 @@
 package com.softuni.gameshop.model.DTO.game;
 
+import com.softuni.gameshop.model.Review;
 import com.softuni.gameshop.model.enums.GenreNamesEnum;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class GameDetailsDTO {
 
@@ -23,6 +25,8 @@ public class GameDetailsDTO {
     private String videoURL;
 
     private Boolean isDeleted;
+
+    private List<Review> reviews;
 
     public GameDetailsDTO() {
     }
@@ -105,6 +109,15 @@ public class GameDetailsDTO {
 
     public GameDetailsDTO setDeleted(Boolean deleted) {
         isDeleted = deleted;
+        return this;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public GameDetailsDTO setReviews(List<Review> reviews) {
+        this.reviews = reviews;
         return this;
     }
 }

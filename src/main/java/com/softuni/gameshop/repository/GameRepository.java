@@ -22,6 +22,9 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     @Query("SELECT g FROM Game g WHERE g.genre.name = :genreName")
     Page<Game> findByGenre(GenreNamesEnum genreName, Pageable pageable);
 
+    @Query("SELECT g FROM Game g JOIN g.reviews r WHERE g.isDeleted = false GROUP BY g.id ORDER BY AVG(r.stars) DESC")
+    Page<Game> findHighestRatedGames(Pageable pageable);
+
     Optional<Game> findByTitle(String title);
 
 }
