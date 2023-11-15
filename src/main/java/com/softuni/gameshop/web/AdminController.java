@@ -68,13 +68,11 @@ public class AdminController {
 
     @GetMapping("/games/edit/{id}")
     public String getEditGameForm(@PathVariable Long id, Model model) {
-        // Retrieve existing game details and populate the form
         GameDetailsDTO gameDetailsDTO = this.gameService.getGameDetails(id);
 
-        // Map the GameDetailsDTO to EditGameDTO (you may need to create a mapper method)
         EditGameDTO editGameDTO = this.gameService.convertToEditGameDTO(gameDetailsDTO);
+        editGameDTO.setGenre(gameDetailsDTO.getGenreName());
 
-        // Add the EditGameDTO to the model
         model.addAttribute("editGameDTO", editGameDTO);
 
 
@@ -82,9 +80,23 @@ public class AdminController {
     }
 
     @PostMapping("/games/edit/{id}")
-    public String editGame(@PathVariable Long id, @ModelAttribute EditGameDTO editGameDTO) {
+    public String editGame(@PathVariable Long id,@ModelAttribute @Valid EditGameDTO editGameDTO,
+            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        String gameTitle = editGameDTO.getTitle();
+
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("editGameDTO", editGameDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editGameDTO", bindingResult);
+            return "redirect:/games/edit/{id}";
+        }
+        if (this.gameService.existsWithSameTitle(id, gameTitle)){
+            redirectAttributes.addFlashAttribute("editGameDTO", editGameDTO);
+            redirectAttributes.addFlashAttribute("gameExists",true);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editGameDTO", bindingResult);
+            return "redirect:/games/edit/{id}";
+        }
         this.gameService.editGame(id, editGameDTO);
-        return "redirect:/games/{id}"; // Redirect to the game details page after editing
+        return "redirect:/games/{id}";
     }
 
     @PostMapping("/games/delete/{id}")

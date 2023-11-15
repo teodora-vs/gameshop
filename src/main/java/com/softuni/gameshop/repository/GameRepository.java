@@ -27,4 +27,8 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     Optional<Game> findByTitle(String title);
 
+
+    boolean existsByTitleAndIdNot(String gameTitle, Long id);
+
+
 }

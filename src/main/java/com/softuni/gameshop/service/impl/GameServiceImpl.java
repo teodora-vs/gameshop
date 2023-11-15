@@ -84,14 +84,11 @@ public class GameServiceImpl implements GameService {
         Game existingGame = this.gameRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Game with id: " + id + " not found!"));
 
-        // Map fields from the EditGameDTO to the existing Game entity
         this.modelMapper.map(editGameDTO, existingGame);
 
-        // If the genre is also editable, you can update it as well
-        Genre genre = this.genreRepository.findByName(editGameDTO.getGenreName()).orElse(null);
+        Genre genre = this.genreRepository.findByName(editGameDTO.getGenre()).orElse(null);
         existingGame.setGenre(genre);
 
-        // Save the updated game entity
         this.gameRepository.save(existingGame);
     }
 
@@ -106,7 +103,7 @@ public class GameServiceImpl implements GameService {
         List<Review> reviews = reviewRepository.findByGameId(gameId);
 
         if (reviews.isEmpty()) {
-            return 0.0; // or any default value you prefer
+            return 0.0;
         }
 
         double totalScore = 0.0;
@@ -119,11 +116,12 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public boolean exists(String title) {
-        if (this.gameRepository.findByTitle(title).isPresent()){
-            return true;
-        } else {
-            return false;
-        }
+        return this.gameRepository.findByTitle(title).isPresent();
+    }
+
+    @Override
+    public boolean existsWithSameTitle(Long id, String gameTitle) {
+        return this.gameRepository.existsByTitleAndIdNot(gameTitle, id);
     }
 
 

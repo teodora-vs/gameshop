@@ -21,27 +21,32 @@
     <div class="col-md-5">
       <h2 class="text-white text-center mt-3 mb-2">Edit Game</h2>
       <form th:action="@{'/games/edit/' + ${editGameDTO.id}}" th:method="POST" th:object="${editGameDTO}">
+        <h2 class="mt-3 text-center">
+          <strong th:if="${gameExists}" class="rounded  pl-3 text-danger mb-3">
+            Game with this title already exists!</strong>
+        </h2>
         <div class="mb-3">
           <label for="title" class="form-label text-white">Title:</label>
           <input type="text" class="form-control" id="title" name="title" th:field="*{title}" th:errorclass="is-invalid">
-          <p th:if="${#fields.hasErrors('title')}"
-             class="errors alert alert-danger"
-             th:errors="*{title}"></p>
+<!--          <p th:if="${#fields.hasErrors('title')}"-->
+<!--             class="errors alert alert-danger"-->
+<!--             th:errors="*{title}"></p>-->
+          <small class="text-danger my-text invalid-feedback">Title cannot be blank!</small>
         </div>
         <br>
         <!-- Genre -->
         <div class="mb-3">
           <label for="genre" class="form-label text-white">Genre: </label>
-          <select class="form-select" id="genre" name="genre" th:field="*{genreName}" th:errorclass="is-invalid">
+          <select class="form-select" id="genre" name="genre" th:field="*{genre}" th:errorclass="is-invalid">
             <option value="">- Select game genre -</option>
             <option th:each="g : ${genres}"
                     th:text="${g}"
                     th:value="${g}">
             </option>
           </select>
-          <p th:if="${#fields.hasErrors('genreName')}"
+          <p th:if="${#fields.hasErrors('genre')}"
              class="errors alert alert-danger"
-             th:errors="*{genreName}">
+             th:errors="*{genre}">
           </p>
         </div>
 
@@ -91,7 +96,7 @@
           </p>
         </div>
         <button type="submit" class="btn btn-primary mx-auto"
-                style="display: block;margin: 0 auto; width: 30%">Add Game</button>
+                style="display: block;margin: 0 auto; width: 30%">Edit Game</button>
       </form>
     </div>
   </div>
