@@ -13,7 +13,7 @@
                 <form th:method="post"
                       th:action="@{/login}">
                     <h3 class="mt-5 text-center">
-                        <strong th:if="${bad_credentials}" class="rounded  pl-3 text-danger">
+                        <strong th:if="${badCredentials}" class="rounded  pl-3 text-danger">
                             Invalid username or password.</strong>
                     </h3>
                     <div class="mb-3">

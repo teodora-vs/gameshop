@@ -1,4 +1,4 @@
-INSERT INTO games.games (id, description, imageurl, is_deleted, price, release_year, title, videourl,genre_id)
+INSERT INTO gameshop.games (id, description, imageurl, is_deleted, price, release_year, title, videourl,genre_id)
 VALUES
     (1, 'Cyberpunk 2077 is an open-world, action-adventure RPG set in the megalopolis of Night City, where you play as a cyberpunk mercenary wrapped-up in a do-or-die fight for survival. Explore the dark future, now upgraded with next-gen in mind and featuring free additional content!Cyberpunk 2077, by extension, presents an alternate history, in which the United States became mired in wars in Central America in the 1980s deeply undermining its power and economy, the Soviet Union failed to dissolve and Japan became a superpower, diffusing its culture as far as California.',
      'https://i.redd.it/w44jvkcns8461.png',

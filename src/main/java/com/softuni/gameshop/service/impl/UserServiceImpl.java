@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -77,6 +78,23 @@ public class UserServiceImpl implements UserService {
         user.setUserRoles(Collections.singletonList(userRole));
         user.setPassword(passwordEncoder.encode("topsecret"));
         userRepository.save(user);
+    }
+
+    @Override
+    public boolean addAdminByUsername(String username) {
+        Optional<UserEntity> byUsername = this.userRepository.findByUsername(username);
+        if (byUsername.isEmpty()){
+            return  false;
+        }
+        List<UserRole> currentRoles = byUsername.get().getUserRoles();
+        UserRole userRole = this.userRoleRepository.findByRoleName(UserRoleEnum.ADMIN);
+        if (currentRoles.contains(userRole)){
+            return false;
+        }
+        currentRoles.add(userRole);
+        byUsername.get().setUserRoles(currentRoles);
+        this.userRepository.save(byUsername.get());
+        return true;
     }
 
 

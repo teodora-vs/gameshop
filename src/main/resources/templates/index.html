@@ -15,7 +15,7 @@
     </th:block>
 
     <th:block sec:authorize="hasRole('USER')">
-        <p style="font-size: 24px">Click <a href="/games">here</a> to browse our latest PC games!</p>
+        <h3 style="">Click <a href="/games">here</a> to browse our latest PC games!</h3>
     </th:block>
 
     <th:block sec:authorize="!isAuthenticated()">
@@ -25,8 +25,9 @@
     </th:block>
 
     <th:block sec:authorize="hasRole('ADMIN')">
-        <h3 class="pt-3">Click <a href="/orders">here</a> to see all orders.</h3>
-        <h3 class="pt-3">Click <a href="/games/add">here</a> to add a new game.</h3>
+        <h4 class="pt-4"><a href="/games/add">Add a new game</a></h4>
+        <h4 class="pt-4"><a href="/orders">See all orders</a></h4>
+        <h4 class="pt-4"><a href="/orders">Add admin</a></h4>
     </th:block>
 </div>
 </body>

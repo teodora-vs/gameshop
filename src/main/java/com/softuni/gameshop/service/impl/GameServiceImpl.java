@@ -70,13 +70,10 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void deleteGame(Long id) {
-        Optional<Game> gameOptional = gameRepository.findById(id);
+        Game byId = gameRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Game with id: " + id + " not found!"));
 
-        if (gameOptional.isPresent()) {
-            Game game = gameOptional.get();
-            game.setDeleted(true);
-            gameRepository.save(game);
-        }
+            byId.setDeleted(true);
+            gameRepository.save(byId);
     }
 
     @Override
@@ -122,6 +119,10 @@ public class GameServiceImpl implements GameService {
     @Override
     public boolean existsWithSameTitle(Long id, String gameTitle) {
         return this.gameRepository.existsByTitleAndIdNot(gameTitle, id);
+    }
+
+    @Override
+    public void deleteMarkedGames() {
     }
 
 

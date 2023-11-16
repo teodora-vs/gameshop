@@ -42,7 +42,7 @@ public class AuthController {
             Model model) {
 
         model.addAttribute("username", username);
-        model.addAttribute("bad_credentials", "true");
+        model.addAttribute("badCredentials", "true");
 
         return "login";
     }

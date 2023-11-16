@@ -28,4 +28,6 @@ public interface GameService {
     boolean exists(String title);
 
     boolean existsWithSameTitle(Long id, String gameTitle);
+
+    void deleteMarkedGames();
 }

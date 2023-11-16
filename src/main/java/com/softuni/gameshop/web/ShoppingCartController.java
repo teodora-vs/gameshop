@@ -23,7 +23,7 @@ public class ShoppingCartController {
     @GetMapping("/add-to-cart/{id}")
     public String addToCart(@PathVariable Long id) {
         shoppingCartService.addToCart(id);
-        return "redirect:/games";
+        return "redirect:/cart";
     }
 
     @GetMapping("/cart")

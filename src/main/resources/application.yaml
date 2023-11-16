@@ -1,5 +1,12 @@
 spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    password: ${db_password}
+    username: ${db_username}
+    url: jdbc:mysql://localhost:3306/gameshop?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
   jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    defer-datasource-initialization: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
@@ -13,11 +20,6 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
-  datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    password: ${db_password}
-    username: ${db_username}
-    url: jdbc:mysql://localhost:3306/games?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
   devtools:
     livereload:
       enabled: true

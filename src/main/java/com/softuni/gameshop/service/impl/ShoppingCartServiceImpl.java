@@ -28,7 +28,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final UserRepository userRepository;
     private final ShoppingCartRepository shoppingCartRepository;
 
-    //TODO add discount fetaure
 
     public ShoppingCartServiceImpl(GameRepository gameRepository, UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, ModelMapper modelMapper, ShoppingCartRepository shoppingCartRepository1) {
         this.gameRepository = gameRepository;

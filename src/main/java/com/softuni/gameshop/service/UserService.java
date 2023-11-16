@@ -12,4 +12,6 @@ public interface UserService {
     Optional<UserEntity> getByUsername(String username);
 
     void addAdmin();
+
+    boolean addAdminByUsername(String username);
 }

@@ -6,12 +6,14 @@ import com.softuni.gameshop.service.impl.GameShopUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 public class SecurityConfiguration {
@@ -41,10 +43,10 @@ public class SecurityConfiguration {
                             logout
                                     .logoutUrl("/logout")
                                     .logoutSuccessUrl("/")
-                                    .invalidateHttpSession(true);
+                                    .invalidateHttpSession(true)
+                                    .deleteCookies("JSESSIONID");
                         }
-                )
-//                .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
+                ).csrf((csrf) -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
                 .build();
 
     }

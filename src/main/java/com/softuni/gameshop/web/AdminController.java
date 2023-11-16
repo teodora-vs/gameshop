@@ -8,14 +8,12 @@ import com.softuni.gameshop.model.DTO.order.AdminOrderDetailsDTO;
 import com.softuni.gameshop.model.enums.GenreNamesEnum;
 import com.softuni.gameshop.service.GameService;
 import com.softuni.gameshop.service.OrderService;
+import com.softuni.gameshop.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -25,10 +23,12 @@ public class AdminController {
 
     private GameService gameService;
     private OrderService orderService;
+    private UserService userService;
 
-    public AdminController(GameService gameService, OrderService orderService) {
+    public AdminController(GameService gameService, OrderService orderService, UserService userService) {
         this.gameService = gameService;
         this.orderService = orderService;
+        this.userService = userService;
     }
 
     @ModelAttribute("addGameDTO")
@@ -85,12 +85,10 @@ public class AdminController {
         String gameTitle = editGameDTO.getTitle();
 
         if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("editGameDTO", editGameDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editGameDTO", bindingResult);
             return "redirect:/games/edit/{id}";
         }
         if (this.gameService.existsWithSameTitle(id, gameTitle)){
-            redirectAttributes.addFlashAttribute("editGameDTO", editGameDTO);
             redirectAttributes.addFlashAttribute("gameExists",true);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editGameDTO", bindingResult);
             return "redirect:/games/edit/{id}";
@@ -118,6 +116,23 @@ public class AdminController {
         AdminOrderDetailsDTO adminOrderDetailsDTO = orderService.getOrderDetailsForAdmin(id);
         model.addAttribute("orderDetails", adminOrderDetailsDTO);
         return "order-details-admin";
+    }
+
+    @GetMapping("/admin/add")
+    public String addAdmin() {
+        return "admin-add";
+    }
+
+    @PostMapping("/admin/add")
+    public String addAdmin(@RequestParam String username, RedirectAttributes redirectAttributes) {
+        if (this.userService.addAdminByUsername(username)) {
+            redirectAttributes.addFlashAttribute("successfullyAdded", true);
+        } else {
+            redirectAttributes.addFlashAttribute("invalidUsername", true);
+        }
+
+        return "redirect:/admin/add";
+
     }
 
 }

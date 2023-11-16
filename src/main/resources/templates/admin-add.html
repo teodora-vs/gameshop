@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div>
+  <nav th:replace="~{fragments/navigation}"></nav>
+</div>
+<br>
+<div class="container mt-5 text-center text-white my-bg">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <h2 class="text-center mb-4">Add Admin</h2>
+      <form th:action="@{/admin/add}" th:method="post">
+
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" class="form-control" id="username" name="username" required>
+          <span th:if="${successfullyAdded}" class="text-success" >Admin added successfully</span>
+          <span th:if="${invalidUsername}" class="text-danger">Invalid username</span>
+        </div>
+        <button type="submit" class="btn btn-primary ">Add Admin</button>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
