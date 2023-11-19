@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -53,7 +52,7 @@ public class GameServiceImpl implements GameService {
 
         Game byId = this.gameRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Game with id: " + id + " not found!"));
         GameDetailsDTO gameDetailsDTO = modelMapper.map(byId, GameDetailsDTO.class);
-        gameDetailsDTO.setReviews(this.reviewRepository.findByGameId(id));
+        gameDetailsDTO.setReviews(this.reviewRepository.findAllByGameId(id));
         return gameDetailsDTO;
     }
 
@@ -97,7 +96,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Double getAverageScore(Long gameId) {
-        List<Review> reviews = reviewRepository.findByGameId(gameId);
+        List<Review> reviews = reviewRepository.findAllByGameId(gameId);
 
         if (reviews.isEmpty()) {
             return 0.0;

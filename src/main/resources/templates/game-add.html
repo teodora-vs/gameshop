@@ -71,7 +71,7 @@
             <!-- Image URL -->
             <div class="mb-3 mt-2">
                 <label for="imageUrl" class="form-label text-white">Image URL:</label>
-                <input type="text" class="form-control" th:field="*{imageURL}" id="imageUrl" name="imageUrl" th:errorclass="is-invalid">
+                <input type="text" class="form-control" th:field="*{imageURL}" id="imageUrl" name="imageURL" th:errorclass="is-invalid">
                 <p th:if="${#fields.hasErrors('imageURL')}"
                    class="errors alert alert-danger"
                    th:errors="*{imageURL}">

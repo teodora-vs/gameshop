@@ -1,14 +1,12 @@
 package com.softuni.gameshop.web;
 
 import com.softuni.gameshop.model.DTO.AddReviewDTO;
-import com.softuni.gameshop.model.DTO.game.EditGameDTO;
 import com.softuni.gameshop.model.DTO.game.GameCardDTO;
 import com.softuni.gameshop.model.DTO.game.GameDetailsDTO;
 import com.softuni.gameshop.model.enums.GenreNamesEnum;
 import com.softuni.gameshop.service.GameService;
 import com.softuni.gameshop.service.ReviewService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,7 +17,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.naming.Binding;
 import java.util.List;
 
 @Controller
@@ -95,7 +92,7 @@ public class GameController {
             redirectAttributes.addFlashAttribute("invalidText", true);
             return "redirect:/games/{gameId}";
         }
-        this.reviewService.create(addReviewDTO);
+        this.reviewService.createReview(addReviewDTO);
 
         return "redirect:/games/{gameId}";
     }

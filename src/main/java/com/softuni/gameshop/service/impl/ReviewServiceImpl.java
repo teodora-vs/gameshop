@@ -34,7 +34,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void create(AddReviewDTO addReviewDTO) {
+    public Review createReview(AddReviewDTO addReviewDTO) {
         Optional<Game> optGame = this.gameRepository.findById(addReviewDTO.getGameId());
         if (optGame.isEmpty()){
             throw new ObjectNotFoundException("game not found");
@@ -42,18 +42,18 @@ public class ReviewServiceImpl implements ReviewService {
 
         UserEntity currentUser = this.getCurrentUser();
 
-            Review review = modelMapper.map(addReviewDTO, Review.class);
-            review.setStars(addReviewDTO.getStars());
-            review.setGame(optGame.orElseThrow(() -> new ObjectNotFoundException("game not found"))); // Ensure the game is present
-            review.setAuthor(currentUser);
-            review.setCreated(LocalDateTime.now());
+        Review review = modelMapper.map(addReviewDTO, Review.class);
+        review.setStars(addReviewDTO.getStars());
+        review.setGame(optGame.get());
+        review.setAuthor(currentUser);
+        review.setCreated(LocalDateTime.now());
 
-            reviewRepository.save(review);
+       return this.reviewRepository.save(review);
     }
 
     @Override
     public List<Review> getAllReviewsForGame(Long gameId){
-        return this.reviewRepository.findByGameId(gameId);
+        return this.reviewRepository.findAllByGameId(gameId);
     }
 
     public UserEntity getCurrentUser(){

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ReviewService {
 
-    void create( AddReviewDTO addReviewDTO);
+    Review createReview(AddReviewDTO addReviewDTO);
 
     List<Review> getAllReviewsForGame(Long gameId);
 }

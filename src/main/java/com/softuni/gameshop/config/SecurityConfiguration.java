@@ -23,10 +23,10 @@ public class SecurityConfiguration {
         return httpSecurity.authorizeHttpRequests(
                 authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/", "/login", "/register", "/login-error", "/return-policy").permitAll()
+                        .requestMatchers("/", "/login", "/register", "/login-error", "/return-policy" ,"/games").permitAll()
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers("/games/add").hasRole(UserRoleEnum.ADMIN.name())
-                        .requestMatchers("/games/delete/**").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/add-to-cart/", "/cart", "/order", "/my-orders", "/games/{id}/add-review").hasRole(UserRoleEnum.USER.name())
+                        .requestMatchers("/games/add", "games/edit/**", "/games/delete/**", "/orders", "/orders/").hasRole(UserRoleEnum.ADMIN.name())
                         .anyRequest().authenticated()
         )
                 .formLogin(

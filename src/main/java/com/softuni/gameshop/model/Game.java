@@ -19,7 +19,7 @@ public class Game {
     @ManyToOne
     private Genre genre;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)

@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
         }
         List<UserRole> currentRoles = byUsername.get().getUserRoles();
         UserRole userRole = this.userRoleRepository.findByRoleName(UserRoleEnum.ADMIN);
-        if (currentRoles.contains(userRole)){
+        if (currentRoles.contains(userRole) || byUsername.isEmpty()){
             return false;
         }
         currentRoles.add(userRole);

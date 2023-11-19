@@ -65,7 +65,7 @@ public class GameControllerTest {
         String viewName = gameController.addReview(gameId, addReviewDTO, bindingResult, redirectAttributes);
 
         // Assert
-        verify(reviewService).create(addReviewDTO);
+        verify(reviewService).createReview(addReviewDTO);
     }
 
     @Test
@@ -83,6 +83,7 @@ public class GameControllerTest {
 
         // Assert
         verify(redirectAttributes).addFlashAttribute("invalidStars", true);
+
     }
 
     @Test

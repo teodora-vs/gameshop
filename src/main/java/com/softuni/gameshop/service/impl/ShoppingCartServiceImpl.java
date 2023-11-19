@@ -5,6 +5,7 @@ import com.softuni.gameshop.model.DTO.CartItemDTO;
 import com.softuni.gameshop.model.Game;
 import com.softuni.gameshop.model.ShoppingCart;
 import com.softuni.gameshop.model.UserEntity;
+import com.softuni.gameshop.model.enums.UserRoleEnum;
 import com.softuni.gameshop.repository.GameRepository;
 import com.softuni.gameshop.repository.ShoppingCartRepository;
 import com.softuni.gameshop.repository.UserRepository;
@@ -64,6 +65,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Optional<Game> optGame = this.gameRepository.findById(gameId);
         UserEntity user = this.getCurrentUser();
         ShoppingCart shoppingCart = user.getShoppingCart();
+
+        if (!user.getUserRoles().contains(UserRoleEnum.USER)) {
+            return;
+        }
 
         if (shoppingCart == null) {
             shoppingCart = new ShoppingCart();

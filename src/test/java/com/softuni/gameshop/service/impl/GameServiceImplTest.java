@@ -1,16 +1,14 @@
 package com.softuni.gameshop.service.impl;
 
 import com.softuni.gameshop.model.DTO.game.AddGameDTO;
-import com.softuni.gameshop.model.DTO.game.EditGameDTO;
 import com.softuni.gameshop.model.DTO.game.GameCardDTO;
-import com.softuni.gameshop.model.DTO.game.GameDetailsDTO;
 import com.softuni.gameshop.model.Game;
 import com.softuni.gameshop.model.Genre;
+import com.softuni.gameshop.model.Review;
 import com.softuni.gameshop.model.enums.GenreNamesEnum;
 import com.softuni.gameshop.repository.GameRepository;
 import com.softuni.gameshop.repository.GenreRepository;
 import com.softuni.gameshop.repository.ReviewRepository;
-import com.softuni.gameshop.service.GameService;
 import com.softuni.gameshop.service.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,10 +19,12 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,7 +32,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class GameServiceImplTestIT {
+class GameServiceImplTest {
 
     @Mock
     private GameRepository gameRepository;
@@ -81,6 +81,7 @@ class GameServiceImplTestIT {
         verify(gameRepository, times(1)).save(game);
     }
 
+
     @Test
     void testDeleteGame() {
         // Arrange
@@ -94,22 +95,6 @@ class GameServiceImplTestIT {
         // Assert
         assertTrue(game.isDeleted());
         verify(gameRepository, times(1)).save(game);
-    }
-
-    @Test
-    void testGetGameDetails() {
-        // Arrange
-        Long gameId = 1L;
-        Game game = new Game().setId(gameId);
-        when(gameRepository.findById(gameId)).thenReturn(Optional.of(game));
-
-        // Act
-        GameDetailsDTO gameDetailsDTO = gameService.getGameDetails(game.getId());
-        gameDetailsDTO.setId(game.getId());
-
-        // Assert
-        assertNotNull(gameDetailsDTO);
-        assertEquals(gameId, gameDetailsDTO.getId());
     }
 
     @Test
@@ -128,5 +113,62 @@ class GameServiceImplTestIT {
         assertThrows(ObjectNotFoundException.class, () -> gameService.deleteGame(gameId));
     }
 
+    @Test
+    void testGetAverageScore() {
+        Long gameId = 1L;
+        List<Review> reviews = new ArrayList<>();
+        reviews.add(new Review().setStars(4));
+        reviews.add(new Review().setStars(5));
+
+        when(reviewRepository.findAllByGameId(gameId)).thenReturn(reviews);
+
+        Double result = gameService.getAverageScore(gameId);
+
+        assertEquals(4.5, result, 0.01);
+    }
+
+    @Test
+    void testGetAllGames() {
+        Pageable pageable = mock(Pageable.class);
+        List<Game> gamesList = new ArrayList<>();
+        gamesList.add(new Game());
+        gamesList.add(new Game());
+        Page<Game> gamesPage = new PageImpl<>(gamesList);
+
+        when(gameRepository.findAllNotDeletedOrderByReleaseYearDesc(pageable)).thenReturn(gamesPage);
+
+        Page<GameCardDTO> result = gameService.getAllGames(pageable);
+
+        assertEquals(gamesList.size(), result.getContent().size());
+        verify(modelMapper, times(gamesList.size())).map(any(Game.class), eq(GameCardDTO.class));
+    }
+
+    @Test
+    void testGetGamesByGenre() {
+        GenreNamesEnum selectedGenre = GenreNamesEnum.ADVENTURE;
+        Pageable pageable = mock(Pageable.class);
+        List<Game> gamesList = new ArrayList<>();
+        gamesList.add(new Game());
+        gamesList.add(new Game());
+        Page<Game> gamesPage = new PageImpl<>(gamesList);
+
+        when(gameRepository.findByGenre(selectedGenre, pageable)).thenReturn(gamesPage);
+
+        Page<GameCardDTO> result = gameService.getGamesByGenre(selectedGenre, pageable);
+
+        assertEquals(gamesList.size(), result.getContent().size());
+        verify(modelMapper, times(gamesList.size())).map(any(Game.class), eq(GameCardDTO.class));
+    }
+
+    @Test
+    void testExists() {
+        String title = "Test Game";
+        when(gameRepository.findByTitle(title)).thenReturn(Optional.of(new Game()));
+
+        boolean result = gameService.exists(title);
+
+        assertTrue(result);
+        verify(gameRepository, times(1)).findByTitle(title);
+    }
 
 }

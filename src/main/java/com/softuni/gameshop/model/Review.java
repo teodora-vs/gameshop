@@ -14,7 +14,7 @@ public class Review {
     private LocalDateTime created;
 
 
-    @Column(name = "text_content",nullable = false, columnDefinition = "TEXT" )
+    @Column(name = "text_content",nullable = false)
     private String textContent;
 
     @Column(nullable = false)

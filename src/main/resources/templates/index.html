@@ -7,7 +7,7 @@
     <nav th:replace="~{fragments/navigation}"></nav>
 </div>
 <br>
-<div class="container mt-5 text-center text-white my-bg">
+<div class="container mt-3 text-center text-white my-bg pt-4">
     <h1>Welcome to GameShop,</h1>
 
     <th:block sec:authorize="isAuthenticated()">
@@ -20,14 +20,15 @@
 
     <th:block sec:authorize="!isAuthenticated()">
         <p>Anonymous!</p>
-        <h3 class="pt-3"><a href="/register">Register</a> to browse our latest PC games!</h3>
-        <h5 class="pt-4">Already have an account? <a href="/login">Login</a> here.</h5>
+        <h3 class="pt-3">Click <a href="/register">here</a> to browse our latest PC games!</h3></br>
+        <h4><a href="/register">Register</a> to see user reviews and place an order.</h4></br>
+        <h5 class="pt-2 pb-2" style="color: grey">Already have an account ? <a href="/login">Log in</a> here.</h5>
     </th:block>
 
     <th:block sec:authorize="hasRole('ADMIN')">
         <h4 class="pt-4"><a href="/games/add">Add a new game</a></h4>
         <h4 class="pt-4"><a href="/orders">See all orders</a></h4>
-        <h4 class="pt-4"><a href="/orders">Add admin</a></h4>
+        <h4 class="pt-4"><a href="/admin/add">Add admin</a></h4>
     </th:block>
 </div>
 </body>
