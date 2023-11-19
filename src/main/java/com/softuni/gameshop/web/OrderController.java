@@ -37,6 +37,11 @@ public class OrderController {
 
     @GetMapping("/order")
     public String order(Model model){
+
+        if (shoppingCartService.getCurrentUser().getShoppingCart() == null || shoppingCartService.getCartItems().isEmpty()){
+            return "redirect:/cart";
+        }
+
         List<CartItemDTO> cartItems = shoppingCartService.getCartItems();
         BigDecimal totalPrice = shoppingCartService.getCartTotalPrice();
         model.addAttribute("cartItems", cartItems);
@@ -54,6 +59,7 @@ public class OrderController {
 
             return "redirect:/order";
         }
+
         this.orderService.addOrder(orderDTO);
         return "redirect:/my-orders";
     }

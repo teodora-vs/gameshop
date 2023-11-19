@@ -67,7 +67,6 @@ public class AdminController {
     }
 
 
-
     @GetMapping("/games/edit/{id}")
     public String getEditGameForm(@PathVariable Long id, Model model) {
         GameDetailsDTO gameDetailsDTO = this.gameService.getGameDetails(id);

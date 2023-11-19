@@ -10,25 +10,32 @@
 <div class="container mt-3 text-center text-white my-bg pt-4">
     <h1>Welcome to GameShop,</h1>
 
-    <th:block sec:authorize="isAuthenticated()">
+    <th:block  sec:authorize="isAuthenticated()">
         <p style="font-size: 24px"><span th:text="${#authentication.name}"></span>!</p>
     </th:block>
 
     <th:block sec:authorize="hasRole('USER')">
-        <h3 style="">Click <a href="/games">here</a> to browse our latest PC games!</h3>
+        <h3 class="mb-4">Click <a href="/games">here</a> to browse our latest PC games!</h3>
     </th:block>
 
     <th:block sec:authorize="!isAuthenticated()">
         <p>Anonymous!</p>
-        <h3 class="pt-3">Click <a href="/register">here</a> to browse our latest PC games!</h3></br>
+        <h3 class="pt-3">Click <a href="/games">here</a> to browse our latest PC games!</h3></br>
         <h4><a href="/register">Register</a> to see user reviews and place an order.</h4></br>
-        <h5 class="pt-2 pb-2" style="color: grey">Already have an account ? <a href="/login">Log in</a> here.</h5>
+        <h5 class="pt-2 pb-2" style="color: grey">Already have an account? Log in <a href="/login">here</a>.</h5>
     </th:block>
 
-    <th:block sec:authorize="hasRole('ADMIN')">
-        <h4 class="pt-4"><a href="/games/add">Add a new game</a></h4>
-        <h4 class="pt-4"><a href="/orders">See all orders</a></h4>
-        <h4 class="pt-4"><a href="/admin/add">Add admin</a></h4>
+    <th:block class="pb-3 mt-4" sec:authorize="hasRole('ADMIN')">
+            <button class="btn btn-success mr-3" onclick="window.location.href='/games/add'">
+                <h4>Add new game</h4>
+            </button>
+            <button class="btn btn-info mr-3" onclick="window.location.href='/orders'">
+                <h4>See all orders</h4>
+            </button>
+
+            <button class="btn btn-warning" onclick="window.location.href='/admin/add'">
+                <h4>Add admin</h4>
+            </button>
     </th:block>
 </div>
 </body>

@@ -1,20 +1,18 @@
 package com.softuni.gameshop.service.impl;
 
-import com.softuni.gameshop.model.CartItem;
+import com.softuni.gameshop.model.*;
 import com.softuni.gameshop.model.DTO.CartItemDTO;
-import com.softuni.gameshop.model.Game;
-import com.softuni.gameshop.model.ShoppingCart;
-import com.softuni.gameshop.model.UserEntity;
 import com.softuni.gameshop.model.enums.UserRoleEnum;
 import com.softuni.gameshop.repository.GameRepository;
 import com.softuni.gameshop.repository.ShoppingCartRepository;
 import com.softuni.gameshop.repository.UserRepository;
+import com.softuni.gameshop.repository.UserRoleRepository;
 import com.softuni.gameshop.service.ShoppingCartService;
+import com.softuni.gameshop.service.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,13 +26,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final GameRepository gameRepository;
     private final UserRepository userRepository;
     private final ShoppingCartRepository shoppingCartRepository;
+    private UserRoleRepository userRoleRepository;
 
 
-    public ShoppingCartServiceImpl(GameRepository gameRepository, UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, ModelMapper modelMapper, ShoppingCartRepository shoppingCartRepository1) {
+    public ShoppingCartServiceImpl(GameRepository gameRepository, UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, ModelMapper modelMapper, ShoppingCartRepository shoppingCartRepository1, UserRoleRepository userRoleRepository) {
         this.gameRepository = gameRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.shoppingCartRepository = shoppingCartRepository1;
+        this.userRoleRepository = userRoleRepository;
     }
 
     @Override
@@ -62,11 +62,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void addToCart(Long gameId) {
-        Optional<Game> optGame = this.gameRepository.findById(gameId);
+        Game game = this.gameRepository.findById(gameId).orElseThrow(() -> new ObjectNotFoundException("Game with id: " + gameId + " not found!"));
         UserEntity user = this.getCurrentUser();
         ShoppingCart shoppingCart = user.getShoppingCart();
+        UserRole userRole = this.userRoleRepository.findByRoleName(UserRoleEnum.USER);
 
-        if (!user.getUserRoles().contains(UserRoleEnum.USER)) {
+        if (!user.getUserRoles().contains(userRole)) {
             return;
         }
 
@@ -82,16 +83,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
 
         for (CartItem cartItem : shoppingCart.getCartItems()) {
-            if (cartItem.getGame().getId().equals(optGame.get().getId())) {
+            if (cartItem.getGame().getId().equals(game.getId())) {
                 cartItem.setQuantity(cartItem.getQuantity() + 1);
                 shoppingCartRepository.save(shoppingCart);
                 return;
             }
         }
 
-        CartItem cartItem = new CartItem();
-        cartItem.setGame(optGame.get());
-        cartItem.setQuantity(1);
+        CartItem cartItem = new CartItem().setGame(game).setQuantity(1);
         shoppingCart.getCartItems().add(cartItem);
         shoppingCartRepository.save(shoppingCart);
     }

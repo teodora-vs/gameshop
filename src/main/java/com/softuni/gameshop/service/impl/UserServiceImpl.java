@@ -25,14 +25,12 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final UserRoleRepository userRoleRepository;
-    private final ShoppingCartRepository shoppingCartRepository;
 
     public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, ShoppingCartRepository shoppingCartRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
-        this.shoppingCartRepository = shoppingCartRepository;
     }
 
     @Override
@@ -65,18 +63,10 @@ public class UserServiceImpl implements UserService {
         user.setEmail("admin@example.com");
         user.setFullName("Admin adminov");
 
-        // Check if the "ADMIN" role exists
         UserRole userRole = userRoleRepository.findByRoleName(UserRoleEnum.ADMIN);
 
-        // If the role doesn't exist, create and save it
-        if (userRole == null) {
-            userRole = new UserRole();
-            userRole.setRoleName(UserRoleEnum.ADMIN);
-            userRoleRepository.save(userRole);
-        }
-
         user.setUserRoles(Collections.singletonList(userRole));
-        user.setPassword(passwordEncoder.encode("topsecret"));
+        user.setPassword(passwordEncoder.encode("admin"));
         userRepository.save(user);
     }
 
