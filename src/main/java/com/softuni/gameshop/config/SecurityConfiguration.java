@@ -26,7 +26,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/", "/login", "/register", "/login-error", "/return-policy" ,"/games").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/add-to-cart/", "/cart", "/order", "/my-orders", "/games/{id}/add-review").hasRole(UserRoleEnum.USER.name())
-                        .requestMatchers("/games/add", "games/edit/**", "/games/delete/**", "/orders", "/orders/").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/games/add", "games/edit/**", "/games/delete/**", "/orders", "/orders/", "/admin/add").hasRole(UserRoleEnum.ADMIN.name())
                         .anyRequest().authenticated()
         )
                 .formLogin(
