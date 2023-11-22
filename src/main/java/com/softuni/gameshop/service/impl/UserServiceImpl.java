@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRoleRepository userRoleRepository;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, ShoppingCartRepository shoppingCartRepository) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
@@ -76,14 +76,19 @@ public class UserServiceImpl implements UserService {
         if (byUsername.isEmpty()){
             return  false;
         }
-        List<UserRole> currentRoles = byUsername.get().getUserRoles();
+        UserEntity user = byUsername.get();
+
+        List<UserRole> currentRoles = user.getUserRoles();
         UserRole userRole = this.userRoleRepository.findByRoleName(UserRoleEnum.ADMIN);
-        if (currentRoles.contains(userRole) || byUsername.isEmpty()){
+
+        if (currentRoles.contains(userRole)){
             return false;
         }
+
         currentRoles.add(userRole);
-        byUsername.get().setUserRoles(currentRoles);
-        this.userRepository.save(byUsername.get());
+        user.setUserRoles(currentRoles);
+        this.userRepository.save(user);
+
         return true;
     }
 

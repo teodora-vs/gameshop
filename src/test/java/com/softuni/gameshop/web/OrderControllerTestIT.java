@@ -3,6 +3,7 @@ import com.softuni.gameshop.model.DTO.order.MyOrdersDTO;
 import com.softuni.gameshop.model.DTO.order.OrderDTO;
 import com.softuni.gameshop.model.DTO.order.OrderDetailsDTO;
 import com.softuni.gameshop.model.Order;
+import com.softuni.gameshop.model.ShoppingCart;
 import com.softuni.gameshop.model.UserEntity;
 import com.softuni.gameshop.service.OrderService;
 import com.softuni.gameshop.service.ShoppingCartService;
@@ -37,7 +38,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 @AutoConfigureMockMvc
 class OrderControllerTestIT {
 
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -47,11 +47,8 @@ class OrderControllerTestIT {
     @MockBean
     private OrderService orderService;
 
-
-
     @BeforeEach
     void setUp() {
-        // Reset mocks before each test
         Mockito.reset(orderService, shoppingCartService);
     }
 
@@ -85,5 +82,7 @@ class OrderControllerTestIT {
 
         verify(orderService, times(1)).getOrderDetailsById(orderId);
     }
+
+
 
 }

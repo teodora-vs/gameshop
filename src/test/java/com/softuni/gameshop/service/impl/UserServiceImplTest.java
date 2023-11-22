@@ -19,7 +19,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,7 +49,6 @@ class UserServiceImplTest {
 
     @Test
     void testRegisterUserSuccessfully() {
-        // Arrange
         UserRegisterDTO userRegisterDTO = new UserRegisterDTO();
         userRegisterDTO.setUsername("testUser");
         userRegisterDTO.setPassword("password");
@@ -60,17 +61,14 @@ class UserServiceImplTest {
         when(modelMapper.map(userRegisterDTO, UserEntity.class)).thenReturn(userEntity);
         when(userRoleRepository.findByRoleName(UserRoleEnum.USER)).thenReturn(new UserRole());
 
-        // Act
         boolean isRegistered = userService.register(userRegisterDTO);
 
-        // Assert
         assertTrue(isRegistered);
         verify(userRepository, times(1)).save(any(UserEntity.class));
     }
 
     @Test
     void testRegisterUserWithExistingUsername() {
-        // Arrange
         UserRegisterDTO userRegisterDTO = new UserRegisterDTO();
         userRegisterDTO.setUsername("existingUser");
         userRegisterDTO.setPassword("password");
@@ -81,11 +79,63 @@ class UserServiceImplTest {
 
         when(userRepository.findByUsername(userRegisterDTO.getUsername())).thenReturn(Optional.of(existingUser));
 
-        // Act
         boolean isRegistered = userService.register(userRegisterDTO);
 
-        // Assert
         assertFalse(isRegistered);
+        verify(userRepository, never()).save(any(UserEntity.class));
+    }
+
+    @Test
+    void testAddAdminByUsernameSuccessfully() {
+        String username = "testUser";
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(username);
+        userEntity.setUserRoles(new ArrayList<>());
+
+        UserRole adminRole = new UserRole();
+        adminRole.setRoleName(UserRoleEnum.ADMIN);
+
+        when(userRepository.findByUsername(username)).thenReturn(Optional.of(userEntity));
+        when(userRoleRepository.findByRoleName(UserRoleEnum.ADMIN)).thenReturn(adminRole);
+
+        boolean isAdminAdded = userService.addAdminByUsername(username);
+
+        assertTrue(isAdminAdded);
+        assertTrue(userEntity.getUserRoles().contains(adminRole));
+        verify(userRepository, times(1)).save(any(UserEntity.class));
+    }
+
+    @Test
+    void testAddAdminByUsernameUserNotFound() {
+        String username = "nonexistentUser";
+
+        when(userRepository.findByUsername(username)).thenReturn(Optional.empty());
+
+        boolean isAdminAdded = userService.addAdminByUsername(username);
+
+        assertFalse(isAdminAdded);
+        verify(userRepository, never()).save(any(UserEntity.class));
+    }
+
+    @Test
+    void testAddAdminByUsernameAdminRoleAlreadyExists() {
+        String username = "existingAdmin";
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(username);
+
+        UserRole adminRole = new UserRole();
+        adminRole.setRoleName(UserRoleEnum.ADMIN);
+
+        List<UserRole> userRoles = new ArrayList<>();
+        userRoles.add(adminRole);
+        userEntity.setUserRoles(userRoles);
+
+        when(userRepository.findByUsername(username)).thenReturn(Optional.of(userEntity));
+        when(userRoleRepository.findByRoleName(UserRoleEnum.ADMIN)).thenReturn(adminRole);
+
+        boolean isAdminAdded = userService.addAdminByUsername(username);
+
+        assertFalse(isAdminAdded);
         verify(userRepository, never()).save(any(UserEntity.class));
     }
 

@@ -3,9 +3,9 @@ package com.softuni.gameshop.web;
 import com.softuni.gameshop.model.DTO.ReviewDTO;
 import com.softuni.gameshop.service.ReviewService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -31,5 +31,7 @@ public class ReviewRestController {
 
         return ResponseEntity.ok(reviews);
     }
+
+
 
 }

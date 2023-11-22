@@ -22,18 +22,17 @@ import java.util.Optional;
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
     private final GameRepository gameRepository;
     private final UserRepository userRepository;
     private final ShoppingCartRepository shoppingCartRepository;
-    private UserRoleRepository userRoleRepository;
+    private final UserRoleRepository userRoleRepository;
 
-
-    public ShoppingCartServiceImpl(GameRepository gameRepository, UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, ModelMapper modelMapper, ShoppingCartRepository shoppingCartRepository1, UserRoleRepository userRoleRepository) {
+    public ShoppingCartServiceImpl(GameRepository gameRepository, UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, ModelMapper modelMapper, UserRoleRepository userRoleRepository) {
         this.gameRepository = gameRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
-        this.shoppingCartRepository = shoppingCartRepository1;
+        this.shoppingCartRepository = shoppingCartRepository;
         this.userRoleRepository = userRoleRepository;
     }
 
@@ -48,7 +47,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                     .findFirst();
 
             if (itemToRemove.isPresent()) {
-                if (itemToRemove.get().getQuantity() > 1){
+                if (itemToRemove.get().getQuantity() > 1) {
                     int currentQuantity = itemToRemove.get().getQuantity();
                     itemToRemove.get().setQuantity(currentQuantity - 1);
                     shoppingCartRepository.save(shoppingCart);
@@ -57,7 +56,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                     shoppingCartRepository.save(shoppingCart);
                 }
             }
+
         }
+
     }
 
     @Override
@@ -124,19 +125,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public UserEntity getCurrentUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-
-        return this.userRepository.findByUsername(currentUsername).get();
-    }
-
-    @Override
     public BigDecimal getCartTotalPrice() {
         UserEntity user = this.getCurrentUser();
         ShoppingCart shoppingCart = user.getShoppingCart();
         return shoppingCart.getTotal();
     }
 
+    public UserEntity getCurrentUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+
+        return this.userRepository.findByUsername(currentUsername).get();
+    }
 
 }

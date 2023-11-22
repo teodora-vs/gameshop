@@ -1,7 +1,7 @@
 package com.softuni.gameshop.web;
 
 import com.softuni.gameshop.model.DTO.AddReviewDTO;
-import com.softuni.gameshop.model.DTO.game.GameCardDTO;
+import com.softuni.gameshop.model.DTO.game.GameSummaryDTO;
 import com.softuni.gameshop.model.DTO.game.GameDetailsDTO;
 import com.softuni.gameshop.model.enums.GenreNamesEnum;
 import com.softuni.gameshop.service.GameService;
@@ -38,7 +38,7 @@ public class GameController {
                        ) Pageable pageable){
 
         List<GenreNamesEnum> genres = List.of(GenreNamesEnum.values());
-        Page<GameCardDTO> allGames = gameService.getAllGames(pageable);
+        Page<GameSummaryDTO> allGames = gameService.getAllGames(pageable);
         model.addAttribute("games", allGames);
         model.addAttribute("genres", genres);
 
@@ -54,7 +54,7 @@ public class GameController {
                              ) Pageable pageable){
 
         List<GenreNamesEnum> genres = List.of(GenreNamesEnum.values());
-        Page<GameCardDTO> games;
+        Page<GameSummaryDTO> games;
 
         if (selectedGenre != null) {
             games = gameService.getGamesByGenre(selectedGenre, pageable);

@@ -23,7 +23,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final GameRepository gameRepository;
     private final UserRepository userRepository;
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
     private final ReviewRepository reviewRepository;
 
     public ReviewServiceImpl(GameRepository gameRepository, UserRepository userRepository, ModelMapper modelMapper, ReviewRepository reviewRepository) {
@@ -62,4 +62,5 @@ public class ReviewServiceImpl implements ReviewService {
 
         return this.userRepository.findByUsername(currentUsername).get();
     }
+
 }

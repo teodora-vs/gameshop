@@ -4,7 +4,7 @@ import com.softuni.gameshop.model.enums.GenreNamesEnum;
 
 import java.math.BigDecimal;
 
-public class GameCardDTO {
+public class GameSummaryDTO {
     private Long id;
 
     private String title;
@@ -17,14 +17,14 @@ public class GameCardDTO {
 
     private String imageURL;
 
-    public GameCardDTO() {
+    public GameSummaryDTO() {
     }
 
     public Long getId() {
         return id;
     }
 
-    public GameCardDTO setId(Long id) {
+    public GameSummaryDTO setId(Long id) {
         this.id = id;
         return this;
     }
@@ -33,7 +33,7 @@ public class GameCardDTO {
         return title;
     }
 
-    public GameCardDTO setTitle(String title) {
+    public GameSummaryDTO setTitle(String title) {
         this.title = title;
         return this;
     }
@@ -42,7 +42,7 @@ public class GameCardDTO {
         return genreName;
     }
 
-    public GameCardDTO setGenreName(GenreNamesEnum genreName) {
+    public GameSummaryDTO setGenreName(GenreNamesEnum genreName) {
         this.genreName = genreName;
         return this;
     }
@@ -51,7 +51,7 @@ public class GameCardDTO {
         return releaseYear;
     }
 
-    public GameCardDTO setReleaseYear(Integer releaseYear) {
+    public GameSummaryDTO setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
         return this;
     }
@@ -60,7 +60,7 @@ public class GameCardDTO {
         return price;
     }
 
-    public GameCardDTO setPrice(BigDecimal price) {
+    public GameSummaryDTO setPrice(BigDecimal price) {
         this.price = price;
         return this;
     }
@@ -69,7 +69,7 @@ public class GameCardDTO {
         return imageURL;
     }
 
-    public GameCardDTO setImageURL(String imageURL) {
+    public GameSummaryDTO setImageURL(String imageURL) {
         this.imageURL = imageURL;
         return this;
     }

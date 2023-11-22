@@ -1,28 +1,27 @@
 package com.softuni.gameshop.service.impl;
+import com.softuni.gameshop.model.*;
 import com.softuni.gameshop.model.DTO.CartItemDTO;
-import com.softuni.gameshop.model.Game;
-import com.softuni.gameshop.model.UserEntity;
-import com.softuni.gameshop.model.ShoppingCart;
-import com.softuni.gameshop.model.CartItem;
+import com.softuni.gameshop.model.enums.UserRoleEnum;
 import com.softuni.gameshop.repository.GameRepository;
 import com.softuni.gameshop.repository.ShoppingCartRepository;
 import com.softuni.gameshop.repository.UserRepository;
-import com.softuni.gameshop.service.impl.ShoppingCartServiceImpl;
+import com.softuni.gameshop.repository.UserRoleRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.test.context.support.WithMockUser;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+@WithMockUser(username = "testUser")
 class ShoppingCartServiceImplTest {
 
     @Mock
@@ -37,17 +36,29 @@ class ShoppingCartServiceImplTest {
     @Mock
     private ModelMapper modelMapper;
 
+    @Mock
+    private UserRoleRepository userRoleRepository;
+
     @InjectMocks
     private ShoppingCartServiceImpl shoppingCartService;
+
+    @Mock
+    private Authentication authentication;
+
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    @AfterEach
+        void teardown(){
+        this.shoppingCartRepository.deleteAll();
     }
 
     @Test
     void testRemoveFromCart() {
-        // Given
         UserEntity user = new UserEntity();
         ShoppingCart shoppingCart = new ShoppingCart();
         CartItem cartItem = new CartItem();
@@ -60,28 +71,30 @@ class ShoppingCartServiceImplTest {
         when(userRepository.findByUsername(any())).thenReturn(Optional.of(user));
         when(shoppingCartRepository.save(any())).thenReturn(shoppingCart);
 
-        // When
         shoppingCartService.removeFromCart(1L);
 
-        // Then
         assertEquals(1, shoppingCart.getCartItems().size());
         assertEquals(1, shoppingCart.getCartItems().get(0).getQuantity());
         verify(shoppingCartRepository, times(1)).save(shoppingCart);
     }
 
     @Test
+    @WithMockUser
     void testAddToCart() {
         Game game = new Game();
         game.setId(1L);
-
+        UserRole userRole = new UserRole().setId(1L).setRoleName(UserRoleEnum.USER);
         UserEntity user = new UserEntity();
+        user.setUserRoles(Collections.singletonList(userRole));
         ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setUser(user);
+        shoppingCart.setId(1L);
         user.setShoppingCart(shoppingCart);
 
         when(gameRepository.findById(any())).thenReturn(Optional.of(game));
-        when(userRepository.findByUsername(any())).thenReturn(Optional.of(user));
+        when(userRepository.findByUsername(any())).thenReturn(Optional.of(user.setUserRoles(Collections.singletonList(userRole))));
         when(shoppingCartRepository.save(any())).thenReturn(shoppingCart);
-
+        when(userRoleRepository.findByRoleName(UserRoleEnum.USER)).thenReturn(userRole);
         shoppingCartService.addToCart(1L);
 
         assertEquals(1, shoppingCart.getCartItems().size());
@@ -107,20 +120,6 @@ class ShoppingCartServiceImplTest {
         List<CartItemDTO> cartItemsDTOs = shoppingCartService.getCartItems();
 
         assertEquals(1, cartItemsDTOs.size());
-    }
-
-    @Test
-    void testGetCurrentUser() {
-        UserEntity user = new UserEntity();
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        when(userRepository.findByUsername(any())).thenReturn(Optional.of(user));
-
-        UserEntity currentUser = shoppingCartService.getCurrentUser();
-
-        assertEquals(user, currentUser);
     }
 
 

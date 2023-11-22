@@ -1,7 +1,9 @@
 package com.softuni.gameshop.service.impl;
 
 import com.softuni.gameshop.model.DTO.game.AddGameDTO;
-import com.softuni.gameshop.model.DTO.game.GameCardDTO;
+import com.softuni.gameshop.model.DTO.game.EditGameDTO;
+import com.softuni.gameshop.model.DTO.game.GameDetailsDTO;
+import com.softuni.gameshop.model.DTO.game.GameSummaryDTO;
 import com.softuni.gameshop.model.Game;
 import com.softuni.gameshop.model.Genre;
 import com.softuni.gameshop.model.Review;
@@ -56,7 +58,6 @@ class GameServiceImplTest {
 
     @Test
     void testAddGame() {
-        // Arrange
         AddGameDTO addGameDTO = new AddGameDTO();
         addGameDTO.setTitle("Test Game");
         addGameDTO.setGenre(GenreNamesEnum.ADVENTURE);
@@ -73,10 +74,8 @@ class GameServiceImplTest {
         when(genreRepository.findByName(GenreNamesEnum.ADVENTURE)).thenReturn(Optional.of(new Genre()));
         when(gameRepository.save(any(Game.class))).thenReturn(game);
 
-        // Act
         Long gameId = gameService.addGame(addGameDTO);
 
-        // Assert
         assertEquals(game.getId(), gameId);
         verify(gameRepository, times(1)).save(game);
     }
@@ -84,17 +83,78 @@ class GameServiceImplTest {
 
     @Test
     void testDeleteGame() {
-        // Arrange
         Long gameId = 1L;
         Game game = new Game().setId(gameId);
         when(gameRepository.findById(gameId)).thenReturn(Optional.of(game));
 
-        // Act
         gameService.deleteGame(gameId);
 
-        // Assert
         assertTrue(game.isDeleted());
         verify(gameRepository, times(1)).save(game);
+    }
+
+    @Test
+    void testEditGame() {
+        Long gameId = 1L;
+        EditGameDTO editGameDTO = new EditGameDTO()
+                .setTitle("Updated Game")
+                .setGenre(GenreNamesEnum.ADVENTURE)
+                .setDescription("Updated description")
+                .setReleaseYear(2023)
+                .setPrice(BigDecimal.valueOf(59.99))
+                .setImageURL("updated-image-url")
+                .setVideoURL("updated-video-url");
+
+        Game existingGame = new Game()
+                .setId(gameId)
+                .setTitle("Existing Game")
+                .setGenre(new Genre().setName(GenreNamesEnum.ADVENTURE));
+
+        when(gameRepository.findById(gameId)).thenReturn(Optional.of(existingGame));
+        when(genreRepository.findByName(GenreNamesEnum.ADVENTURE)).thenReturn(Optional.of(new Genre()));
+
+        gameService.editGame(gameId, editGameDTO);
+
+        verify(gameRepository, times(1)).findById(gameId);
+        verify(genreRepository, times(1)).findByName(GenreNamesEnum.ADVENTURE);
+
+        verify(modelMapper, times(1)).map(eq(editGameDTO), same(existingGame));
+
+        verify(gameRepository, times(1)).save(existingGame);
+    }
+
+
+    @Test
+    void testGetGameDetails() {
+        Long gameId = 1L;
+        Game game = new Game()
+                .setId(gameId)
+                .setTitle("Test Game")
+                .setGenre(new Genre().setName(GenreNamesEnum.ADVENTURE))
+                .setDescription("Test description")
+                .setReleaseYear(2022)
+                .setPrice(BigDecimal.valueOf(49.99))
+                .setImageURL("test-image-url")
+                .setVideoURL("test-video-url");
+
+        when(gameRepository.findById(gameId)).thenReturn(Optional.of(game));
+        when(modelMapper.map(game, GameDetailsDTO.class)).thenReturn(new GameDetailsDTO()
+                .setTitle(game.getTitle()).setGenreName(game.getGenre().getName()).setReleaseYear(game.getReleaseYear())
+                .setPrice(game.getPrice()).setImageURL(game.getImageURL()).setVideoURL(game.getVideoURL()).setDescription(game.getDescription())
+                .setId(gameId));
+
+        GameDetailsDTO gameDetailsDTO = gameService.getGameDetails(gameId);
+
+        assertNotNull(gameDetailsDTO);
+        assertEquals(game.getTitle(), gameDetailsDTO.getTitle());
+        assertEquals(game.getGenre().getName(), gameDetailsDTO.getGenreName());
+        assertEquals(game.getDescription(), gameDetailsDTO.getDescription());
+        assertEquals(game.getReleaseYear(), gameDetailsDTO.getReleaseYear());
+        assertEquals(game.getPrice(), gameDetailsDTO.getPrice());
+        assertEquals(game.getImageURL(), gameDetailsDTO.getImageURL());
+        assertEquals(game.getVideoURL(), gameDetailsDTO.getVideoURL());
+
+        verify(modelMapper, times(1)).map(game, GameDetailsDTO.class);
     }
 
     @Test
@@ -137,10 +197,10 @@ class GameServiceImplTest {
 
         when(gameRepository.findAllNotDeletedOrderByReleaseYearDesc(pageable)).thenReturn(gamesPage);
 
-        Page<GameCardDTO> result = gameService.getAllGames(pageable);
+        Page<GameSummaryDTO> result = gameService.getAllGames(pageable);
 
         assertEquals(gamesList.size(), result.getContent().size());
-        verify(modelMapper, times(gamesList.size())).map(any(Game.class), eq(GameCardDTO.class));
+        verify(modelMapper, times(gamesList.size())).map(any(Game.class), eq(GameSummaryDTO.class));
     }
 
     @Test
@@ -154,10 +214,10 @@ class GameServiceImplTest {
 
         when(gameRepository.findByGenre(selectedGenre, pageable)).thenReturn(gamesPage);
 
-        Page<GameCardDTO> result = gameService.getGamesByGenre(selectedGenre, pageable);
+        Page<GameSummaryDTO> result = gameService.getGamesByGenre(selectedGenre, pageable);
 
         assertEquals(gamesList.size(), result.getContent().size());
-        verify(modelMapper, times(gamesList.size())).map(any(Game.class), eq(GameCardDTO.class));
+        verify(modelMapper, times(gamesList.size())).map(any(Game.class), eq(GameSummaryDTO.class));
     }
 
     @Test

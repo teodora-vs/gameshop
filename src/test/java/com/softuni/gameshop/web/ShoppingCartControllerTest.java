@@ -1,5 +1,6 @@
 package com.softuni.gameshop.web;
 
+import com.softuni.gameshop.model.CartItem;
 import com.softuni.gameshop.model.DTO.CartItemDTO;
 import com.softuni.gameshop.model.Game;
 import com.softuni.gameshop.model.ShoppingCart;
@@ -53,5 +54,20 @@ class ShoppingCartControllerTest {
         verify(shoppingCartService,times(1)).addToCart(1L);
     }
 
+    @Test
+    @WithMockUser(username = "user", roles = "USER")
+    public void testViewCart() throws Exception {
+        when(shoppingCartService.getCartItems()).thenReturn(Collections.emptyList());
+        when(shoppingCartService.getCartTotalPrice()).thenReturn(BigDecimal.ZERO);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/cart"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(view().name("cart"))
+                .andExpect(model().attributeExists("cartItems"))
+                .andExpect(model().attributeExists("totalPrice"));
+
+        verify(shoppingCartService, times(1)).getCartItems();
+        verify(shoppingCartService, times(1)).getCartTotalPrice();
+    }
 
 }

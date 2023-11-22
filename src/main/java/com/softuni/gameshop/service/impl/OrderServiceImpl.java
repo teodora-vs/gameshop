@@ -9,6 +9,7 @@ import com.softuni.gameshop.repository.OrderRepository;
 import com.softuni.gameshop.repository.ShoppingCartRepository;
 import com.softuni.gameshop.repository.UserRepository;
 import com.softuni.gameshop.service.OrderService;
+import com.softuni.gameshop.service.exception.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
@@ -24,15 +25,15 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-    private final UserRepository userRepository;
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
     private final ShoppingCartRepository shoppingCartRepository;
+    private UserRepository userRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, UserRepository userRepository, ModelMapper modelMapper, ShoppingCartRepository shoppingCartRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, ModelMapper modelMapper, ShoppingCartRepository shoppingCartRepository, UserRepository userRepository) {
         this.orderRepository = orderRepository;
-        this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.shoppingCartRepository = shoppingCartRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -65,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<MyOrdersDTO> getMyOrders() {
-        Long id =  getCurrentUser().getId();
+        Long id =  this.getCurrentUser().getId();
         List<MyOrdersDTO> myOrdersDTOs= new ArrayList<>();
         List<Order> byUserId = this.orderRepository.findAllByUserIdOrderByOrderDateTimeDesc(id);
         for (Order order: byUserId) {
@@ -77,13 +78,20 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order getOrderById(Long id) {
-        return this.orderRepository.findById(id).get();
+        Optional<Order> order = this.orderRepository.findById(id);
+        if (order.isEmpty()){
+            throw new ObjectNotFoundException("Order with id " + id + " was not found");
+        }
+            return order.get();
     }
 
     @Override
     public OrderDetailsDTO getOrderDetailsById(Long orderId) {
-        Order order = getOrderById(orderId);
-        return convertToOrderDetailsDTO(order);
+        Order order = this.getOrderById(orderId);
+        if (order.getUser().getUsername().equals(this.getCurrentUser().getUsername())){
+            return convertToOrderDetailsDTO(order);
+        }
+        throw new ObjectNotFoundException("order with id " + order.getId() + " was not found");
     }
 
     @Override

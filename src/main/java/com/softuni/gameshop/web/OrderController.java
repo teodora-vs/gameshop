@@ -23,7 +23,7 @@ import java.util.List;
 public class OrderController {
 
     private final ShoppingCartService shoppingCartService;
-    private OrderService orderService;
+    private final OrderService orderService;
 
     @ModelAttribute("orderDTO")
     public OrderDTO initOrderDTO() {
@@ -42,8 +42,8 @@ public class OrderController {
             return "redirect:/cart";
         }
 
-        List<CartItemDTO> cartItems = shoppingCartService.getCartItems();
-        BigDecimal totalPrice = shoppingCartService.getCartTotalPrice();
+        List<CartItemDTO> cartItems = this.shoppingCartService.getCartItems();
+        BigDecimal totalPrice = this.shoppingCartService.getCartTotalPrice();
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("totalPrice", totalPrice);
         return "order";
@@ -73,7 +73,7 @@ public class OrderController {
 
     @GetMapping("/my-orders/{id}")
     public String viewOrderDetails(@PathVariable Long id, Model model) {
-        OrderDetailsDTO orderDetails = orderService.getOrderDetailsById(id);
+        OrderDetailsDTO orderDetails = this.orderService.getOrderDetailsById(id);
         model.addAttribute("orderDetails", orderDetails);
         return "order-details";
     }

@@ -2,7 +2,7 @@ package com.softuni.gameshop.service;
 
 import com.softuni.gameshop.model.DTO.game.AddGameDTO;
 import com.softuni.gameshop.model.DTO.game.EditGameDTO;
-import com.softuni.gameshop.model.DTO.game.GameCardDTO;
+import com.softuni.gameshop.model.DTO.game.GameSummaryDTO;
 import com.softuni.gameshop.model.DTO.game.GameDetailsDTO;
 import com.softuni.gameshop.model.enums.GenreNamesEnum;
 import org.springframework.data.domain.Page;
@@ -15,7 +15,7 @@ public interface GameService {
 
     EditGameDTO convertToEditGameDTO(GameDetailsDTO gameDetailsDTO);
 
-    Page<GameCardDTO> getAllGames(Pageable pageable);
+    Page<GameSummaryDTO> getAllGames(Pageable pageable);
 
     void deleteGame(Long id);
 
@@ -23,7 +23,7 @@ public interface GameService {
 
     Double getAverageScore(Long gameId);
 
-    Page<GameCardDTO> getGamesByGenre(GenreNamesEnum selectedGenre, Pageable pageable);
+    Page<GameSummaryDTO> getGamesByGenre(GenreNamesEnum selectedGenre, Pageable pageable);
 
     boolean exists(String title);
 

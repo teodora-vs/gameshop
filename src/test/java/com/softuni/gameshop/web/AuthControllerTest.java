@@ -19,8 +19,7 @@ import static org.hamcrest.Matchers.any;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -34,17 +33,17 @@ class AuthControllerTest {
 
     @Test
     void testRegister() throws Exception {
-        when(userService.getByUsername("pesho")).thenReturn(Optional.empty());
+        when(userService.getByUsername("test")).thenReturn(Optional.empty());
         mockMvc.perform(
                         MockMvcRequestBuilders.post("/register")
-                                .param("username", "pesho")
-                                .param("email", "pesho@mail.com")
-                                .param("fullName", "Pesho Petrov")
+                                .param("username", "test")
+                                .param("fullName", "test testov")
+                                .param("email", "test@mail.com")
                                 .param("password", "1234")
                                 .param("confirmPassword", "1234")
                                 .with(csrf())
                 ).andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/login"));
+                .andExpect(redirectedUrl("redirect:/login"));
 
     }
 

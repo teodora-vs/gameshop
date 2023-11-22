@@ -28,10 +28,10 @@ public class Order {
     @Column(nullable = false)
     private String address;
 
-    @Column
+    @Column(nullable = false)
     private BigDecimal totalPrice;
 
-    @Column
+    @Column(nullable = false)
     private String phoneNumber;
 
     public Order() {

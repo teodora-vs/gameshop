@@ -49,10 +49,11 @@
     </tbody>
   </table>
 
-
   <div th:unless="${cartItems.size() == 0}" class="float-right">
-    <p style="font-size: 22px;">Total Price: $<span th:text="${totalPrice}"></span></p>
-    <a href="/order" class="btn btn-success btn-lg">Proceed to Checkout</a>
+    <div class="d-inline-block ml-3">
+      <p class="my-bg" style="font-size: 22px; padding: 10px; border-radius: 8px; display: inline-block;">Total Price: $<span th:text="${totalPrice}"></span></p>
+      <a href="/order" class="btn btn-success btn-lg ml-3">Proceed to Checkout</a>
+    </div>
   </div>
 
 </div>

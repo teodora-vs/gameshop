@@ -9,8 +9,6 @@ import java.util.List;
 public interface OrderService {
     void addOrder(OrderDTO orderDTO);
 
-    UserEntity getCurrentUser();
-
     OrderDetailsDTO convertToOrderDetailsDTO(Order order);
     OrderDetailsDTO getOrderDetailsById(Long orderId);
 

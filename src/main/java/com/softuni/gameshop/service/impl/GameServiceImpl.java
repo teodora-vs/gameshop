@@ -2,7 +2,7 @@ package com.softuni.gameshop.service.impl;
 
 import com.softuni.gameshop.model.DTO.game.AddGameDTO;
 import com.softuni.gameshop.model.DTO.game.EditGameDTO;
-import com.softuni.gameshop.model.DTO.game.GameCardDTO;
+import com.softuni.gameshop.model.DTO.game.GameSummaryDTO;
 import com.softuni.gameshop.model.DTO.game.GameDetailsDTO;
 import com.softuni.gameshop.model.Game;
 import com.softuni.gameshop.model.Genre;
@@ -62,7 +62,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Page<GameCardDTO> getAllGames(Pageable pageable) {
+    public Page<GameSummaryDTO> getAllGames(Pageable pageable) {
         Page<Game> undeletedGamesPage = gameRepository.findAllNotDeletedOrderByReleaseYearDesc(pageable);
         return undeletedGamesPage.map(this::mapAsCard);
     }
@@ -89,7 +89,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Page<GameCardDTO> getGamesByGenre(GenreNamesEnum selectedGenre, Pageable pageable) {
+    public Page<GameSummaryDTO> getGamesByGenre(GenreNamesEnum selectedGenre, Pageable pageable) {
         Page<Game> byGenre = this.gameRepository.findByGenre(selectedGenre, pageable);
         return byGenre.map(this::mapAsCard);
     }
@@ -125,7 +125,7 @@ public class GameServiceImpl implements GameService {
     }
 
 
-    public GameCardDTO mapAsCard(Game game){
-        return modelMapper.map(game, GameCardDTO.class);
+    public GameSummaryDTO mapAsCard(Game game){
+        return modelMapper.map(game, GameSummaryDTO.class);
     }
 }

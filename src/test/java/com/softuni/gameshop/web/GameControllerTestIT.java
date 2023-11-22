@@ -22,20 +22,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class GameControllerTestIT {
 
-
-
     @Autowired
     private MockMvc mockMvc;
-
 
     @Mock
     private ReviewService reviewService;
 
-
-
     @Test
     @WithMockUser(username = "user")
-    void testAddReviewEndpoint_InvalidStars() throws Exception {
+    void testAddReviewEndpointInvalidStars() throws Exception {
         Long gameId = 1L;
         AddReviewDTO addReviewDTO = new AddReviewDTO();
       addReviewDTO.setTextContent("Test");
@@ -52,7 +47,7 @@ class GameControllerTestIT {
 
     @Test
     @WithMockUser(username = "user")
-    void testAddReviewEndpoint_InvalidText() throws Exception {
+    void testAddReviewEndpointInvalidText() throws Exception {
         Long gameId = 1L;
         AddReviewDTO addReviewDTO = new AddReviewDTO();
         addReviewDTO.setTextContent("").setStars(4);

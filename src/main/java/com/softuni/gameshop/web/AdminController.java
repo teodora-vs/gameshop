@@ -76,7 +76,6 @@ public class AdminController {
 
         model.addAttribute("editGameDTO", editGameDTO);
 
-
         return "game-edit";
     }
 
@@ -128,13 +127,12 @@ public class AdminController {
     public String addAdmin(@RequestParam String username, RedirectAttributes redirectAttributes) {
         if (this.userService.addAdminByUsername(username)) {
             redirectAttributes.addFlashAttribute("successfullyAdded", true);
-            return "redirect:/admin/add";
         } else {
             redirectAttributes.addFlashAttribute("invalidUsername", true);
-            return "redirect:/admin/add";
         }
-
+        return "redirect:/admin/add";
 
     }
+
 
 }
