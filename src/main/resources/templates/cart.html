@@ -14,40 +14,40 @@
     <h5 class="mt-5 mb-4">Click <a href="/games">here</a> to browse our latest games!</h5>
   </div>
 
-  <table th:unless="${cartItems.size() == 0}" class="table table-striped my-bg">
-    <thead>
-    <tr>
-      <th>Game</th>
-      <th>Price</th>
-      <th>Quantity</th>
-      <th>Total</th>
-      <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="item : ${cartItems}">
-      <td>
-        <div class="media">
-          <img th:src="@{${item.game.imageURL}}" alt="Game Image" width="40" height="55" class="mr-3">
-          <div class="media-body">
-            <a th:href="@{'/games/' + ${item.game.id}}">
-              <span class="font-weight-bold" th:text="${item.game.title}"></span>
-            </a>
-            <p th:if="${item.game.isDeleted}" class="text-danger">Out of Stock</p>
-          </div>
-        </div>
-      </td>
-      <td th:text="${item.game.price}"></td>
-      <td th:text="${item.quantity}"></td>
-      <td th:text="${item.getTotal()}"></td>
-      <td>
-        <form th:action="@{'/cart/remove/' + ${item.id}}" th:method="POST">
-          <button type="submit" class="btn btn-danger">Remove</button>
-        </form>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+    <table th:unless="${cartItems.size() == 0}" class="table table-bordered table-hover table-dark">
+        <thead>
+        <tr>
+            <th class="ml-2">Game</th>
+            <th class="text-center">Price</th>
+            <th class="text-center">Quantity</th>
+            <th class="text-center">Total</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${cartItems}">
+            <td>
+                <div class="media">
+                    <img th:src="@{${item.game.imageURL}}" alt="Game Image" width="40" height="55" class="mr-3">
+                    <div class="media-body">
+                        <a th:href="@{'/games/' + ${item.game.id}}">
+                            <span class="font-weight-bold" th:text="${item.game.title}"></span>
+                        </a>
+                        <p th:if="${item.game.isDeleted}" class="text-danger text-center">Out of Stock</p>
+                    </div>
+                </div>
+            </td>
+            <td class="text-center" th:text="${item.game.price}"></td>
+            <td class="text-center" th:text="${item.quantity}"></td>
+            <td class="text-center" th:text="${item.getTotal()}"></td>
+            <td class="text-center">
+                <form th:action="@{'/cart/remove/' + ${item.id}}" th:method="POST">
+                    <button type="submit" class="btn btn-danger">Remove</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
   <div th:unless="${cartItems.size() == 0}" class="float-right">
     <div class="d-inline-block ml-3">

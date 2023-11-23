@@ -31,15 +31,12 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
-
     @Mock
     private UserRepository userRepository;
 
     @Mock
     private ModelMapper modelMapper;
 
-    @Mock
-    private PasswordEncoder passwordEncoder;
 
     @Mock
     private UserRoleRepository userRoleRepository;

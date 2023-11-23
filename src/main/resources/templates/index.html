@@ -20,9 +20,9 @@
 
     <th:block sec:authorize="!isAuthenticated()">
         <p>Anonymous!</p>
-        <h3 class="pt-3">Click <a href="/games">here</a> to browse our latest PC games!</h3></br>
-        <h4><a href="/register">Register</a> to see user reviews and place an order.</h4></br>
-        <h5 class="pt-2 pb-2" style="color: grey">Already have an account? Log in <a href="/login">here</a>.</h5>
+        <h3 class="pt-3">Click <a href="/games">here</a> to browse our latest PC games!</h3><br>
+        <h4><a href="/register">Register</a> to view game details and place an order.</h4><br>
+        <h5 class="pt-1 pb-2" style="color: grey">Already have an account? Log in <a href="/login">here</a>.</h5>
     </th:block>
 
     <th:block class="pb-3 mt-4" sec:authorize="hasRole('ADMIN')">

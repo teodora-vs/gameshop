@@ -10,6 +10,7 @@ import com.softuni.gameshop.repository.ShoppingCartRepository;
 import com.softuni.gameshop.repository.UserRepository;
 import com.softuni.gameshop.repository.UserRoleRepository;
 import com.softuni.gameshop.service.UserService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -56,16 +57,23 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+
     @Override
+    @Transactional
     public void addAdmin(){
         UserEntity user = new UserEntity();
         user.setUsername("admin");
         user.setEmail("admin@example.com");
         user.setFullName("Admin adminov");
 
-        UserRole userRole = userRoleRepository.findByRoleName(UserRoleEnum.ADMIN);
+        UserRole adminRole = userRoleRepository.findByRoleName(UserRoleEnum.ADMIN);
 
-        user.setUserRoles(Collections.singletonList(userRole));
+        if (adminRole == null) {
+            adminRole = new UserRole().setRoleName(UserRoleEnum.ADMIN);
+            userRoleRepository.save(adminRole);
+        }
+
+        user.setUserRoles(Collections.singletonList(adminRole));
         user.setPassword(passwordEncoder.encode("admin"));
         userRepository.save(user);
     }

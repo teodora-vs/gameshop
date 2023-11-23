@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 public class AdminInit implements CommandLineRunner {
     private UserService userService;
 
-        //TODO : change password after first login
-
     public AdminInit(UserService userService) {
         this.userService = userService;
     }

@@ -15,7 +15,7 @@
     padding: 20px; /* Add padding to the container */
     border-radius: 10px; " class=" text-white">
           <p class=""><strong>Order ID:</strong> <span th:text="${orderDetails.id}"></span></p>
-          <p ><strong>Order Date:</strong> <span th:text="${#temporals.format(orderDetails.orderDateTime, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+          <p ><strong>Order Date:</strong> <span th:text="${#temporals.format(orderDetails.orderDateTime, 'yyyy-MM-dd HH:mm')}"></span></p>
           <p ><strong>Receiver:</strong> <span th:text="${orderDetails.receiver}"></span></p>
           <p ><strong>Shipping Address:</strong> <span th:text="${orderDetails.address}"></span></p>
           <p ><strong>Phone Number:</strong> <span th:text="${orderDetails.phoneNumber}"></span></p>
@@ -25,12 +25,12 @@
 
       <h2 class="mt-4 text-white">Order Items</h2>
       <div class="table-responsive my-bg">
-        <table class="table table-responsive-md  text-white">
+        <table class="table table-bordered table-hover table-dark">
           <thead>
           <tr>
             <th>Game</th>
-            <th>Quantity</th>
-            <th>Total</th>
+            <th class="text-center">Quantity</th>
+            <th class="text-center">Total</th>
           </tr>
           </thead>
           <tbody>
@@ -45,8 +45,8 @@
                 </div>
               </div>
             </td>
-            <td th:text="${item.quantity}"></td>
-            <td th:text="${item.total}"></td>
+            <td class="text-center" th:text="${item.quantity}"></td>
+            <td class="text-center" th:text="${item.total}"></td>
           </tr>
           </tbody>
         </table>

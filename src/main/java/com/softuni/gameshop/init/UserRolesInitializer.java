@@ -15,6 +15,7 @@ public class UserRolesInitializer implements CommandLineRunner {
         this.userRoleRepository = userRoleRepository;
     }
 
+    @Override
     public void run(String... args) {
         UserRoleEnum[] roleEnums = UserRoleEnum.values();
 

@@ -11,30 +11,32 @@
     <h1 class="mb-3">All Orders</h1>
 
     <div th:if="${orders.size() > 0 }">
-        <table class="table table-responsive-lg text-white my-bg">
-            <thead>
-            <tr>
-                <th>Order ID</th>
-                <th>Order Date</th>
-                <th>Receiver</th>
-                <th>Address</th>
-                <th>Phone Number</th>
-                <th>Details</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="order : ${orders}">
-                <td th:text="${order.id}"></td>
-                <td th:text="${#temporals.format(order.orderDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                <td th:text="${order.receiver}"></td>
-                <td th:text="${order.address}"></td>
-                <td th:text="${order.phoneNumber}"></td>
-                <td>
-                    <a th:href="@{'/orders/' + ${order.id}}" class="btn btn-info">View Details</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Order Date</th>
+                    <th scope="col">Receiver</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Details</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${#temporals.format(order.orderDateTime, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${order.receiver}"></td>
+                    <td th:text="${order.address}"></td>
+                    <td th:text="${order.phoneNumber}"></td>
+                    <td>
+                        <a th:href="@{'/orders/' + ${order.id}}" class="btn btn-info btn-sm">View Details</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div th:unless="${not #lists.isEmpty(orders)}">
