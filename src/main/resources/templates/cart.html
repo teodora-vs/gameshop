@@ -9,6 +9,12 @@
 <br>
 <div class="container text-white">
   <h1 class="mb-3">Shopping Cart</h1>
+    <div th:if="${itemAddedToCartMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong th:text="${itemAddedToCartMessage}"></strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
   <div  th:if="${cartItems.size() == 0}" class="text-center align-items-center justify-content-center my-bg">
     <h3 class="mt-4">Looks like your shopping cart is still empty. </h3>
     <h5 class="mt-5 mb-4">Click <a href="/games">here</a> to browse our latest games!</h5>

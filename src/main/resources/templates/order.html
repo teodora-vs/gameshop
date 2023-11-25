@@ -9,20 +9,20 @@
 <br>
 <div class="container text-white">
   <h1 class="mb-3">Shopping Cart</h1>
-  <table class="table table-striped my-bg">
+  <table class="table table-bordered table-hover table-dark">
     <thead>
     <tr>
       <th>Game</th>
-      <th>Price</th>
-      <th>Quantity</th>
-      <th>Total</th>
+      <th class="text-center">Price</th>
+      <th class="text-center">Quantity</th>
+      <th class="text-center">Total</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="item : ${cartItems}">
       <td>
         <div class="media">
-          <img th:src="@{${item.game.imageURL}}" alt="Game Image" width="35" height="50" class="mr-3">
+          <img th:src="@{${item.game.imageURL}}" alt="Game Image" width="40" height="55" class="mr-3">
           <div class="media-body">
             <a th:href="@{'/games/' + ${item.game.id}}">
               <span class="font-weight-bold" th:text="${item.game.title}"></span>
@@ -31,9 +31,9 @@
           </div>
         </div>
       </td>
-      <td th:text="${item.game.price}"></td>
-      <td th:text="${item.quantity}"></td>
-      <td th:text="${item.getTotal()}"></td>
+      <td class="text-center" th:text="${item.game.price}"></td>
+      <td class="text-center" th:text="${item.quantity}"></td>
+      <td class="text-center" th:text="${item.getTotal()}"></td>
     </tr>
     </tbody>
   </table>

@@ -9,22 +9,20 @@
 <br>
 <div class="container mt-3 text-center text-white my-bg pt-4">
     <h1>Welcome to GameShop,</h1>
-
-    <th:block  sec:authorize="isAuthenticated()">
-        <p style="font-size: 24px"><span th:text="${#authentication.name}"></span>!</p>
+    <th:block th:if="${loggedInUsername != null}">
+        <p style="font-size: 24px" th:text="${loggedInUsername} + '!'"></p>
     </th:block>
-
+    <th:block th:if="${loggedInUsername == null}">
+        <p style="font-size: 24px">Anonymous !</p>
+    </th:block>
     <th:block sec:authorize="hasRole('USER')">
         <h3 class="mb-4">Click <a href="/games">here</a> to browse our latest PC games!</h3>
     </th:block>
-
     <th:block sec:authorize="!isAuthenticated()">
-        <p>Anonymous!</p>
         <h3 class="pt-3">Click <a href="/games">here</a> to browse our latest PC games!</h3><br>
         <h4><a href="/register">Register</a> to view game details and place an order.</h4><br>
         <h5 class="pt-1 pb-2" style="color: grey">Already have an account? Log in <a href="/login">here</a>.</h5>
     </th:block>
-
     <th:block class="pb-3 mt-4" sec:authorize="hasRole('ADMIN')">
             <button class="btn btn-success mr-3" onclick="window.location.href='/games/add'">
                 <h4>Add new game</h4>

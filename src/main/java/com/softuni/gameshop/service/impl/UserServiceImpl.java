@@ -12,6 +12,7 @@ import com.softuni.gameshop.repository.UserRoleRepository;
 import com.softuni.gameshop.service.UserService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -102,7 +103,11 @@ public class UserServiceImpl implements UserService {
 
 
     public Optional<UserEntity> getByUsername(String username){
-        return this.userRepository.findByUsername(username);
+        Optional<UserEntity> byUsername = this.userRepository.findByUsername(username);
+        if (byUsername.isEmpty()){
+            throw new UsernameNotFoundException("User with username " + username + " not found!" );
+        }
+        return byUsername;
     }
 
 

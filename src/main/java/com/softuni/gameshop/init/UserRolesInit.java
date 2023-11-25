@@ -7,11 +7,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserRolesInitializer implements CommandLineRunner {
+public class UserRolesInit implements CommandLineRunner {
 
     private final UserRoleRepository userRoleRepository;
 
-    public UserRolesInitializer(UserRoleRepository userRoleRepository) {
+    public UserRolesInit(UserRoleRepository userRoleRepository) {
         this.userRoleRepository = userRoleRepository;
     }
 

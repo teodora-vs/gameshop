@@ -6,6 +6,7 @@ import com.softuni.gameshop.model.DTO.order.OrderDTO;
 import com.softuni.gameshop.model.DTO.order.OrderDetailsDTO;
 import com.softuni.gameshop.service.OrderService;
 import com.softuni.gameshop.service.ShoppingCartService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,7 +51,7 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public String finishOrder(@Valid OrderDTO orderDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String finishOrder(@Valid OrderDTO orderDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session){
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("orderDTO", orderDTO);
@@ -61,6 +62,10 @@ public class OrderController {
         }
 
         this.orderService.addOrder(orderDTO);
+        session.setAttribute("orderCompleted", true);
+
+        redirectAttributes.addFlashAttribute("orderSuccessMessage", "Your order was successfully completed!");
+
         return "redirect:/my-orders";
     }
 

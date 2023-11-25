@@ -14,7 +14,7 @@ public class Review {
     private LocalDateTime created;
 
 
-    @Column(name = "text_content",nullable = false)
+    @Column(name = "text_content",nullable = false, columnDefinition = "TEXT")
     private String textContent;
 
     @Column(nullable = false)
@@ -25,7 +25,6 @@ public class Review {
 
     @ManyToOne
     private Game game;
-
 
     public Review() {
     }

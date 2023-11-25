@@ -17,7 +17,7 @@ import java.util.Optional;
 
 import static org.hamcrest.Matchers.any;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -71,6 +71,8 @@ class AuthControllerTest {
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/register"))
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("usernameExists"));
 
+        verify(userService, never()).register(new UserRegisterDTO().setUsername("existingUsername"));
+
     }
 
     @Test
@@ -88,6 +90,8 @@ class AuthControllerTest {
                 .andExpect(view().name("redirect:/register"))
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("org.springframework.validation.BindingResult.userRegisterDTO"))
                 .andExpect(MockMvcResultMatchers.flash().attribute("org.springframework.validation.BindingResult.userRegisterDTO", Matchers.hasProperty("fieldErrors", Matchers.hasItem(Matchers.hasProperty("field", Matchers.equalTo("username"))))));
+
+        verify(userService, never()).register(new UserRegisterDTO().setUsername("existingUsername"));
     }
 
     @Test
