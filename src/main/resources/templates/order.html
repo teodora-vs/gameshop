@@ -41,12 +41,12 @@
     <p style="font-size: 22px;">Total Price: $<span th:text="${totalPrice}"></span></p>
   </div>
 </div>
-<div class="container mt-4 text-white">
+<div th:if="${loggedInUsername != null}" class="container mt-4 text-white">
   <div class="row justify-content-center">
     <div style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
     padding: 20px; /* Add padding to the container */
     border-radius: 10px; " class="col-md-5">
-      <h4 class="text-center mb-2 text-white">Done shopping?</h4>
+        <h4 class="text-center mb-2 text-white">Done shopping, <span th:text="${loggedInUsername}"></span>?</h4>
       <h5 class="text-center mb-4 text-white">Please enter your shipping address and mobile phone number.</h5>
       <form th:method="POST" th:action="@{/order}" th:object="${orderDTO}">
         <div class="form-group">
