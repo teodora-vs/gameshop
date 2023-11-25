@@ -101,7 +101,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public List<CartItemDTO> getCartItems() {
         UserEntity user = this.getCurrentUser();
         ShoppingCart shoppingCart = user.getShoppingCart();
-        if (shoppingCart == null) {
+        if (shoppingCart == null ) {
             shoppingCart = new ShoppingCart();
             shoppingCart.setUser(user);
             user.setShoppingCart(shoppingCart);

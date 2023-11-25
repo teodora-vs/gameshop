@@ -16,8 +16,35 @@
         <p style="font-size: 24px">Anonymous !</p>
     </th:block>
     <th:block sec:authorize="hasRole('USER')">
-        <h3 class="mb-4">Click <a href="/games">here</a> to browse our latest PC games!</h3>
+        <h3 class="mb-3 pt-3">Click <a href="/games">here</a> to browse our latest PC games!</h3>
     </th:block>
+    <h4 th:if="${confirmed == false}" class="mt-4">
+        <p class="text-center" style="color: #919090; font-size: 22px">or</p>
+        <h4 class="mb-3" style="color: #7c7c7c">enter your email address below to confirm your profile.</h4>
+        <div class="pt-3 pb-3" style="font-size: 18px ; color: #e86473">
+            <strong>Note:</strong> Unconfirmed user profiles without emails will be deleted after a certain time.
+            Full functionality, such as ordering and reviewing games, requires email confirmation.
+        </div>
+        <form th:action="@{/enter-email}" method="post" th:object="${addEmailDTO}">
+            <div class="row justify-content-center pt-2">
+                <div class="col-md-4">
+                    <div class="input-group input-group-sm mb-3">
+                        <label for="email" class="sr-only">Enter your email:</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div th:if="${emailExists}" class="text-danger mb-2">
+                        This email address is already taken.
+                    </div>
+                    <div th:if="${confirmed}" class="text-success">
+                        You have successfully confirmed your email address!
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary mt-1">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </h4>
     <th:block sec:authorize="!isAuthenticated()">
         <h3 class="pt-3">Click <a href="/games">here</a> to browse our latest PC games!</h3><br>
         <h4><a href="/register">Register</a> to view game details and place an order.</h4><br>

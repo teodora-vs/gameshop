@@ -41,7 +41,16 @@
     <p style="font-size: 22px;">Total Price: $<span th:text="${totalPrice}"></span></p>
   </div>
 </div>
-<div th:if="${loggedInUsername != null}" class="container mt-4 text-white">
+
+<div th:if="${confirmed == false}" class="container mt-4 text-white">
+    <div class="row justify-content-center">
+        <div class="my-bg col-md-5" style="padding: 10px; border-radius: 10px;">
+            <h4 class="text-center text-danger mb-1 " style="color: #969fa1">Please confirm your profile <a href="/">here</a> to proceed with your order.</h4>
+        </div>
+    </div>
+</div>
+
+<div th:if="${confirmed == true}" class="container mt-4 text-white">
   <div class="row justify-content-center">
     <div style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
     padding: 20px; /* Add padding to the container */

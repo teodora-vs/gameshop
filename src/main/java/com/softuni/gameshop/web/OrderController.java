@@ -42,6 +42,11 @@ public class OrderController {
         if (shoppingCartService.getCurrentUser().getShoppingCart() == null || shoppingCartService.getCartItems().isEmpty()){
             return "redirect:/cart";
         }
+        if (shoppingCartService.getCurrentUser().getEmail() == null){
+            model.addAttribute("confirmed", false);
+        } else {
+            model.addAttribute("confirmed", true);
+        }
 
         List<CartItemDTO> cartItems = this.shoppingCartService.getCartItems();
         BigDecimal totalPrice = this.shoppingCartService.getCartTotalPrice();

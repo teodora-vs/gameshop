@@ -14,9 +14,9 @@ public class UserRegisterDTO {
     @Size(min = 4, max = 32, message = "Full name must be between 4 and 32 symbols!")
     private String fullName;
 
-    @NotBlank(message = "Email cannot be blank")
-    @Email
-    private String email;
+//    @NotBlank(message = "Email cannot be blank")
+//    @Email
+//    private String email;
 
     @NotBlank
     @Size(min = 4)
@@ -45,14 +45,14 @@ public class UserRegisterDTO {
         return this;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public UserRegisterDTO setEmail(String email) {
-        this.email = email;
-        return this;
-    }
+//    public String getEmail() {
+//        return email;
+//    }
+//
+//    public UserRegisterDTO setEmail(String email) {
+//        this.email = email;
+//        return this;
+//    }
 
     public String getPassword() {
         return password;

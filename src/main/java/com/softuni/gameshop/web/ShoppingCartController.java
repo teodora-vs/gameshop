@@ -23,13 +23,10 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/add-to-cart/{id}")
-    public String addToCart(@PathVariable Long id, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String addToCart(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         shoppingCartService.addToCart(id);
 
-        session.setAttribute("itemAddedToCart", true);
-
         redirectAttributes.addFlashAttribute("itemAddedToCartMessage", "Item successfully added to the cart!");
-
         return "redirect:/cart";
     }
 

@@ -9,11 +9,11 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-4">
-                <h2 class="text-center mb-4 text-white">Login</h2>
+                <h2 class="text-center text-white mb-3">Login</h2>
                 <form th:method="post"
                       th:action="@{/login}">
-                    <h3 class="mt-5 text-center">
-                        <strong th:if="${badCredentials}" class="rounded  pl-3 text-danger">
+                    <h3 th:if="${badCredentials}" class="mt-2 my-bg text-center">
+                        <strong  class="rounded pl-3 text-danger">
                             Invalid username or password.</strong>
                     </h3>
                     <div class="mb-3">

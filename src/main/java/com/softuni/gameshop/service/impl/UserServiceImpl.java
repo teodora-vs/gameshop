@@ -104,9 +104,6 @@ public class UserServiceImpl implements UserService {
 
     public Optional<UserEntity> getByUsername(String username){
         Optional<UserEntity> byUsername = this.userRepository.findByUsername(username);
-        if (byUsername.isEmpty()){
-            throw new UsernameNotFoundException("User with username " + username + " not found!" );
-        }
         return byUsername;
     }
 
