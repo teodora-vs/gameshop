@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
@@ -37,19 +38,22 @@ class UserServiceImplTest {
     @Mock
     private ModelMapper modelMapper;
 
-
     @Mock
     private UserRoleRepository userRoleRepository;
 
     @InjectMocks
     private UserServiceImpl userService;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+
     @Test
     void testRegisterUserSuccessfully() {
         UserRegisterDTO userRegisterDTO = new UserRegisterDTO();
         userRegisterDTO.setUsername("testUser");
-        userRegisterDTO.setPassword("password");
-        userRegisterDTO.setConfirmPassword("password");
+        userRegisterDTO.setPassword("test");
+        userRegisterDTO.setConfirmPassword("test");
 
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername("testUser");

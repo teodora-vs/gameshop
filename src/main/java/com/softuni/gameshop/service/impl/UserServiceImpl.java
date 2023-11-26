@@ -94,6 +94,10 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
+//        if (byUsername.get().getEmail() == null){
+//            return false;
+//        }
+
         currentRoles.add(userRole);
         user.setUserRoles(currentRoles);
         this.userRepository.save(user);

@@ -7,7 +7,6 @@ import java.time.Year;
 
 public class YearNotInFutureValidator implements ConstraintValidator<YearNotInFuture, Number> {
 
-
     @Override
     public boolean isValid(Number value, ConstraintValidatorContext context) {
         if (value == null){

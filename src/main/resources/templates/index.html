@@ -16,17 +16,16 @@
         <p style="font-size: 24px">Anonymous !</p>
     </th:block>
     <th:block sec:authorize="hasRole('USER')">
-        <h3 class="mb-3 pt-3">Click <a href="/games">here</a> to browse our latest PC games!</h3>
+        <h3 class=" pt-3">Click <a href="/games">here</a> to browse our latest PC games!</h3>
     </th:block>
     <h4 th:if="${confirmed == false}" class="mt-4">
-        <p class="text-center" style="color: #919090; font-size: 22px">or</p>
-        <h4 class="mb-3" style="color: #7c7c7c">enter your email address below to confirm your profile.</h4>
+        <h4 class="mb-3" style="color: #7c7c7c">or enter your email address below to confirm your profile.</h4>
         <div class="pt-3 pb-3" style="font-size: 18px ; color: #e86473">
-            <strong>Note:</strong> Unconfirmed user profiles without emails will be deleted after a certain time.
+            <strong>Note:</strong> Unconfirmed user profiles will be deleted after a certain time.
             Full functionality, such as ordering and reviewing games, requires email confirmation.
         </div>
         <form th:action="@{/enter-email}" method="post" th:object="${addEmailDTO}">
-            <div class="row justify-content-center pt-2">
+            <div class="row justify-content-center pt-2 pb-4">
                 <div class="col-md-4">
                     <div class="input-group input-group-sm mb-3">
                         <label for="email" class="sr-only">Enter your email:</label>
@@ -50,16 +49,15 @@
         <h4><a href="/register">Register</a> to view game details and place an order.</h4><br>
         <h5 class="pt-1 pb-2" style="color: grey">Already have an account? Log in <a href="/login">here</a>.</h5>
     </th:block>
-    <th:block class="pb-3 mt-4" sec:authorize="hasRole('ADMIN')">
+    <th:block sec:authorize="hasRole('ADMIN')">
             <button class="btn btn-success mr-3" onclick="window.location.href='/games/add'">
                 <h4>Add new game</h4>
             </button>
-            <button class="btn btn-info mr-3" onclick="window.location.href='/orders'">
-                <h4>See all orders</h4>
+          <button class="btn btn-warning mr-3" onclick="window.location.href='/admin/add'">
+            <h4>Add admin</h4>
             </button>
-
-            <button class="btn btn-warning" onclick="window.location.href='/admin/add'">
-                <h4>Add admin</h4>
+            <button class="btn btn-info " onclick="window.location.href='/orders'">
+                <h4>See all orders</h4>
             </button>
     </th:block>
 </div>

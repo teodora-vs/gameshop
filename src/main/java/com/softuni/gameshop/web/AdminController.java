@@ -99,7 +99,6 @@ public class AdminController {
 
     @PostMapping("/games/delete/{id}")
     public String deleteGame(@PathVariable Long id) {
-        //TODO : fix
         this.gameService.deleteGame(id);
         return "redirect:/games";
     }

@@ -120,11 +120,6 @@ public class GameServiceImpl implements GameService {
         return this.gameRepository.existsByTitleAndIdNot(gameTitle, id);
     }
 
-    @Override
-    public void deleteMarkedGames() {
-    }
-
-
     public GameSummaryDTO mapAsCard(Game game){
         return modelMapper.map(game, GameSummaryDTO.class);
     }

@@ -5,11 +5,9 @@ import com.softuni.gameshop.model.UserEntity;
 import com.softuni.gameshop.model.UserRole;
 import com.softuni.gameshop.repository.ShoppingCartRepository;
 import com.softuni.gameshop.repository.UserRepository;
-import com.softuni.gameshop.repository.UserRoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,7 +26,7 @@ public class ScheduledTask {
         this.shoppingCartRepository = shoppingCartRepository;
     }
 
-    @Scheduled(cron = "0 */10 * * * *")
+    @Scheduled(cron = "0 0 * * * *")
     public void deleteUsersWithNullEmails() {
         List<UserEntity> usersWithNullEmails = userRepository.findByEmailIsNull();
 
