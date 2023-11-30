@@ -6,25 +6,29 @@
 <div>
     <nav th:replace="~{fragments/navigation}"></nav>
 </div>
-<div class="container mt-4 genre-dropdown text-white">
-    <form action="/games/byGenre" method="get">
-        <div class="row g-2 align-items-center">
-            <div class="col-md-6 col-lg-4">
-                <label for="genre" class="form-label">Select Genre:</label>
-                <select id="genre" name="genre" class="form-select">
-                    <option value="" th:selected="${selectedGenre == null}">All Genres</option>
-                    <option th:each="genre : ${genres}" th:value="${genre}" th:text="${genre}" th:selected="${genre == selectedGenre}"></option>
-                </select>
-            </div>
-            <div class="col-md-6 col-lg-2" style="margin-left: -150px">
-                <button type="submit" class="btn btn-primary btn-md">Filter</button>
-            </div>
-        </div>
-    </form>
 
-</div>
 <div class="container mt-2 justify-content-center align-items-center">
-    <h2 class="text-white mb-3">Latest Games:</h2>
+    <h1 class="text-white mb-3 pt-2">
+        <span class="my-bg" style="padding: 5px; border-radius: 2px;">Latest Games</span>
+    </h1>
+
+    <div class="container mt-3 mb-3 genre-dropdown text-white">
+        <form action="/games/byGenre" method="get">
+            <div class="row g-2 align-items-center">
+                <div class="col-md-6 col-lg-4">
+                    <label for="genre" class="form-label">Select Genre: </label>
+                    <select id="genre" name="genre" class="form-select">
+                        <option value="" th:selected="${selectedGenre == null}">All Genres</option>
+                        <option th:each="genre : ${genres}" th:value="${genre}" th:text="${genre}" th:selected="${genre == selectedGenre}"></option>
+                    </select>
+                </div>
+                <div class="col-md-6 col-lg-2" style="margin-left: -150px">
+                    <button type="submit" class="btn btn-primary btn-md">Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <div class="row mx-auto">
         <div class="col-md-4 mb-4" th:each="game : ${games}">
             <div class="card" style="width: 100%; height: 700px">

@@ -25,17 +25,23 @@
                 <p><strong>Release Year:</strong> <span th:text="*{releaseYear}"></span></p>
                 <p class="mb-3" ><strong>Description:</strong><br><span th:text="*{description}"></span></p>
                 <p class="mb-3"><strong>Price:</strong> $<span th:text="*{price}"></span></p>
-                <p th:if="*{deleted}" class="text-danger">Out of Stock</p>
+                <p th:if="*{deleted || quantity == 0}" class="text-danger">Out of Stock</p>
+                <p sec:authorize="hasRole('USER')" th:if="*{quantity <  3 && quantity != 0 && deleted == false}" class="text-danger">Hurry up! Less than 3 left in stock</p>
+                <div sec:authorize="hasRole('ADMIN')" th:unless="*{deleted}">
+                    <label for="quantity" class="form-label text-white">Remaining quantity:</label>
+                    <span th:utext="*{quantity}" class="text-white"></span>
+                </div>
                 <div class="mt-3 row">
-                    <a th:unless="${game.deleted}" sec:authorize="hasRole('USER')" th:href="@{'/add-to-cart/' + ${game.id}}"
+                    <a th:if="${game.deleted == false && game.quantity > 0}" sec:authorize="hasRole('USER')" th:href="@{'/add-to-cart/' + ${game.id}}"
                        class="btn btn-success ml-2 mr-2">Add to cart</a>
                     <a th:href="*{videoURL}" class="btn btn-primary mr-2 ml-2" target="_blank">Watch Trailer</a>
-                    <form th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+                    <form sec:authorize="hasRole('ADMIN')"
+                          th:if="${game.deleted == false}"
                           th:action="@{'/games/edit/' + ${game.id}}"
                           th:method="GET">
                         <button class="btn btn-warning btn-sm ml-2" type="submit">Edit</button>
                     </form>
-                    <form sec:authorize="hasRole('ADMIN')" th:action="@{'/games/delete/' + ${game.id}}" th:method="POST"  onsubmit="return confirmDelete()">
+                    <form sec:authorize="hasRole('ADMIN')" th:if="${game.deleted == false}" th:action="@{'/games/delete/' + ${game.id}}" th:method="POST"  onsubmit="return confirmDelete()">
                         <button class="btn btn-danger btn-sm ml-2" type="submit">Delete</button>
                     </form>
                 </div>
@@ -45,7 +51,7 @@
             </div>
             <div class="col-md-12 mt-4">
                 <div class="mt-4">
-                    <form th:if="${confirmed != false}" th:action="@{'/games/' + ${game.id} + '/add-review'}"
+                    <form sec:authorize="hasRole('USER')" th:if="${confirmed != false && game.deleted == false}" th:action="@{'/games/' + ${game.id} + '/add-review'}"
                           th:method="POST" th:object="${addReviewDTO}">
                         <h3 class="mb-3">Post a review</h3>
                         <input type="hidden" name="gameId" th:value="${game.id}">

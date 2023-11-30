@@ -5,10 +5,13 @@ import com.softuni.gameshop.model.DTO.game.EditGameDTO;
 import com.softuni.gameshop.model.DTO.game.GameDetailsDTO;
 import com.softuni.gameshop.model.DTO.order.AdminOrderDTO;
 import com.softuni.gameshop.model.DTO.order.AdminOrderDetailsDTO;
+import com.softuni.gameshop.model.Game;
 import com.softuni.gameshop.model.enums.GenreNamesEnum;
+import com.softuni.gameshop.repository.GameRepository;
 import com.softuni.gameshop.service.GameService;
 import com.softuni.gameshop.service.OrderService;
 import com.softuni.gameshop.service.UserService;
+import com.softuni.gameshop.service.exception.ObjectNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,18 +20,21 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AdminController {
 
-    private GameService gameService;
-    private OrderService orderService;
-    private UserService userService;
+    private final GameService gameService;
+    private final OrderService orderService;
+    private final UserService userService;
+    private GameRepository gameRepository;
 
-    public AdminController(GameService gameService, OrderService orderService, UserService userService) {
+    public AdminController(GameService gameService, OrderService orderService, UserService userService, GameRepository gameRepository) {
         this.gameService = gameService;
         this.orderService = orderService;
         this.userService = userService;
+        this.gameRepository = gameRepository;
     }
 
     @ModelAttribute("addGameDTO")
@@ -69,6 +75,10 @@ public class AdminController {
 
     @GetMapping("/games/edit/{id}")
     public String getEditGameForm(@PathVariable Long id, Model model) {
+        Optional<Game> optionalGame = this.gameRepository.findById(id);
+        if (optionalGame.get().isDeleted()){
+            throw new ObjectNotFoundException("Game with id: "+ id + " not found");
+        }
         GameDetailsDTO gameDetailsDTO = this.gameService.getGameDetails(id);
 
         EditGameDTO editGameDTO = this.gameService.convertToEditGameDTO(gameDetailsDTO);

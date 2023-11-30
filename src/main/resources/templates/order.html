@@ -8,7 +8,9 @@
 </div>
 <br>
 <div class="container text-white">
-  <h1 class="mb-3">Shopping Cart</h1>
+    <h1 class="mb-3">
+        <span class="my-bg" style="padding: 5px; border-radius: 2px;">Shopping Cart</span>
+    </h1>
   <table class="table table-bordered table-hover table-dark">
     <thead>
     <tr>
@@ -45,7 +47,7 @@
 <div th:if="${confirmed == false}" class="container mt-4 text-white">
     <div class="row justify-content-center">
         <div class="my-bg col-md-5" style="padding: 10px; border-radius: 10px;">
-            <h4 class="text-center text-danger mb-1 " style="color: #969fa1">Please confirm your profile <a href="/">here</a> to proceed with your order.</h4>
+            <h4 class="text-center text-danger mb-2 " style="color: #969fa1">Please confirm your profile <a href="/">here</a> to proceed with your order.</h4>
         </div>
     </div>
 </div>

@@ -7,8 +7,9 @@
 <div>
   <nav th:replace="~{fragments/navigation}"></nav>
   <div class="container text-white">
-    <h1 class="mt-4">Order Details</h1>
-
+      <h1 class="mb-3 mt-4">
+          <span class="my-bg" style="padding: 7px; border-radius: 2px;">Order Details</span>
+      </h1>
     <div  th:if="${orderDetails}" class="mt-4 text-dark">
       <div class="">
         <div style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
@@ -18,6 +19,7 @@
           <p ><strong>Order Date:</strong> <span th:text="${#temporals.format(orderDetails.orderDateTime, 'yyyy-MM-dd HH:mm')}"></span></p>
           <p ><strong>Receiver:</strong> <span th:text="${orderDetails.receiver}"></span></p>
           <p ><strong>Shipping Address:</strong> <span th:text="${orderDetails.address}"></span></p>
+            <p><strong>Email Address:</strong> <span th:text="${orderDetails.email}"></span></p>
           <p ><strong>Phone Number:</strong> <span th:text="${orderDetails.phoneNumber}"></span></p>
           <p ><strong>Total Price:</strong> <span th:text="${orderDetails.totalPrice}"></span></p>
         </div>

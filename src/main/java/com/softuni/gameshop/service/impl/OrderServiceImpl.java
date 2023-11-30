@@ -15,7 +15,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
         order.setCartItems(orderedCartItems);
 
         shoppingCart.getCartItems().clear();
-
+        shoppingCart.getCartItems().clear();
         shoppingCartRepository.save(shoppingCart);
         orderRepository.save(order);
     }
@@ -133,10 +132,13 @@ public class OrderServiceImpl implements OrderService {
 
         AdminOrderDetailsDTO map = modelMapper.map(byId.get(), AdminOrderDetailsDTO.class);
         map.setReceiver(byId.get().getUser().getFullName());
+        if (!byId.get().getUser().getEmail().isEmpty()){
+            map.setEmail(byId.get().getUser().getEmail());
+        }
         return map;
     }
 
-    public UserEntity getCurrentUser(){
+    private UserEntity getCurrentUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
 

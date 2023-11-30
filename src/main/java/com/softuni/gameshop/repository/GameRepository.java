@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
 
-    @Query("SELECT g FROM Game g WHERE g.isDeleted = false ORDER BY g.releaseYear DESC")
+    @Query("SELECT g FROM Game g WHERE g.isDeleted = false AND g.quantity > 0 ORDER BY g.releaseYear DESC")
     Page<Game> findAllNotDeletedOrderByReleaseYearDesc(Pageable pageable);
 
     @Query("SELECT g FROM Game g WHERE g.genre.name = :genreName")

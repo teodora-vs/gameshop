@@ -1,10 +1,10 @@
 package com.softuni.gameshop.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "games")
@@ -41,8 +41,19 @@ public class Game {
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
     private List<Review> reviews;
 
+    @Column(nullable = false)
+    private Integer quantity ;
 
     public Game() {
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public Game setQuantity(Integer quantity) {
+        this.quantity = quantity;
+        return this;
     }
 
     public Long getId() {

@@ -11,6 +11,8 @@ public class AdminOrderDetailsDTO extends OrderDetailsDTO {
 
     private String receiver;
 
+    private String email;
+
     public AdminOrderDetailsDTO() {
     }
 
@@ -29,6 +31,15 @@ public class AdminOrderDetailsDTO extends OrderDetailsDTO {
 
     public AdminOrderDetailsDTO setReceiver(String receiver) {
         this.receiver = receiver;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public AdminOrderDetailsDTO setEmail(String email) {
+        this.email = email;
         return this;
     }
 }

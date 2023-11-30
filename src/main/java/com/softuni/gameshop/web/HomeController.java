@@ -19,7 +19,7 @@ import java.util.Optional;
 public class HomeController {
 
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public HomeController(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -40,7 +40,7 @@ public class HomeController {
     }
 
     @PostMapping("/enter-email")
-    public String enterEmail(@ModelAttribute("addEmailDTO") @Valid AddEmailDTO addEmailDTO, Model model, RedirectAttributes redirectAttributes) {
+    public String enterEmail(@ModelAttribute("addEmailDTO") @Valid AddEmailDTO addEmailDTO, RedirectAttributes redirectAttributes) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.isAuthenticated()){
             String currentUsername = authentication.getName();

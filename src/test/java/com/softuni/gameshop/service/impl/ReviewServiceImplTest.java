@@ -3,16 +3,12 @@ package com.softuni.gameshop.service.impl;
 
 import com.softuni.gameshop.model.DTO.AddReviewDTO;
 import com.softuni.gameshop.model.Game;
-import com.softuni.gameshop.model.Genre;
 import com.softuni.gameshop.model.Review;
 import com.softuni.gameshop.model.UserEntity;
-import com.softuni.gameshop.model.enums.GenreNamesEnum;
 import com.softuni.gameshop.repository.GameRepository;
 import com.softuni.gameshop.repository.ReviewRepository;
 import com.softuni.gameshop.repository.UserRepository;
 import com.softuni.gameshop.service.exception.ObjectNotFoundException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -21,14 +17,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static org.hamcrest.Matchers.any;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

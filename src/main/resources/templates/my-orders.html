@@ -7,21 +7,19 @@
   <nav th:replace="~{fragments/navigation}"></nav>
 </div>
 <div class="container text-white">
-  <h1 class="mt-4 mb-3">My Orders</h1>
-
+    <h1 class="mb-3 mt-4">
+        <span class="my-bg" style="padding: 5px; border-radius: 2px;">My Orders</span>
+    </h1>
     <div th:if="${orderSuccessMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
         <strong th:text="${orderSuccessMessage}"></strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
     </div>
   <div  th:if="${orders.size() == 0}" class="text-center align-items-center justify-content-center" style="background-color: rgba(0, 0, 0, 0.9);
             padding: 20px;
             border-radius: 24px">
     <h3 class="mt-4">You haven't made any orders yet. </h3>
-    <h5 class="mt-5 mb-4">Click <a href="/games">here</a> to browse our latest games!</h5>
+    <h4 class="mt-5 mb-4" style="color: grey;">Click <a href="/games">here</a> to browse our latest games!</h4>
   </div>
-  <div  th:if="${orders.size() > 0}" class="text-center align-items-center justify-content-center">
+  <div th:if="${orders.size() > 0}" class="text-center align-items-center justify-content-center">
   <table class="table table-bordered table-hover table-dark">
     <thead>
     <tr>

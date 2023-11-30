@@ -7,25 +7,19 @@ import com.softuni.gameshop.model.DTO.UserRegisterDTO;
 import com.softuni.gameshop.model.UserEntity;
 import com.softuni.gameshop.model.UserRole;
 import com.softuni.gameshop.model.enums.UserRoleEnum;
-import com.softuni.gameshop.repository.ShoppingCartRepository;
 import com.softuni.gameshop.repository.UserRepository;
 import com.softuni.gameshop.repository.UserRoleRepository;
-import com.softuni.gameshop.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

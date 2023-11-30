@@ -80,6 +80,10 @@ public class GameServiceImpl implements GameService {
         Game existingGame = this.gameRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Game with id: " + id + " not found!"));
 
+        if (existingGame.isDeleted() == true){
+            return;
+        }
+
         this.modelMapper.map(editGameDTO, existingGame);
 
         Genre genre = this.genreRepository.findByName(editGameDTO.getGenre()).orElse(null);

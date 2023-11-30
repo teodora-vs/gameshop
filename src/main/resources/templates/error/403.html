@@ -8,7 +8,10 @@
   <nav th:replace="~{fragments/navigation}"></nav>
 </div>
 <div class="container-fluid">
-  <h5 class="text-center text-white mt-5">Oopps, you are not authorized to perform this action.</h5>
+    <h5 class="text-center text-white mt-5">
+      <span class="my-bg" style="padding: 5px; border-radius: 2px;">Oopps, you are not authorized to perform this action.
+      </span>
+    </h5>
   <h5 class="text-center text-white mt-">Go to <a href="/">homepage...</a></h5>
   <img class="mx-auto d-block" th:src="@{/images/broken2.png}" alt="Broken Controller">
 </div>

@@ -28,7 +28,18 @@ public class GameDetailsDTO {
 
     private List<Review> reviews;
 
+    private Integer quantity;
+
     public GameDetailsDTO() {
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public GameDetailsDTO setQuantity(Integer quantity) {
+        this.quantity = quantity;
+        return this;
     }
 
     public Long getId() {

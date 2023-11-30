@@ -1,8 +1,9 @@
 package com.softuni.gameshop.web;
 
 import com.softuni.gameshop.model.DTO.CartItemDTO;
+import com.softuni.gameshop.model.Game;
+import com.softuni.gameshop.repository.GameRepository;
 import com.softuni.gameshop.service.ShoppingCartService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,21 +13,28 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ShoppingCartController {
 
-    private ShoppingCartService shoppingCartService;
+    private final ShoppingCartService shoppingCartService;
+    private final GameRepository gameRepository;
 
-    public ShoppingCartController(ShoppingCartService shoppingCartService) {
+    public ShoppingCartController(ShoppingCartService shoppingCartService, GameRepository gameRepository) {
         this.shoppingCartService = shoppingCartService;
+        this.gameRepository = gameRepository;
     }
 
     @GetMapping("/add-to-cart/{id}")
     public String addToCart(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+
         shoppingCartService.addToCart(id);
 
-        redirectAttributes.addFlashAttribute("itemAddedToCartMessage", "Item successfully added to the cart!");
+        Optional<Game> optGame = gameRepository.findById(id);
+        redirectAttributes.addFlashAttribute("itemAddedToCartMessage" ,
+                optGame.get().getTitle() + " was successfully added to your cart!");
+
         return "redirect:/cart";
     }
 
@@ -42,6 +50,7 @@ public class ShoppingCartController {
     @PostMapping("/cart/remove/{id}")
     public String deleteCartItem(@PathVariable Long id) {
         shoppingCartService.removeFromCart(id);
+
         return "redirect:/cart";
     }
     

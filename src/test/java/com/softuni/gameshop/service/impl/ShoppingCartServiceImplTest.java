@@ -9,9 +9,11 @@ import com.softuni.gameshop.repository.UserRoleRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +24,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 @WithMockUser(username = "testUser")
+@ExtendWith(MockitoExtension.class)
 class ShoppingCartServiceImplTest {
 
     @Mock
@@ -46,9 +49,9 @@ class ShoppingCartServiceImplTest {
     private Authentication authentication;
 
 
+
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
@@ -64,7 +67,7 @@ class ShoppingCartServiceImplTest {
         CartItem cartItem = new CartItem();
         cartItem.setId(1L);
         cartItem.setQuantity(2);
-        cartItem.setGame(new Game());
+        cartItem.setGame(new Game().setQuantity(2));
         shoppingCart.setCartItems(Collections.singletonList(cartItem));
         user.setShoppingCart(shoppingCart);
 
@@ -83,6 +86,7 @@ class ShoppingCartServiceImplTest {
     void testAddToCart() {
         Game game = new Game();
         game.setId(1L);
+        game.setQuantity(1);
         UserRole userRole = new UserRole().setId(1L).setRoleName(UserRoleEnum.USER);
         UserEntity user = new UserEntity();
         user.setUserRoles(Collections.singletonList(userRole));

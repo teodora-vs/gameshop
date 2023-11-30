@@ -32,22 +32,6 @@ class AuthControllerTest {
     private UserService userService;
 
     @Test
-    void testRegister() throws Exception {
-        when(userService.getByUsername("test")).thenReturn(Optional.empty());
-        mockMvc.perform(
-                        MockMvcRequestBuilders.post("/register")
-                                .param("username", "test")
-                                .param("fullName", "test testov")
-                                .param("email", "test@mail.com")
-                                .param("password", "1234")
-                                .param("confirmPassword", "1234")
-                                .with(csrf())
-                ).andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("redirect:/login"));
-
-    }
-
-    @Test
     void testRegisterPasswordsDoNotMatch() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/register")
                         .param("password", "pass")

@@ -27,8 +27,8 @@ import java.util.Optional;
 @Controller
 public class GameController {
 
-    private GameService gameService;
-    private ReviewService reviewService;
+    private final GameService gameService;
+    private final ReviewService reviewService;
     private final UserRepository userRepository;
 
     public GameController(GameService gameService, ReviewService reviewService, UserRepository userRepository) {

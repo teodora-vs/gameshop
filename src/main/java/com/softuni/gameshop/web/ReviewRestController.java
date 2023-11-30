@@ -3,11 +3,8 @@ package com.softuni.gameshop.web;
 import com.softuni.gameshop.model.DTO.ReviewDTO;
 import com.softuni.gameshop.service.ReviewService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +12,7 @@ import java.util.stream.Collectors;
 @RestController
 public class ReviewRestController {
 
-    private ReviewService reviewService;
+    private final ReviewService reviewService;
 
     public ReviewRestController(ReviewService reviewService) {
         this.reviewService = reviewService;

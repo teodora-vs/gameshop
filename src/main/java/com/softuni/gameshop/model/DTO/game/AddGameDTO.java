@@ -32,7 +32,20 @@ public class AddGameDTO {
     @Pattern(regexp = "^((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$", message = "Invalid youtube url provided")
     private String videoURL;
 
+    @NotNull(message = "quantity is required!")
+    @Positive(message = "quantity must be a positive number!")
+    private Integer quantity;
+
     public AddGameDTO() {
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public AddGameDTO setQuantity(Integer quantity) {
+        this.quantity = quantity;
+        return this;
     }
 
     public String getTitle() {

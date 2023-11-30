@@ -1,7 +1,5 @@
 package com.softuni.gameshop.service.impl;
 
-
-import com.softuni.gameshop.model.Game;
 import com.softuni.gameshop.model.UserEntity;
 import com.softuni.gameshop.model.UserRole;
 import com.softuni.gameshop.model.enums.UserRoleEnum;

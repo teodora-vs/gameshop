@@ -77,6 +77,14 @@
            th:errors="*{price}">
         </p>
         <small id="priceHelp" class="form-text text-muted">Please use a dot (.) for decimal values (e.g., 29.99).</small>
+          <div class="mb-3">
+              <label for="quantity" class="form-label text-white">Quantity:</label>
+              <input type="number" id="quantity" name="quantity" th:field="*{quantity}" th:errorclass="is-invalid" value="1" min="1" class="form-control">
+              <p th:if="${#fields.hasErrors('quantity')}"
+                 class="errors alert alert-danger"
+                 th:errors="*{quantity}">
+              </p>
+          </div>
         <!-- Image URL -->
         <div class="mb-3 mt-2">
           <label for="imageUrl" class="form-label text-white">Image URL:</label>

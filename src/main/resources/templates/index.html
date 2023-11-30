@@ -25,20 +25,20 @@
             Full functionality, such as ordering and reviewing games, requires email confirmation.
         </div>
         <form th:action="@{/enter-email}" method="post" th:object="${addEmailDTO}">
-            <div class="row justify-content-center pt-2 pb-4">
+            <div class="row justify-content-center pt-2 pb-3">
                 <div class="col-md-4">
-                    <div class="input-group input-group-sm mb-3">
+                    <div class="input-group input-group-sm mb-2">
                         <label for="email" class="sr-only">Enter your email:</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
                     </div>
-                    <div th:if="${emailExists}" class="text-danger mb-2">
+                    <div th:if="${emailExists}" class="text-danger">
                         This email address is already taken.
                     </div>
                     <div th:if="${confirmed}" class="text-success">
                         You have successfully confirmed your email address!
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary mt-1">Submit</button>
+                        <button type="submit" class="btn btn-primary mt-2">Submit</button>
                     </div>
                 </div>
             </div>

@@ -1,11 +1,7 @@
 package com.softuni.gameshop.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
-import org.springframework.security.core.userdetails.User;
-
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

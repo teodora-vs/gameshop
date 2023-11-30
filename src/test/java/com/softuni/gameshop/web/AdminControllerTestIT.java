@@ -133,6 +133,7 @@ class AdminControllerTestIT {
                                 .param("imageURL", "https://example.com/thumbnail.jpg")
                                 .param("releaseYear", "2023")
                                 .param("genre", GenreNamesEnum.ADVENTURE.name())
+                                .param("quantity", "1")
                                 .with(csrf())
                 ).andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/games"));

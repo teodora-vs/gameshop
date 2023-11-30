@@ -6,6 +6,8 @@ import com.softuni.gameshop.repository.UserRoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 @Component
 public class UserRolesInit implements CommandLineRunner {
 
@@ -18,6 +20,7 @@ public class UserRolesInit implements CommandLineRunner {
     @Override
     public void run(String... args) {
         UserRoleEnum[] roleEnums = UserRoleEnum.values();
+
 
         for (UserRoleEnum roleEnum : roleEnums) {
             UserRole existingRole = userRoleRepository.findByRoleName(roleEnum);

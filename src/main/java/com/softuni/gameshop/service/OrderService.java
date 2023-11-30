@@ -7,6 +7,7 @@ import com.softuni.gameshop.model.UserEntity;
 import java.util.List;
 
 public interface OrderService {
+
     void addOrder(OrderDTO orderDTO);
 
     OrderDetailsDTO convertToOrderDetailsDTO(Order order);

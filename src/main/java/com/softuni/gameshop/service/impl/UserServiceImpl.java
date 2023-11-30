@@ -2,17 +2,14 @@ package com.softuni.gameshop.service.impl;
 
 
 import com.softuni.gameshop.model.DTO.UserRegisterDTO;
-import com.softuni.gameshop.model.ShoppingCart;
 import com.softuni.gameshop.model.UserEntity;
 import com.softuni.gameshop.model.UserRole;
 import com.softuni.gameshop.model.enums.UserRoleEnum;
-import com.softuni.gameshop.repository.ShoppingCartRepository;
 import com.softuni.gameshop.repository.UserRepository;
 import com.softuni.gameshop.repository.UserRoleRepository;
 import com.softuni.gameshop.service.UserService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class AuthController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public AuthController(UserService userService) {
         this.userService = userService;
