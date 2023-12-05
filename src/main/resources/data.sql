@@ -8,7 +8,7 @@ VALUES
      0, 31.00, 40 ,2020, 'Fallout 4', 'https://youtu.be/U3crIKmZTsA', 4),
     (3, 'In this smaller scale, back to basics Assassin`s caper, you play Basim, a young street thief seeking answers. Roam the richly-detailed, reactive and vibrant streets of 9th century Baghdad, uncovering the mysteries of the past as you fight to secure your future. Stalk the shadows.',
      'https://i.pinimg.com/736x/d0/17/55/d01755c0ce0f569ba3be83a7017cabab.jpg',
-     , 42.99, 100 ,2023,'Assassin`s Creed Mirage', 'https://youtu.be/XV4zVqb9vWc', 10),
+     0, 42.99, 100 ,2023,'Assassin`s Creed Mirage', 'https://youtu.be/XV4zVqb9vWc', 10),
     (5, 'Diablo 4 is the newest entry in the legendary dungeon-crawling action RPG. Players will fight against the horde of monsters controlled by Lilith, the daughter of Mephisto, one of the Great Evils, and called the "mother" of Sanctuary, the world in which the Diablo series takes place.',
      'https://image.api.playstation.com/vulcan/ap/rnd/202212/0522/Dzry5RAwU9HsJGXZ3PUSYgCa.jpg',
      0, 59.99, 300 ,2023, 'Diablo 4', 'https://youtu.be/XV4zVqb9vWc', 4),
