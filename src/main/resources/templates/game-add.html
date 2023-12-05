@@ -17,7 +17,7 @@
                 Game with this title already exists!</strong>
             </h2>
 
-            <div class="mb-3">
+            <div class="mb-2">
                 <label for="title" class="form-label text-white">Title:</label>
                 <input type="text" class="form-control" id="title" name="title" th:field="*{title}" th:errorclass="is-invalid">
                 <p th:if="${#fields.hasErrors('title')}"
@@ -52,7 +52,7 @@
             </div>
 
             <!-- Release Year -->
-            <div class="mb-3">
+            <div class="mb-2">
                 <label for="releaseYear" class="form-label text-white">Release Year:</label>
                 <input class="form-control" id=releaseYear name=releaseYear type="text" th:field="*{releaseYear}">
                 <p th:if="${#fields.hasErrors('releaseYear')}"
@@ -67,7 +67,7 @@
                class="errors alert alert-danger"
                th:errors="*{price}">
             </p>
-            <small id="priceHelp" class="form-text text-muted my-bg" style="padding: 2px">Please use a dot (.) for decimal values (e.g., 29.99).</small>
+            <small id="priceHelp" class="form-text text-muted my-bg mb-3" style="padding: 2px; padding-top: -5px">Please use a dot (.) for decimal values (e.g., 29.99).</small>
             <div class="mb-3">
                 <label for="quantity" class="form-label text-white">Quantity:</label>
                 <input type="number" id="quantity" name="quantity" th:field="*{quantity}" th:errorclass="is-invalid" value="1" min="1" class="form-control">

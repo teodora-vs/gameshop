@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setOrderDateTime(LocalDateTime.now());
         order.setUser(user);
-        order.setPhoneNumber("+359" + orderDTO.getPhoneNumber());
+        order.setPhoneNumber("+359" + orderDTO.getPhoneNumber().replaceAll(" ", ""));
         order.setAddress(orderDTO.getAddress());
         order.setTotalPrice(shoppingCart.getTotal());
 

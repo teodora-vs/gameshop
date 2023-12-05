@@ -12,6 +12,7 @@ import com.softuni.gameshop.repository.GameRepository;
 import com.softuni.gameshop.repository.GenreRepository;
 import com.softuni.gameshop.repository.ReviewRepository;
 import com.softuni.gameshop.service.exception.ObjectNotFoundException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -121,6 +122,25 @@ class GameServiceImplTest {
         verify(modelMapper, times(1)).map(eq(editGameDTO), same(existingGame));
 
         verify(gameRepository, times(1)).save(existingGame);
+    }
+
+    @Test
+    void testEditGameDeletedGame() {
+        Long gameId = 1L;
+        EditGameDTO editGameDTO = new EditGameDTO();
+
+        Game deletedGame = new Game()
+                .setId(gameId)
+                .setTitle("Deleted Game")
+                .setGenre(new Genre().setName(GenreNamesEnum.ADVENTURE))
+                .setDeleted(true);
+
+        when(gameRepository.findById(gameId)).thenReturn(Optional.of(deletedGame));
+
+        assertTrue(gameRepository.findById(gameId).get().isDeleted());
+        assertThrows(ObjectNotFoundException.class, () -> gameService.editGame(gameId, editGameDTO));
+
+        verify(gameRepository, never()).save(any());
     }
 
 

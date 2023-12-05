@@ -25,6 +25,8 @@ public interface GameService {
 
     Page<GameSummaryDTO> getGamesByGenre(GenreNamesEnum selectedGenre, Pageable pageable);
 
+    GameSummaryDTO getTopRatedGame();
+
     boolean exists(String title);
 
     boolean existsWithSameTitle(Long id, String gameTitle);

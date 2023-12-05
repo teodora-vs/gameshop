@@ -7,7 +7,7 @@
     <nav th:replace="~{fragments/navigation}"></nav>
 </div>
 <br>
-<div class="container mt-3 text-center text-white my-bg pt-4">
+<div class="container mt-3 text-center text-white my-bg pt-3">
     <h1>Welcome to GameShop,</h1>
     <th:block th:if="${loggedInUsername != null}">
         <p style="font-size: 24px" th:text="${loggedInUsername} + '!'"></p>
@@ -25,7 +25,7 @@
             Full functionality, such as ordering and reviewing games, requires email confirmation.
         </div>
         <form th:action="@{/enter-email}" method="post" th:object="${addEmailDTO}">
-            <div class="row justify-content-center pt-2 pb-3">
+            <div class="row justify-content-center pt-2 pb-2">
                 <div class="col-md-4">
                     <div class="input-group input-group-sm mb-2">
                         <label for="email" class="sr-only">Enter your email:</label>
@@ -44,6 +44,7 @@
             </div>
         </form>
     </h4>
+
     <th:block sec:authorize="!isAuthenticated()">
         <h3 class="pt-3">Click <a href="/games">here</a> to browse our latest PC games!</h3><br>
         <h4><a href="/register">Register</a> to view game details and place an order.</h4><br>
@@ -60,6 +61,29 @@
                 <h4>See all orders</h4>
             </button>
     </th:block>
+
 </div>
+<div th:if="${topRatedGame != null}" class="container mt-3 text-white game-details-container my-bg" style="font-size: 20px ; letter-spacing: 1px; max-width: 800px; padding: 6px; border-radius: 6px">
+    <h3 class="mb-2 text-center" style="color: #b4b3b3">Our top rated game: </h3>
+    <div class="row pt-3">
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <img th:src="*{topRatedGame.imageURL}" class="img-fluid mx-auto" alt="Game Image" style="max-width: 100%;height: 350px;">
+        </div>
+        <div class="col-md-6">
+            <h2 class="mb-3 mt-2" th:text="*{topRatedGame.title}"></h2>
+            <p class="mt-2"><strong>Average Score: </strong>
+                <span th:if="${averageScore != 0}" th:each="star : ${#numbers.sequence(1, 5)}"
+                      th:utext="${averageScore >= star - 0.5 ? '&#9733;' : '&#9734;'}"
+                      style="color: #ffc107;"></span>
+                <span th:if="${averageScore == 0}" th:utext="${'&#9734;&#9734;&#9734;&#9734;&#9734;'}" style="color: #ccc;"></span>
+            </p>
+            <p><strong>Genre: </strong> <span th:text="*{topRatedGame.genreName}"></span></p>
+            <p><strong>Release Year: </strong> <span th:text="*{topRatedGame.releaseYear}"></span></p>
+            <p class="mb-3"><strong>Price: </strong> $<span th:text="*{topRatedGame.price}"></span></p>
+            <a th:href="@{'/games/' + ${topRatedGame.id}}" class="btn btn-primary btn-lg mt-2">Details</a>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

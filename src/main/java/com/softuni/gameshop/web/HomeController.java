@@ -1,7 +1,10 @@
 package com.softuni.gameshop.web;
 import com.softuni.gameshop.model.DTO.AddEmailDTO;
+import com.softuni.gameshop.model.DTO.game.GameDetailsDTO;
+import com.softuni.gameshop.model.DTO.game.GameSummaryDTO;
 import com.softuni.gameshop.model.UserEntity;
 import com.softuni.gameshop.repository.UserRepository;
+import com.softuni.gameshop.service.GameService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,11 +21,12 @@ import java.util.Optional;
 @Controller
 public class HomeController {
 
-
     private final UserRepository userRepository;
+    private final GameService gameService;
 
-    public HomeController(UserRepository userRepository) {
+    public HomeController(UserRepository userRepository, GameService gameService) {
         this.userRepository = userRepository;
+        this.gameService = gameService;
     }
 
     @GetMapping("/")
@@ -35,6 +39,11 @@ public class HomeController {
                 model.addAttribute("confirmed", false);
             }
         }
+
+        GameSummaryDTO topRatedGame = gameService.getTopRatedGame();
+        Double averageScore = gameService.getAverageScore(topRatedGame.getId());
+        model.addAttribute("topRatedGame", topRatedGame);
+        model.addAttribute("averageScore", averageScore);
 
         return "index";
     }

@@ -19,7 +19,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -48,31 +50,10 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public GameDetailsDTO getGameDetails(Long id) {
-
-        Game byId = this.gameRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Game with id: " + id + " not found!"));
-        GameDetailsDTO gameDetailsDTO = modelMapper.map(byId, GameDetailsDTO.class);
-        gameDetailsDTO.setReviews(this.reviewRepository.findAllByGameId(id));
-        return gameDetailsDTO;
-    }
-
-    public EditGameDTO convertToEditGameDTO(GameDetailsDTO gameDetailsDTO){
-        EditGameDTO map = modelMapper.map(gameDetailsDTO, EditGameDTO.class);
-        return map;
-    }
-
-    @Override
-    public Page<GameSummaryDTO> getAllGames(Pageable pageable) {
-        Page<Game> undeletedGamesPage = gameRepository.findAllNotDeletedOrderByReleaseYearDesc(pageable);
-        return undeletedGamesPage.map(this::mapAsCard);
-    }
-
-    @Override
     public void deleteGame(Long id) {
         Game byId = gameRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Game with id: " + id + " not found!"));
-
-            byId.setDeleted(true);
-            gameRepository.save(byId);
+        byId.setDeleted(true);
+        gameRepository.save(byId);
     }
 
     @Override
@@ -80,8 +61,8 @@ public class GameServiceImpl implements GameService {
         Game existingGame = this.gameRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Game with id: " + id + " not found!"));
 
-        if (existingGame.isDeleted() == true){
-            return;
+        if (existingGame.isDeleted()){
+            throw new ObjectNotFoundException("Game with id: " + id + " not found!");
         }
 
         this.modelMapper.map(editGameDTO, existingGame);
@@ -93,9 +74,23 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public Page<GameSummaryDTO> getAllGames(Pageable pageable) {
+        Page<Game> undeletedGamesPage = gameRepository.findAllNotDeletedOrderByReleaseYearDesc(pageable);
+        return undeletedGamesPage.map(this::mapAsCard);
+    }
+
+    @Override
     public Page<GameSummaryDTO> getGamesByGenre(GenreNamesEnum selectedGenre, Pageable pageable) {
         Page<Game> byGenre = this.gameRepository.findByGenre(selectedGenre, pageable);
         return byGenre.map(this::mapAsCard);
+    }
+
+    @Override
+    public GameDetailsDTO getGameDetails(Long id) {
+        Game byId = this.gameRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Game with id: " + id + " not found!"));
+        GameDetailsDTO gameDetailsDTO = modelMapper.map(byId, GameDetailsDTO.class);
+        gameDetailsDTO.setReviews(this.reviewRepository.findAllByGameId(id));
+        return gameDetailsDTO;
     }
 
     @Override
@@ -115,6 +110,17 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public GameSummaryDTO getTopRatedGame() {
+        List<Game> allGames = gameRepository.findAll();
+
+        Optional<Game> topRatedGame = allGames.stream()
+                .filter(game -> !game.isDeleted() && game.getQuantity() > 0)
+                .max(Comparator.comparingDouble(game -> getAverageScore(game.getId())));
+
+        return topRatedGame.map(this::mapAsCard).orElse(null);
+    }
+
+    @Override
     public boolean exists(String title) {
         return this.gameRepository.findByTitle(title).isPresent();
     }
@@ -126,5 +132,11 @@ public class GameServiceImpl implements GameService {
 
     public GameSummaryDTO mapAsCard(Game game){
         return modelMapper.map(game, GameSummaryDTO.class);
+    }
+
+    @Override
+    public EditGameDTO convertToEditGameDTO(GameDetailsDTO gameDetailsDTO){
+        EditGameDTO map = modelMapper.map(gameDetailsDTO, EditGameDTO.class);
+        return map;
     }
 }

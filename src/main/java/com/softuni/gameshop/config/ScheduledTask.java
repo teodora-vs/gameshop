@@ -23,10 +23,9 @@ public class ScheduledTask {
         this.shoppingCartRepository = shoppingCartRepository;
     }
 
-    @Scheduled(cron = "0 1 0 * * *") // Run every day at 00:01:00
+    @Scheduled(cron = "0 1 0 * * *")          // Run every day at 00:01:00
     public void deleteUsersWithNullEmails() {
         List<UserEntity> usersWithNullEmails = userRepository.findByEmailIsNull();
-
         logger.info("Found {} users with null emails", usersWithNullEmails.size());
 
         for (UserEntity user : usersWithNullEmails) {
@@ -34,13 +33,12 @@ public class ScheduledTask {
             user.setUserRoles(null);
             userRepository.save(user);
             userRepository.delete(user);
-            logger.info("Deleted user with id: {} - ", user.getId());
+            logger.info("Deleted user with id: {} ", user.getId());
         }
-
         logger.info("Scheduled task completed");
     }
 
-    private void deleteAssociatedShoppingCarts(UserEntity user) {
+       private void deleteAssociatedShoppingCarts(UserEntity user) {
         Optional<ShoppingCart> shoppingCart = shoppingCartRepository.findByUserId(user.getId());
         if (shoppingCart.isPresent()) {
             shoppingCartRepository.delete(shoppingCart.get());

@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 
 public class AddEmailDTO {
 
+
     @Email
     private String email;
 
@@ -14,8 +15,4 @@ public class AddEmailDTO {
         return email;
     }
 
-    public AddEmailDTO setEmail(String email) {
-        this.email = email;
-        return this;
-    }
 }
