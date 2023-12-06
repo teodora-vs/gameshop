@@ -12,7 +12,7 @@
       </h1>
     <div  th:if="${orderDetails}" class="mt-4 text-dark">
       <div class="">
-        <div class=" text-white my-bg">
+        <div class=" text-white my-bg" style="border-radius: 10px; border: 1px solid dimgrey">
           <p ><strong>Order ID:</strong> <span th:text="${orderDetails.id}"></span></p>
           <p ><strong>Order Date:</strong> <span th:text="${#temporals.format(orderDetails.orderDateTime, 'yyyy-MM-dd HH:mm')}"></span></p>
           <p ><strong>Shipping Address:</strong> <span th:text="${orderDetails.address}"></span></p>

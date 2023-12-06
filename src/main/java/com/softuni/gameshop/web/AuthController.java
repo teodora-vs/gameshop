@@ -52,18 +52,19 @@ public class AuthController {
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes) {
 
-        if (!userRegisterDTO.getPassword().equals(userRegisterDTO.getConfirmPassword())){
-            redirectAttributes.addFlashAttribute("userRegisterDTO", userRegisterDTO);
-            redirectAttributes.addFlashAttribute("passwordsDontMatch", true);
-            redirectAttributes.addFlashAttribute(
-                    "org.springframework.validation.BindingResult.userRegisterDTO", bindingResult);
-            return "redirect:/register";
-        }
 
         if (userService.getByUsername(userRegisterDTO.getUsername()).isPresent()){
             redirectAttributes.addFlashAttribute("userRegisterDTO", userRegisterDTO);
             redirectAttributes.addFlashAttribute("usernameExists", true);
 
+            return "redirect:/register";
+        }
+
+        if (!userRegisterDTO.getPassword().equals(userRegisterDTO.getConfirmPassword())){
+            redirectAttributes.addFlashAttribute("userRegisterDTO", userRegisterDTO);
+            redirectAttributes.addFlashAttribute("passwordsDontMatch", true);
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.userRegisterDTO", bindingResult);
             return "redirect:/register";
         }
 

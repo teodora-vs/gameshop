@@ -62,17 +62,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                     itemToRemove.getGame().setQuantity(itemToRemove.getGame().getQuantity() + 1);
                     if (itemToRemove.getGame().getQuantity() > 0) {
                         itemToRemove.getGame().setDeleted(false);
-
                         shoppingCart.getCartItems().remove(itemToRemove);
 
                         shoppingCartRepository.save(shoppingCart);
                     }
-
-
                 }
 
             }
         }
+
     }
 
     @Override

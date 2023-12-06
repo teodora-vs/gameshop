@@ -47,27 +47,25 @@
 <div th:if="${confirmed == false}" class="container mt-4 text-white">
     <div class="row justify-content-center">
         <div class="my-bg col-md-5" style="padding: 10px; border-radius: 10px;">
-            <h4 class="text-center text-danger mb-2 " style="color: #969fa1">Please confirm your profile <a href="/">here</a> to proceed with your order.</h4>
+            <h4 class="text-center text-danger mb-2">Please confirm your profile <a href="/">here</a> to proceed with your order.</h4>
         </div>
     </div>
 </div>
 
 <div th:if="${confirmed == true}" class="container mt-4 text-white">
   <div class="row justify-content-center">
-    <div style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
-    padding: 20px; /* Add padding to the container */
-    border-radius: 10px; " class="col-md-5">
+    <div style="border-radius: 10px; border: 1px solid dimgrey" class="col-md-5 my-bg">
         <h4 class="text-center mb-2 text-white">Done shopping, <span th:text="${loggedInUsername}"></span>?</h4>
-      <h5 class="text-center mb-4 text-white">Please enter your shipping address and mobile phone number.</h5>
+      <h5 class="text-center mb-3" style="color: darkgrey;">Please enter your shipping address and mobile phone number.</h5>
       <form th:method="POST" th:action="@{/order}" th:object="${orderDTO}">
-        <div class="form-group">
+        <div class="form-group" style="color: darkgrey">
           <label for="street">City name, street name and number</label>
           <input type="text" id="street" name="street" th:field="*{address}"  class="form-control">
           <p th:if="${#fields.hasErrors('address')}"
              class="errors alert alert-danger"
              th:errors="${orderDTO.address}">
         </div>
-        <div class="form-group">
+        <div class="form-group" style="color:darkgrey;" >
           <label for="phoneNumber">Phone number</label>
           <div class="input-group">
             <div class="input-group-prepend">
@@ -75,12 +73,12 @@
             </div>
             <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="881231234"  required>
           </div>
-          <small id="phoneNumberHelp" class="form-text text-muted">Enter a Bulgarian phone number in the format +359XXXXXXXXX.</small>
           <p th:if="${#fields.hasErrors('phoneNumber')}"
              class="errors alert alert-danger"
              th:errors="${orderDTO.phoneNumber}">
             Invalid Bulgarian phone number format.
           </p>
+            <small id="phoneNumberHelp" class="form-text text-muted">Enter a Bulgarian phone number in the format +359XXXXXXXXX.</small>
         </div>
         <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block">Place Order</button>

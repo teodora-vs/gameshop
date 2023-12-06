@@ -15,4 +15,8 @@ public class AddEmailDTO {
         return email;
     }
 
+    public AddEmailDTO setEmail(String email) {
+        this.email = email;
+        return this;
+    }
 }

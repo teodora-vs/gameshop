@@ -47,8 +47,8 @@
 
     <th:block sec:authorize="!isAuthenticated()">
         <h3 class="pt-3">Click <a href="/games">here</a> to browse our latest PC games!</h3><br>
-        <h4><a href="/register">Register</a> to view game details and place an order.</h4><br>
-        <h5 class="pt-1 pb-2" style="color: grey">Already have an account? Log in <a href="/login">here</a>.</h5>
+        <h4 style="color: grey"><a href="/register" >Register</a> to view game details and place an order.</h4><br>
+        <h5 class="pb-2" style="color: grey">Already have an account? Log in <a href="/login">here</a>.</h5>
     </th:block>
     <th:block sec:authorize="hasRole('ADMIN')">
             <button class="btn btn-success mr-3" onclick="window.location.href='/games/add'">
@@ -63,14 +63,14 @@
     </th:block>
 
 </div>
-<div th:if="${topRatedGame != null}" class="container mt-3 text-white game-details-container my-bg" style="font-size: 20px ; letter-spacing: 1px; max-width: 800px; padding: 6px; border-radius: 6px">
-    <h3 class="mb-2 text-center" style="color: #b4b3b3">Our top rated game: </h3>
-    <div class="row pt-3">
-        <div class="col-md-6 d-flex align-items-center justify-content-center">
-            <img th:src="*{topRatedGame.imageURL}" class="img-fluid mx-auto" alt="Game Image" style="max-width: 100%;height: 350px;">
+<div th:if="${topRatedGame != null}" class="container mt-3 text-white game-details-container my-bg" style="font-size: 20px ; max-width: 800px; padding: 6px; border-radius: 8px; border: 1px solid dimgrey">
+    <h3 class="mb-3 text-center" style="color: #b4b3b3">Our top rated game: </h3>
+    <div class="row pt-2">
+        <div class="col-md-6 pb-3 d-flex align-items-center justify-content-center">
+            <img th:src="*{topRatedGame.imageURL}" class="img-fluid mx-auto" alt="Game Image" style="max-width: 100%;height: 310px;">
         </div>
-        <div class="col-md-6">
-            <h2 class="mb-3 mt-2" th:text="*{topRatedGame.title}"></h2>
+        <div class="col-md-4">
+            <h3 class="" th:text="*{topRatedGame.title}"></h3>
             <p class="mt-2"><strong>Average Score: </strong>
                 <span th:if="${averageScore != 0}" th:each="star : ${#numbers.sequence(1, 5)}"
                       th:utext="${averageScore >= star - 0.5 ? '&#9733;' : '&#9734;'}"
@@ -80,7 +80,9 @@
             <p><strong>Genre: </strong> <span th:text="*{topRatedGame.genreName}"></span></p>
             <p><strong>Release Year: </strong> <span th:text="*{topRatedGame.releaseYear}"></span></p>
             <p class="mb-3"><strong>Price: </strong> $<span th:text="*{topRatedGame.price}"></span></p>
-            <a th:href="@{'/games/' + ${topRatedGame.id}}" class="btn btn-primary btn-lg mt-2">Details</a>
+            <a th:href="@{'/games/' + ${topRatedGame.id}}" class="btn btn-primary mt-2">Details</a>
+            <a sec:authorize="hasRole('USER')" th:href="@{'/add-to-cart/' + ${topRatedGame.id}}"
+               class="btn btn-success ml-2 mr-2 mt-2">Add to cart</a>
         </div>
     </div>
 </div>

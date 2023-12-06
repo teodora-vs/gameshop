@@ -12,9 +12,8 @@
                 <h2 class="text-center text-white mb-3">Login</h2>
                 <form th:method="post"
                       th:action="@{/login}">
-                    <h3 th:if="${badCredentials}" class="mt-2 my-bg text-center">
-                        <strong  class="rounded pl-3 text-danger">
-                            Invalid username or password.</strong>
+                    <h3 th:if="${badCredentials}" class="my-bg text-danger text-center">
+                            Invalid username or password.
                     </h3>
                     <div class="mb-3">
                         <label for="username" class="form-label text-white">Username</label>

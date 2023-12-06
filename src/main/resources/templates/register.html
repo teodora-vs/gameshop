@@ -12,9 +12,8 @@
             <div class="col-md-4">
                 <h2 class="text-center mb-3 text-white">Register</h2>
                 <form th:method="POST" th:action="@{/register}" th:object="${userRegisterDTO}">
-                    <h3 th:if="${usernameExists}" class="mt-5 text-center">
-                        <strong  class="rounded pl-3 text-danger">
-                            Username already exists</strong>
+                    <h3 th:if="${usernameExists}" class="my-bg text-center text-danger">
+                     Username already exists
                     </h3>
                     <div class="mb-3">
                         <label for="username" class="form-label text-white">Username</label>
@@ -39,7 +38,7 @@
                     <div class="mb-4">
                         <label for="confirmPassword" class="form-label text-white">Confirm Password</label>
                         <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" th:field="*{confirmPassword}" placeholder="Confirm your password">
-                        <small th:if="${passwordsDontMatch}" class="text-danger my-text">Passwords don't match!</small>
+                        <small th:if="${passwordsDontMatch}" class="text-danger my-text mt-2">Passwords don't match!</small>
                     </div>
                     <button type="submit" value="Register" class=" btn btn-primary btn-block mb-5">Register</button>
                 </form>

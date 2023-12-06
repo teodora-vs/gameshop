@@ -12,9 +12,7 @@
       </h1>
     <div  th:if="${orderDetails}" class="mt-4 text-dark">
       <div class="">
-        <div style=" background-color: rgba(0, 0, 0, 0.9); /* Background color with transparency */
-    padding: 20px; /* Add padding to the container */
-    border-radius: 10px; " class=" text-white">
+        <div style="border-radius: 10px; border: 1px solid dimgrey" class="my-bg text-white">
           <p class=""><strong>Order ID:</strong> <span th:text="${orderDetails.id}"></span></p>
           <p ><strong>Order Date:</strong> <span th:text="${#temporals.format(orderDetails.orderDateTime, 'yyyy-MM-dd HH:mm')}"></span></p>
           <p ><strong>Receiver:</strong> <span th:text="${orderDetails.receiver}"></span></p>

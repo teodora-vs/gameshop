@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Pattern;
 
 public class OrderDTO {
 
+    @Pattern(regexp = "^[a-zA-Z]+\\s+[a-zA-Z]+.*\\d+$", message = "Invalid address format. Should have address names and street number")
     @NotBlank(message = "Address is required!")
     private String address;
 

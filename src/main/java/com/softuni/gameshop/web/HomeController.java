@@ -42,8 +42,10 @@ public class HomeController {
 
         GameSummaryDTO topRatedGame = gameService.getTopRatedGame();
         Double averageScore = gameService.getAverageScore(topRatedGame.getId());
-        model.addAttribute("topRatedGame", topRatedGame);
-        model.addAttribute("averageScore", averageScore);
+        if (gameService.getAverageScore(topRatedGame.getId()) != 0.0){
+            model.addAttribute("topRatedGame", topRatedGame);
+            model.addAttribute("averageScore", averageScore);
+        }
 
         return "index";
     }
