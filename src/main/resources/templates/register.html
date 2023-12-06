@@ -9,7 +9,7 @@
 </div>
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-4">
+            <div class="col-md-4 my-bg">
                 <h2 class="text-center mb-3 text-white">Register</h2>
                 <form th:method="POST" th:action="@{/register}" th:object="${userRegisterDTO}">
                     <h3 th:if="${usernameExists}" class="my-bg text-center text-danger">
@@ -25,11 +25,6 @@
                         <input class="form-control" id="fullName" name="fullName" th:field="*{fullName}" th:errorclass="'is-invalid alert-danger'" placeholder="Enter your full name">
                         <small class="text-danger my-text invalid-feedback">Full name must be at least 4 symbols!</small>
                     </div>
-<!--                    <div class="mb-3">-->
-<!--                        <label for="email" class="form-label text-white">Email</label>-->
-<!--                        <input type="email" class="form-control" name="email" id="email" th:field="*{email}" th:errorclass="'is-invalid alert-danger'" placeholder="Enter your email">-->
-<!--                        <small class="text-danger my-text invalid-feedback">Email cannot be blank!</small>-->
-<!--                    </div>-->
                     <div class="mb-3">
                         <label for="password" class="form-label text-white">Password</label>
                         <input type="password" class="form-control" name="password" id="password" th:errorclass="'is-invalid alert-danger'" th:field="*{password}" placeholder="Enter your password">
