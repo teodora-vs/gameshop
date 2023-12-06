@@ -17,11 +17,13 @@ public class GenresInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (genreRepository.count() == 0) {
+        if (genreRepository.count() < GenreNamesEnum.values().length) {
             for (GenreNamesEnum name : GenreNamesEnum.values()) {
-                Genre genre = new Genre();
-                genre.setName(name);
-                genreRepository.save(genre);
+                if (genreRepository.findByName(name).isEmpty()){
+                    Genre genre = new Genre();
+                    genre.setName(name);
+                    genreRepository.save(genre);
+                }
             }
         }
     }
