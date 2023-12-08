@@ -240,6 +240,7 @@ class GameServiceImplTest {
         verify(modelMapper, times(gamesList.size())).map(any(Game.class), eq(GameSummaryDTO.class));
     }
 
+
     @Test
     void testExists() {
         String title = "Test Game";
@@ -250,5 +251,6 @@ class GameServiceImplTest {
         assertTrue(result);
         verify(gameRepository, times(1)).findByTitle(title);
     }
+
 
 }

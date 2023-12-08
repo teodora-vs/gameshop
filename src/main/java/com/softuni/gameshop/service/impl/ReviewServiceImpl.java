@@ -52,7 +52,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<Review> getAllReviewsForGame(Long gameId){
-        return this.reviewRepository.findAllByGameId(gameId);
+        return this.reviewRepository.findAllByGameIdOrderByMostRecent(gameId);
     }
 
     public UserEntity getCurrentUser(){

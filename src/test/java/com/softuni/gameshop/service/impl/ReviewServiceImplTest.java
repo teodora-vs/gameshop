@@ -89,7 +89,7 @@ public class ReviewServiceImplTest {
         reviews.add(new Review());
         reviews.add(new Review());
 
-        when(reviewRepository.findAllByGameId(gameId)).thenReturn(reviews);
+        when(reviewRepository.findAllByGameIdOrderByMostRecent(gameId)).thenReturn(reviews);
 
         List<Review> retrievedReviews = reviewService.getAllReviewsForGame(gameId);
 
