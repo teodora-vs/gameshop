@@ -29,6 +29,4 @@ public class ReviewRestController {
         return ResponseEntity.ok(reviews);
     }
 
-
-
 }

@@ -23,7 +23,8 @@ public class ScheduledTask {
         this.shoppingCartRepository = shoppingCartRepository;
     }
 
-    @Scheduled(cron = "0 1 0 * * *")          // Run every day at 00:01:00
+//        @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 1 0 * * *")
     public void deleteUsersWithNullEmails() {
         List<UserEntity> usersWithNullEmails = userRepository.findByEmailIsNull();
         logger.info("Found {} users with null emails", usersWithNullEmails.size());

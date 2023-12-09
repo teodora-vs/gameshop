@@ -55,7 +55,6 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-
     @Override
     @Transactional
     public void addAdmin(){
@@ -90,10 +89,6 @@ public class UserServiceImpl implements UserService {
         if (currentRoles.contains(userRole)){
             return false;
         }
-
-//        if (byUsername.get().getEmail() == null){
-//            return false;
-//        }
 
         currentRoles.add(userRole);
         user.setUserRoles(currentRoles);

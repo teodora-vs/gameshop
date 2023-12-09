@@ -36,7 +36,7 @@ public class ReviewServiceImpl implements ReviewService {
     public Review createReview(AddReviewDTO addReviewDTO) {
         Optional<Game> optGame = this.gameRepository.findById(addReviewDTO.getGameId());
         if (optGame.isEmpty()){
-            throw new ObjectNotFoundException("game not found");
+            throw new ObjectNotFoundException("Game with Id " + addReviewDTO.getGameId()  + " not found");
         }
 
         UserEntity currentUser = this.getCurrentUser();

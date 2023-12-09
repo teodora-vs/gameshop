@@ -12,7 +12,7 @@
                 <h2 class="text-center text-white mb-3">Login</h2>
                 <form th:method="post"
                       th:action="@{/login}">
-                    <h3 th:if="${badCredentials}" class="my-bg text-danger text-center">
+                    <h3 th:if="${badCredentials}" class="text-danger text-center">
                             Invalid username or password.
                     </h3>
                     <div class="mb-3">

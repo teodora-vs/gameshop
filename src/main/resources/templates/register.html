@@ -12,7 +12,7 @@
             <div class="col-md-4 my-bg">
                 <h2 class="text-center mb-3 text-white">Register</h2>
                 <form th:method="POST" th:action="@{/register}" th:object="${userRegisterDTO}">
-                    <h3 th:if="${usernameExists}" class="my-bg text-center text-danger">
+                    <h3 th:if="${usernameExists}" class="text-center text-danger">
                      Username already exists
                     </h3>
                     <div class="mb-3">

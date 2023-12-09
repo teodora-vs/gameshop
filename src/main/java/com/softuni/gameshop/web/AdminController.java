@@ -76,6 +76,9 @@ public class AdminController {
     @GetMapping("/games/edit/{id}")
     public String getEditGameForm(@PathVariable Long id, Model model) {
         Optional<Game> optionalGame = this.gameRepository.findById(id);
+        if (optionalGame.isEmpty()){
+            throw new ObjectNotFoundException("Game with id: "+ id + " not found");
+        }
         if (optionalGame.get().isDeleted()){
             throw new ObjectNotFoundException("Game with id: "+ id + " not found");
         }

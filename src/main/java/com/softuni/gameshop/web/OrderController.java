@@ -67,7 +67,6 @@ public class OrderController {
         }
 
         this.orderService.addOrder(orderDTO);
-        session.setAttribute("orderCompleted", true);
 
         redirectAttributes.addFlashAttribute("orderSuccessMessage", "Your order was successfully completed!");
 

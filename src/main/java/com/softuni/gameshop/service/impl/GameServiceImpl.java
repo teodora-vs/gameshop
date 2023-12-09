@@ -67,8 +67,8 @@ public class GameServiceImpl implements GameService {
 
         this.modelMapper.map(editGameDTO, existingGame);
 
-        Genre genre = this.genreRepository.findByName(editGameDTO.getGenre()).orElse(null);
-        existingGame.setGenre(genre);
+        Optional<Genre> genre = this.genreRepository.findByName(editGameDTO.getGenre());
+        existingGame.setGenre(genre.get());
 
         this.gameRepository.save(existingGame);
     }
