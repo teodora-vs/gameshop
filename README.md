@@ -7,6 +7,7 @@ Admins can add new games, edit or delete them and see user orders.
 The app has one default admin users which can give other users admin rights.
 
 Admin details for login:
+
 username and password: admin
 
 User registration is required to use the full functionality of the website such as viewing game details and ordering.
