@@ -5,6 +5,7 @@ Guests can only browse games.
 
 Admins can add new games, edit or delete them and see user orders.
 The app has one default admin users which can give other users admin rights.
+
 Admin details for login:
 username and password: admin
 
