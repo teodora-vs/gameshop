@@ -25,6 +25,10 @@ This Spring MVC Game Shop is a web application built with Spring Boot, Thymeleaf
 - Admin access to all user orders.
 - Admin ability to manage user roles.
 - Admin ability to view, edit, and delete games.
+- - **User Reviews:**
+    - Users can write reviews for games in the catalog.
+    - Ratings and detailed feedback help the community make informed decisions.
+    - Access reviews on the game details page.
 
 ## Technologies Used
 
