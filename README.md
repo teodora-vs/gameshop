@@ -33,7 +33,7 @@ This Spring MVC Game Shop is a web application built with Spring Boot, Thymeleaf
 ## Technologies Used
 
 - Java
-- Spring Boot
+- Spring MVC
 - Spring Data JPA
 - Spring Security
 - Thymeleaf
