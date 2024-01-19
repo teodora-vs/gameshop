@@ -69,6 +69,7 @@ This Spring MVC Game Shop is a web application built with Spring Boot, Thymeleaf
 - **Game Catalog:**
     - Browse available games with details, prices, and quantity.
     - Add games to the shopping cart.
+    - Review game or read user reviews.
 
 - **Shopping Cart:**
     - Add or remove items.
