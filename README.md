@@ -1,6 +1,6 @@
 # Spring MVC Game Shop
 
-Welcome to the Spring MVC Game Shop, a web application for managing a game catalog, shopping cart, and orders.
+Welcome to the Spring MVC Gameshop, a web application for managing a game catalog, shopping cart, and orders.
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -13,7 +13,7 @@ Welcome to the Spring MVC Game Shop, a web application for managing a game catal
 
 ## Introduction
 
-This Spring MVC Game Shop is a web application built with Spring Boot, Thymeleaf, and Bootstrap 5. It includes features for managing user roles with Spring Security, a game catalog, a shopping cart, and simple order functionality.
+This Spring MVC Gameshop is a web application built with Spring Boot, Thymeleaf, and Bootstrap 5. It includes features for managing user roles with Spring Security, a game catalog, a shopping cart, and simple order functionality.
 
 ## Features
 
@@ -33,7 +33,7 @@ This Spring MVC Game Shop is a web application built with Spring Boot, Thymeleaf
 ## Technologies Used
 
 - Java
-- Spring Boot
+- Spring Boot (Including Spring MVC, Spring Data, Spring Security)
 - Thymeleaf
 - Bootstrap 5
 - MySQL Database
@@ -42,8 +42,8 @@ This Spring MVC Game Shop is a web application built with Spring Boot, Thymeleaf
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/spring-mvc-game-shop.git
-    cd spring-mvc-game-shop
+    git clone https://github.com/TeodoraV1415/gameshop.git
+    cd gameshop
     ```
 
 2. **Configure the Database:**
