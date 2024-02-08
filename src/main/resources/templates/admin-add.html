@@ -18,6 +18,9 @@
           <input type="text" class="form-control" id="username" name="username" required>
           <span th:if="${successfullyAdded}" class="text-success" >Admin added successfully</span>
           <span th:if="${invalidUsername}" class="text-danger">Invalid username</span>
+          <div class="text-center mt-2">
+            <small class="text-muted">Note: Users must have confirmed their emails to be added as admins.</small>
+          </div>
         </div>
         <button type="submit" class="btn btn-primary ">Add Admin</button>
       </form>

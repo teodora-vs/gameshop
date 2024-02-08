@@ -82,15 +82,18 @@ public class UserServiceImpl implements UserService {
             return  false;
         }
         UserEntity user = byUsername.get();
+        String userEmail = user.getEmail();
 
         List<UserRole> currentRoles = user.getUserRoles();
-        UserRole userRole = this.userRoleRepository.findByRoleName(UserRoleEnum.ADMIN);
+        UserRole adminRole = this.userRoleRepository.findByRoleName(UserRoleEnum.ADMIN);
 
-        if (currentRoles.contains(userRole)){
+        if (currentRoles.contains(adminRole) || userEmail == null){
             return false;
         }
 
-        currentRoles.add(userRole);
+        currentRoles.clear();
+        currentRoles.add(adminRole);
+
         user.setUserRoles(currentRoles);
         this.userRepository.save(user);
 
