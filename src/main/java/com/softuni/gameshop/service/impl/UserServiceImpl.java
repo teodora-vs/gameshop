@@ -78,6 +78,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     @Override
     public boolean addAdminByUsername(String username) {
         Optional<UserEntity> byUsername = this.userRepository.findByUsername(username);
