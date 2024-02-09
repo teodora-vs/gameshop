@@ -27,7 +27,6 @@ public class Game {
 
     @Column(nullable = false)
     private BigDecimal price;
-    // Other fields, getters, and setters
 
     @Column(nullable = false)
     private String imageURL;

@@ -13,7 +13,6 @@ public class Review {
     @Column(nullable = false)
     private LocalDateTime created;
 
-
     @Column(name = "text_content",nullable = false, columnDefinition = "TEXT")
     private String textContent;
 

@@ -5,6 +5,7 @@ import com.softuni.gameshop.model.DTO.UserRegisterDTO;
 import com.softuni.gameshop.model.UserEntity;
 import com.softuni.gameshop.model.UserRole;
 import com.softuni.gameshop.model.enums.UserRoleEnum;
+import com.softuni.gameshop.repository.ShoppingCartRepository;
 import com.softuni.gameshop.repository.UserRepository;
 import com.softuni.gameshop.repository.UserRoleRepository;
 import com.softuni.gameshop.service.UserService;
@@ -24,12 +25,14 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final UserRoleRepository userRoleRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, ShoppingCartRepository shoppingCartRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
     }
 
     @Override
@@ -83,6 +86,7 @@ public class UserServiceImpl implements UserService {
         }
         UserEntity user = byUsername.get();
         String userEmail = user.getEmail();
+        Long cartId = user.getShoppingCart().getId();
 
         List<UserRole> currentRoles = user.getUserRoles();
         UserRole adminRole = this.userRoleRepository.findByRoleName(UserRoleEnum.ADMIN);
@@ -93,9 +97,13 @@ public class UserServiceImpl implements UserService {
 
         currentRoles.clear();
         currentRoles.add(adminRole);
-
         user.setUserRoles(currentRoles);
+        user.getShoppingCart().getCartItems().clear();
+        user.setShoppingCart(null);
+
         this.userRepository.save(user);
+        this.shoppingCartRepository.deleteById(cartId);
+        this.userRepository.flush();
 
         return true;
     }
