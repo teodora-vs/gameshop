@@ -87,7 +87,6 @@ public class UserServiceImpl implements UserService {
         }
         UserEntity user = byUsername.get();
         String userEmail = user.getEmail();
-        Long cartId = user.getShoppingCart().getId();
 
         List<UserRole> currentRoles = user.getUserRoles();
         UserRole adminRole = this.userRoleRepository.findByRoleName(UserRoleEnum.ADMIN);
@@ -96,7 +95,9 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
-        if (user.getShoppingCart().getCartItems() != null) {
+        Long cartId = user.getShoppingCart().getId();
+
+        if (user.getShoppingCart().getCartItems() != null || !user.getShoppingCart().getCartItems().isEmpty()) {
             user.getShoppingCart().getCartItems().clear();
         }
 

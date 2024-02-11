@@ -3,6 +3,7 @@ package com.softuni.gameshop.service.impl;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+import com.softuni.gameshop.model.CartItem;
 import com.softuni.gameshop.model.DTO.UserRegisterDTO;
 import com.softuni.gameshop.model.ShoppingCart;
 import com.softuni.gameshop.model.UserEntity;
@@ -85,6 +86,43 @@ class UserServiceImplTest {
         verify(userRepository, never()).save(any(UserEntity.class));
     }
 
+    @Test
+    void testAddAdminByUsernameAdminRoleAlreadyExists() {
+        String username = "existingAdmin";
+        UserEntity adminUser = new UserEntity();
+        adminUser.setUsername(username);
+        UserRole adminRole = new UserRole();
+        adminRole.setRoleName(UserRoleEnum.ADMIN);
+        adminUser.setUserRoles(List.of(adminRole));
+
+        when(userRepository.findByUsername(username)).thenReturn(Optional.of(adminUser));
+        when(userRoleRepository.findByRoleName(UserRoleEnum.ADMIN)).thenReturn(adminRole);
+
+        boolean isAdminAdded = userService.addAdminByUsername(username);
+
+        assertFalse(isAdminAdded);
+        assertEquals(1, adminUser.getUserRoles().size()); // Ensure existing admin roles are not modified
+        verify(userRepository, never()).save(any(UserEntity.class));
+        verify(shoppingCartRepository, never()).deleteById(anyLong());
+        verify(userRepository, never()).flush();
+    }
+
+    @Test
+    void testAddAdminByUsernameWithNullEmail() {
+        String username = "userWithNullEmail";
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(username);
+        userEntity.setEmail(null);
+
+        when(userRepository.findByUsername(username)).thenReturn(Optional.of(userEntity));
+
+        boolean isAdminAdded = userService.addAdminByUsername(username);
+
+        assertFalse(isAdminAdded);
+        verify(userRepository, never()).save(any(UserEntity.class));
+        verify(shoppingCartRepository, never()).deleteById(anyLong());
+        verify(userRepository, never()).flush();
+    }
 
     @Test
     void testAddAdminByUsernameUserNotFound() {
@@ -100,5 +138,32 @@ class UserServiceImplTest {
         verify(userRepository, never()).flush();
     }
 
+    @Test
+    void testAddAdminByUsernameSuccess() {
+        String username = "userToPromote";
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(username);
+        userEntity.setEmail("test@example.com");
+        UserRole userRole = new UserRole();
+        userRole.setRoleName(UserRoleEnum.USER);
+        userEntity.setUserRoles(new ArrayList<>(List.of(userRole)));
+
+        ShoppingCart shoppingCart = new ShoppingCart().setId(1L);
+        CartItem cartItem = new CartItem();
+
+        shoppingCart.setCartItems(new ArrayList<>(List.of(cartItem)));
+        userEntity.setShoppingCart(shoppingCart);
+
+        when(userRepository.findByUsername(username)).thenReturn(Optional.of(userEntity));
+        when(userRoleRepository.findByRoleName(UserRoleEnum.ADMIN)).thenReturn(new UserRole());
+
+        boolean isAdminAdded = userService.addAdminByUsername(username);
+
+        assertTrue(isAdminAdded);
+        assertNull(userEntity.getShoppingCart());
+        verify(userRepository, times(1)).save(any(UserEntity.class));
+        verify(shoppingCartRepository, times(1)).deleteById(anyLong());
+        verify(userRepository, times(1)).flush();
+    }
 
 }
