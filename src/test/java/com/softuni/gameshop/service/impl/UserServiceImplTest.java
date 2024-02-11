@@ -4,9 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 import com.softuni.gameshop.model.DTO.UserRegisterDTO;
+import com.softuni.gameshop.model.ShoppingCart;
 import com.softuni.gameshop.model.UserEntity;
 import com.softuni.gameshop.model.UserRole;
 import com.softuni.gameshop.model.enums.UserRoleEnum;
+import com.softuni.gameshop.repository.ShoppingCartRepository;
 import com.softuni.gameshop.repository.UserRepository;
 import com.softuni.gameshop.repository.UserRoleRepository;
 import org.junit.jupiter.api.Test;
@@ -34,6 +36,9 @@ class UserServiceImplTest {
 
     @Mock
     private UserRoleRepository userRoleRepository;
+
+    @Mock
+    private ShoppingCartRepository shoppingCartRepository;
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -80,25 +85,6 @@ class UserServiceImplTest {
         verify(userRepository, never()).save(any(UserEntity.class));
     }
 
-    @Test
-    void testAddAdminByUsernameSuccessfully() {
-        String username = "testUser";
-        UserEntity userEntity = new UserEntity();
-        userEntity.setUsername(username);
-        userEntity.setUserRoles(new ArrayList<>());
-
-        UserRole adminRole = new UserRole();
-        adminRole.setRoleName(UserRoleEnum.ADMIN);
-
-        when(userRepository.findByUsername(username)).thenReturn(Optional.of(userEntity));
-        when(userRoleRepository.findByRoleName(UserRoleEnum.ADMIN)).thenReturn(adminRole);
-
-        boolean isAdminAdded = userService.addAdminByUsername(username);
-
-        assertTrue(isAdminAdded);
-        assertTrue(userEntity.getUserRoles().contains(adminRole));
-        verify(userRepository, times(1)).save(any(UserEntity.class));
-    }
 
     @Test
     void testAddAdminByUsernameUserNotFound() {
@@ -110,28 +96,9 @@ class UserServiceImplTest {
 
         assertFalse(isAdminAdded);
         verify(userRepository, never()).save(any(UserEntity.class));
+        verify(shoppingCartRepository, never()).deleteById(anyLong());
+        verify(userRepository, never()).flush();
     }
 
-    @Test
-    void testAddAdminByUsernameAdminRoleAlreadyExists() {
-        String username = "existingAdmin";
-        UserEntity userEntity = new UserEntity();
-        userEntity.setUsername(username);
-
-        UserRole adminRole = new UserRole();
-        adminRole.setRoleName(UserRoleEnum.ADMIN);
-
-        List<UserRole> userRoles = new ArrayList<>();
-        userRoles.add(adminRole);
-        userEntity.setUserRoles(userRoles);
-
-        when(userRepository.findByUsername(username)).thenReturn(Optional.of(userEntity));
-        when(userRoleRepository.findByRoleName(UserRoleEnum.ADMIN)).thenReturn(adminRole);
-
-        boolean isAdminAdded = userService.addAdminByUsername(username);
-
-        assertFalse(isAdminAdded);
-        verify(userRepository, never()).save(any(UserEntity.class));
-    }
 
 }

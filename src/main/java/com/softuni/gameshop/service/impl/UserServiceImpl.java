@@ -96,11 +96,15 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
+        if (user.getShoppingCart().getCartItems() != null) {
+            user.getShoppingCart().getCartItems().clear();
+        }
+
+        user.setShoppingCart(null);
+
         currentRoles.clear();
         currentRoles.add(adminRole);
         user.setUserRoles(currentRoles);
-        user.getShoppingCart().getCartItems().clear();
-        user.setShoppingCart(null);
 
         this.userRepository.save(user);
         this.shoppingCartRepository.deleteById(cartId);
