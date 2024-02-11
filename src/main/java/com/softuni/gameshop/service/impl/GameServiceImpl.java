@@ -48,7 +48,7 @@ public class GameServiceImpl implements GameService {
 
         return game.getId();
     }
-
+    
     @Override
     public void deleteGame(Long id) {
         Game byId = gameRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Game with id: " + id + " not found!"));

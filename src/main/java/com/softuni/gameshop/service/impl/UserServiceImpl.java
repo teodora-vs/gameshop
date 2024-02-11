@@ -109,11 +109,9 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-
     public Optional<UserEntity> getByUsername(String username){
         Optional<UserEntity> byUsername = this.userRepository.findByUsername(username);
         return byUsername;
     }
-
 
 }
