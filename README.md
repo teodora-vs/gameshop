@@ -46,9 +46,11 @@ This Spring MVC Gameshop is a web application built with Spring Boot, Thymeleaf,
     cd gameshop
     ```
 
-2. **Configure the Database:**
-    - Set up a MySQL database.
-    - Update `application.properties` with your database configurations.
+2. **Configure the Database (Optional):**
+    - The application is configured to use a MySQL database with default settings.
+    - If you want to use a different database or have specific configurations, update the `application.yaml` file in the `src/main/resources` directory.
+    - Ensure you have MySQL installed on your system.
+    - Create a new MySQL database if needed.
 
 3. **Run the Application:**
     ```bash
