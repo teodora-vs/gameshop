@@ -28,7 +28,7 @@ public class AdminController {
     private final GameService gameService;
     private final OrderService orderService;
     private final UserService userService;
-    private GameRepository gameRepository;
+    private final GameRepository gameRepository;
 
     public AdminController(GameService gameService, OrderService orderService, UserService userService, GameRepository gameRepository) {
         this.gameService = gameService;

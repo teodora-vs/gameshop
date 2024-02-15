@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AdminInit implements CommandLineRunner {
-    private UserService userService;
+    private final UserService userService;
 
     public AdminInit(UserService userService) {
         this.userService = userService;

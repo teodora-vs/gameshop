@@ -26,10 +26,10 @@ import java.util.Optional;
 @Service
 public class GameServiceImpl implements GameService {
 
-    private ModelMapper modelMapper;
-    private GameRepository gameRepository;
-    private GenreRepository genreRepository;
-    private ReviewRepository reviewRepository;
+    private final ModelMapper modelMapper;
+    private final GameRepository gameRepository;
+    private final GenreRepository genreRepository;
+    private final ReviewRepository reviewRepository;
 
     public GameServiceImpl(ModelMapper modelMapper, GameRepository gameRepository, GenreRepository genreRepository, ReviewRepository reviewRepository) {
         this.modelMapper = modelMapper;

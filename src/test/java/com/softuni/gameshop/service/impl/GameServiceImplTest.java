@@ -51,11 +51,7 @@ class GameServiceImplTest {
 
     @InjectMocks
     private GameServiceImpl gameService;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+    
 
     @Test
     void testAddGame() {
