@@ -20,6 +20,10 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private static final String ADMIN_USERNAME = "admin";
+    private static final String ADMIN_EMAIL = "admin@example.com";
+    private static final String ADMIN_FULL_NAME = "Admin Adminov";
+    private static final String ADMIN_PASSWORD = "admin";
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
@@ -62,9 +66,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void addAdmin(){
         UserEntity user = new UserEntity();
-        user.setUsername("admin");
-        user.setEmail("admin@example.com");
-        user.setFullName("Admin adminov");
+        user.setUsername(ADMIN_USERNAME);
+        user.setEmail(ADMIN_EMAIL);
+        user.setFullName(ADMIN_FULL_NAME);
 
         UserRole adminRole = userRoleRepository.findByRoleName(UserRoleEnum.ADMIN);
 
@@ -74,7 +78,7 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setUserRoles(Collections.singletonList(adminRole));
-        user.setPassword(passwordEncoder.encode("admin"));
+        user.setPassword(passwordEncoder.encode(ADMIN_PASSWORD));
         userRepository.save(user);
     }
 
