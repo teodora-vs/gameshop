@@ -16,4 +16,6 @@ public interface ShoppingCartService {
     UserEntity getCurrentUser();
 
     BigDecimal getCartTotalPrice();
+
+    void clearCart();
 }

@@ -140,9 +140,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public BigDecimal getCartTotalPrice() {
-        UserEntity user = this.getCurrentUser();
-        ShoppingCart shoppingCart = user.getShoppingCart();
-        return shoppingCart.getTotal();
+        return this.getCurrentUser().getShoppingCart().getTotal();
+    }
+
+    @Override
+    public void clearCart() {
+        ShoppingCart shoppingCart = this.getCurrentUser().getShoppingCart();
+        shoppingCart.getCartItems().clear();
+        this.shoppingCartRepository.save(shoppingCart);
     }
 
     public UserEntity getCurrentUser(){

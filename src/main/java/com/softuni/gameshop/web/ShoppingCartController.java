@@ -29,7 +29,7 @@ public class ShoppingCartController {
     @GetMapping("/add-to-cart/{id}")
     public String addToCart(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 
-        shoppingCartService.addToCart(id);
+        this.shoppingCartService.addToCart(id);
 
         Optional<Game> optGame = gameRepository.findById(id);
         redirectAttributes.addFlashAttribute("itemAddedToCartMessage" ,
@@ -49,8 +49,14 @@ public class ShoppingCartController {
 
     @PostMapping("/cart/remove/{id}")
     public String deleteCartItem(@PathVariable Long id) {
-        shoppingCartService.removeFromCart(id);
+        this.shoppingCartService.removeFromCart(id);
 
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/cart/clear")
+    public String clearCart(){
+        this.shoppingCartService.clearCart();
         return "redirect:/cart";
     }
     

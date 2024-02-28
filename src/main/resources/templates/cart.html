@@ -54,12 +54,17 @@
         </tbody>
     </table>
 
-  <div th:unless="${cartItems.size() == 0}" class="float-right">
-    <div class="d-inline-block ml-3">
-      <p class="my-bg" style="font-size: 22px; padding: 10px; border-radius: 8px; display: inline-block;">Total Price: $<span th:text="${totalPrice}"></span></p>
-      <a href="/order" class="btn btn-success btn-lg ml-3">Proceed to Checkout</a>
+    <div th:unless="${cartItems.size() == 0}" class="float-right">
+        <div class="d-inline-block ml-3">
+            <p class="my-bg" style="font-size: 22px; padding: 10px; border-radius: 8px; display: inline-block;">
+                Total Price: $<span th:text="${totalPrice}"></span>
+            </p>
+            <form th:action="@{/cart/clear}" method="post" class="d-inline-block">
+                <button type="submit" class="btn btn-danger btn-lg ml-3">Clear Cart</button>
+            </form>
+            <a href="/order" class="btn btn-success btn-lg ml-3">Proceed to Checkout</a>
+        </div>
     </div>
-  </div>
 
 </div>
 </body>
