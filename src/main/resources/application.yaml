@@ -15,7 +15,8 @@ spring:
       ddl-auto: update
   sql:
     init:
-      mode: always
+      mode: never
+
   mvc:
     hiddenmethod:
       filter:

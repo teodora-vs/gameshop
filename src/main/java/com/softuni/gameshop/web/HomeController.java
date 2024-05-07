@@ -73,9 +73,4 @@ public class HomeController {
         return "redirect:/";
     }
 
-    @GetMapping("/return-policy")
-    public String returnPolicy(){
-        return "return-policy";
-    }
-
 }
