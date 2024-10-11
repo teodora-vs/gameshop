@@ -10,11 +10,8 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
 
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]  # Test on both Ubuntu and Windows
+    runs-on: ubuntu-latest
 
     services:
       mysql:
@@ -38,8 +35,9 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '21'
-          distribution: 'temurin'
+          distribution: 'zulu'
 
+      # Clear Maven cache
       - name: Clear Maven cache
         uses: actions/cache@v2
         with:
@@ -48,22 +46,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Install Maven dependencies
-      - name: Install dependencies
-        run: mvn install -DskipTests
-
-      # Run tests
+      # Build and run tests
       - name: Run tests
         env:
           DB_URL: jdbc:mysql://localhost:3306/gameshop
           DB_USER: root
           DB_PASSWORD: 1234
-        run: mvn clean test -e -DskipTests=false
-
-      # Save test results for inspection if tests fail
-      - name: Store test results
-        if: failure()  # only store if tests fail
-        uses: actions/upload-artifact@v3  # updated to v3
-        with:
-          name: test-results
-          path: target/surefire-reports/  # default Maven test result path
+        run: mvn clean test
