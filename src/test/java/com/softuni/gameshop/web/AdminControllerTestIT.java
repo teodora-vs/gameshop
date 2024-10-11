@@ -78,7 +78,7 @@ class AdminControllerTestIT {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     public void testAddAdminPageAccessForAdmin() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/add"))
-                .andExpect(status().is4xxClientError())
+                .andExpect(status().isOk())
                 .andExpect(view().name("admin-add"));
     }
 
