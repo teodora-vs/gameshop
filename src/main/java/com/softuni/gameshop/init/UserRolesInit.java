@@ -21,7 +21,6 @@ public class UserRolesInit implements CommandLineRunner {
     public void run(String... args) {
         UserRoleEnum[] roleEnums = UserRoleEnum.values();
 
-
         for (UserRoleEnum roleEnum : roleEnums) {
             UserRole existingRole = userRoleRepository.findByRoleName(roleEnum);
             if (existingRole == null) {
