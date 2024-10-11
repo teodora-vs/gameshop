@@ -63,7 +63,7 @@ jobs:
       # Save test results for inspection if tests fail
       - name: Store test results
         if: failure()  # only store if tests fail
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # updated to v3
         with:
           name: test-results
           path: target/surefire-reports/  # default Maven test result path
