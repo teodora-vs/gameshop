@@ -19,8 +19,6 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: 1234
           MYSQL_DATABASE: gameshop
-          MYSQL_USER: root
-          MYSQL_PASSWORD: 1234
         ports:
           - 3306:3306
         options: >-
@@ -37,7 +35,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '21'
-          distribution: 'temurin'
+          distribution: 'temurin' # or 'zulu'
 
       - name: Set up environment variables
         run: |
