@@ -15,7 +15,7 @@ jobs:
 
     services:
       mysql:
-        image: mysql:latest
+        image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: 1234
           MYSQL_DATABASE: gameshop
@@ -35,17 +35,21 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '21'
-          distribution: 'temurin' # or 'zulu'
+          distribution: 'temurin'
 
-      - name: Set up environment variables
-        run: |
-          echo "DB_URL=jdbc:mysql://localhost:3306/gameshop?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC" >> $GITHUB_ENV
-          echo "DB_USER=root" >> $GITHUB_ENV
-          echo "DB_PASSWORD=1234" >> $GITHUB_ENV
+      # Clear Maven cache
+      - name: Clear Maven cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
+      # Build and run tests
       - name: Run tests
         env:
-          DB_URL: ${{ env.DB_URL }}
-          DB_USER: ${{ env.DB_USER }}
-          DB_PASSWORD: ${{ env.DB_PASSWORD }}
-        run: mvn test
+          DB_URL: jdbc:mysql://localhost:3306/gameshop
+          DB_USER: root
+          DB_PASSWORD: 1234
+        run: mvn clean test
