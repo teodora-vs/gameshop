@@ -19,6 +19,7 @@ public class EditGameDTO {
     @YearNotInFuture(message = "The year should not be in the future!")
     @NotNull(message = "Year must be provided!")
     @Min(value = 1990, message = "Year must be greater than 1990")
+    @Positive(message = "Year must be a positive number!")
     private Integer releaseYear;
 
     @NotNull(message = "Price is required!")

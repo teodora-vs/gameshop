@@ -26,12 +26,13 @@
             Game with this title already exists!</strong>
         </h2>
         <div class="mb-3">
-          <label for="title" class="form-label text-white">Title:</label>
-          <input type="text" class="form-control" id="title" name="title" th:field="*{title}" th:errorclass="is-invalid">
-<!--          <p th:if="${#fields.hasErrors('title')}"-->
-<!--             class="errors alert alert-danger"-->
-<!--             th:errors="*{title}"></p>-->
-          <small class="text-danger my-text invalid-feedback">Title cannot be blank!</small>
+            <label for="title" class="form-label text-white">Title:</label>
+            <input type="text" class="form-control" id="title" name="title"
+                   th:field="*{title}" th:errorclass="is-invalid">
+            <p th:if="${#fields.hasErrors('title')}"
+               class="errors alert alert-danger"
+               th:errors="*{title}">
+            </p>
         </div>
         <br>
         <!-- Genre -->
@@ -63,7 +64,7 @@
         <!-- Release Year -->
         <div class="mb-3">
           <label for="releaseYear" class="form-label text-white">Release Year:</label>
-          <input class="form-control" id=releaseYear name=releaseYear type="text" th:field="*{releaseYear}">
+          <input class="form-control" id=releaseYear name=releaseYear type="text" th:field="*{releaseYear}" >
           <p th:if="${#fields.hasErrors('releaseYear')}"
              class="errors alert alert-danger"
              th:errors="*{releaseYear}">

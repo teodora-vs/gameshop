@@ -75,29 +75,30 @@ public class AdminController {
 
     @GetMapping("/games/edit/{id}")
     public String getEditGameForm(@PathVariable Long id, Model model) {
-        Optional<Game> optionalGame = this.gameRepository.findById(id);
-        if (optionalGame.isEmpty()){
-            throw new ObjectNotFoundException("Game with id: "+ id + " not found");
-        }
-        if (optionalGame.get().isDeleted()){
-            throw new ObjectNotFoundException("Game with id: "+ id + " not found");
-        }
-        GameDetailsDTO gameDetailsDTO = this.gameService.getGameDetails(id);
+        if (!model.containsAttribute("editGameDTO")) {
+            Optional<Game> optionalGame = this.gameRepository.findById(id);
+            if (optionalGame.isEmpty() || optionalGame.get().isDeleted()) {
+                throw new ObjectNotFoundException("Game with id: " + id + " not found");
+            }
 
-        EditGameDTO editGameDTO = this.gameService.convertToEditGameDTO(gameDetailsDTO);
-        editGameDTO.setGenre(gameDetailsDTO.getGenreName());
+            GameDetailsDTO gameDetailsDTO = this.gameService.getGameDetails(id);
+            EditGameDTO editGameDTO = this.gameService.convertToEditGameDTO(gameDetailsDTO);
+            editGameDTO.setGenre(gameDetailsDTO.getGenreName());
 
-        model.addAttribute("editGameDTO", editGameDTO);
+            model.addAttribute("editGameDTO", editGameDTO);
+        }
 
         return "game-edit";
     }
 
     @PostMapping("/games/edit/{id}")
-    public String editGame(@PathVariable Long id,@ModelAttribute @Valid EditGameDTO editGameDTO,
+    public String editGame(@PathVariable Long id, @Valid EditGameDTO editGameDTO,
             BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
         String gameTitle = editGameDTO.getTitle();
 
         if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("editGameDTO", editGameDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editGameDTO", bindingResult);
             return "redirect:/games/edit/{id}";
         }
