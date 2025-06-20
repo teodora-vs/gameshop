@@ -12,7 +12,7 @@ Welcome to Gameshop, a Spring web application for managing a game catalog, shopp
 
 ## Introduction
 
-This Spring MVC Gameshop is a web application built with Spring Boot, Thymeleaf, and Bootstrap 5. It includes features for managing user roles with Spring Security, a game catalog, a shopping cart, and simple order functionality.
+A web application built with Spring Boot, MySQL, Thymeleaf and Bootstrap 5. It includes features for managing user roles with Spring Security, a game catalog, a shopping cart, and simple order functionality.
 
 ## Features
 
