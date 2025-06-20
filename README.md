@@ -1,6 +1,5 @@
-# Spring MVC Game Shop
 
-Welcome to the Spring MVC Gameshop, a web application for managing a game catalog, shopping cart, and orders.
+Welcome to Gameshop, a Spring web application for managing a game catalog, shopping cart, and orders.
 
 ## Table of Contents
 - [Introduction](#introduction)
