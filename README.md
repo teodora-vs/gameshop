@@ -1,6 +1,5 @@
-# Spring MVC Game Shop
 
-Welcome to the Spring MVC Gameshop, a web application for managing a game catalog, shopping cart, and orders.
+Welcome to Gameshop, a Spring web application for managing a game catalog, shopping cart, and orders.
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -13,7 +12,7 @@ Welcome to the Spring MVC Gameshop, a web application for managing a game catalo
 
 ## Introduction
 
-This Spring MVC Gameshop is a web application built with Spring Boot, Thymeleaf, and Bootstrap 5. It includes features for managing user roles with Spring Security, a game catalog, a shopping cart, and simple order functionality.
+A web application built with Spring Boot, MySQL, Thymeleaf and Bootstrap 5. It includes features for managing user roles with Spring Security, a game catalog, a shopping cart, and simple order functionality.
 
 ## Features
 
@@ -51,6 +50,8 @@ This Spring MVC Gameshop is a web application built with Spring Boot, Thymeleaf,
     - If you want to use a different database or have specific configurations, update the `application.yaml` file in the `src/main/resources` directory.
     - Ensure you have MySQL installed on your system.
     - Create a new MySQL database if needed.
+    - To ensure the database is properly populated, set spring.sql.init.mode to always in application.yaml. This allows the application to run initialization scripts on startup.
+    - Update the application.yaml file in src/main/resources with your MySQL username and password by replacing ${db_username} and ${db_password}.
 
 3. **Run the Application:**
     ```bash
