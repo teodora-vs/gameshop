@@ -41,7 +41,7 @@ A web application built with Spring Boot, MySQL, Thymeleaf and Bootstrap 5. It i
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/TeodoraV1415/gameshop.git
+    git clone https://github.com/teodora-vs/gameshop.git
     cd gameshop
     ```
 
