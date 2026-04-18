@@ -2,6 +2,8 @@ package com.softuni.gameshop.web;
 
 import com.softuni.gameshop.model.DTO.ReviewDTO;
 import com.softuni.gameshop.service.ReviewService;
+import org.modelmapper.ModelMapper;
+import org.springframework.boot.Banner;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,20 +15,30 @@ import java.util.stream.Collectors;
 public class ReviewRestController {
 
     private final ReviewService reviewService;
+    private final ModelMapper modelMapper;
 
-    public ReviewRestController(ReviewService reviewService) {
+    public ReviewRestController(ReviewService reviewService, ModelMapper modelMapper) {
         this.reviewService = reviewService;
+        this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/api/{gameId}/reviews")
-    public ResponseEntity<List<ReviewDTO>> getGameReviews(@PathVariable("gameId") Long gameId) {
-        List <ReviewDTO> reviews = reviewService.getAllReviewsForGame(gameId)
-                .stream().map(r -> new ReviewDTO().setId(r.getId()).setAuthor(r.getAuthor().getFullName())
-                        .setStars(r.getStars()).setTextContent(r.getTextContent())
-                        .setCreated(r.getCreated().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))))
-                .collect(Collectors.toList());
+//    @GetMapping("/api/{gameId}/reviews")
+//    public ResponseEntity<List<ReviewDTO>> getGameReviews(@PathVariable("gameId") Long gameId) {
+//        List <ReviewDTO> reviews = reviewService.getAllReviewsForGame(gameId)
+//                .stream().map(r -> new ReviewDTO().setId(r.getId()).setAuthor(r.getAuthor().getFullName())
+//                        .setStars(r.getStars()).setTextContent(r.getTextContent())
+//                        .setCreated(r.getCreated().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))))
+//                .collect(Collectors.toList());
+//
+//        return ResponseEntity.ok(reviews);
+//    }
 
-        return ResponseEntity.ok(reviews);
+    @GetMapping("/api/{gameId}/reviews")
+    public List<ReviewDTO> getGameReviews(@PathVariable("gameId") Long gameId) {
+        return reviewService.getAllReviewsForGame(gameId)
+                .stream()
+                .map(review -> modelMapper.map(review, ReviewDTO.class))
+                .collect(Collectors.toList());
     }
 
 }

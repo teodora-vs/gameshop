@@ -30,6 +30,7 @@ public class GameController {
     private final GameService gameService;
     private final ReviewService reviewService;
     private final UserRepository userRepository;
+
     public GameController(GameService gameService, ReviewService reviewService, UserRepository userRepository) {
         this.gameService = gameService;
         this.reviewService = reviewService;

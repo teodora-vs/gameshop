@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface GameService {
+
     Long addGame(AddGameDTO addGameDTO);
 
     GameDetailsDTO getGameDetails(Long offerId) ;
