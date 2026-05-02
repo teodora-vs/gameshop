@@ -21,12 +21,17 @@ public class UserRolesInit implements CommandLineRunner {
     public void run(String... args) {
         UserRoleEnum[] roleEnums = UserRoleEnum.values();
 
-        for (UserRoleEnum roleEnum : roleEnums) {
-            UserRole existingRole = userRoleRepository.findByRoleName(roleEnum);
-            if (existingRole == null) {
-                UserRole role = new UserRole().setRoleName(roleEnum);
-                userRoleRepository.save(role);
-            }
-        }
+//        for (UserRoleEnum roleEnum : roleEnums) {
+//            UserRole existingRole = userRoleRepository.findByRoleName(roleEnum);
+//            if (existingRole == null) {
+//                UserRole role = new UserRole().setRoleName(roleEnum);
+//                userRoleRepository.save(role);
+//            }
+//        }
+
+        Arrays.stream(roleEnums).
+                filter(roleEnum -> userRoleRepository.findByRoleName(roleEnum) == null)
+                .map(roleEnum -> new UserRole().setRoleName(roleEnum))
+                .forEach(userRoleRepository::save);
     }
 }

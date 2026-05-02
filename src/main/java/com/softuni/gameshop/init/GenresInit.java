@@ -6,6 +6,8 @@ import com.softuni.gameshop.repository.GenreRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 @Component
 public class GenresInit implements CommandLineRunner {
 
@@ -17,16 +19,23 @@ public class GenresInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (genreRepository.count() < GenreNamesEnum.values().length) {
-            for (GenreNamesEnum name : GenreNamesEnum.values()) {
-                if (genreRepository.findByName(name).isEmpty()){
-                    Genre genre = new Genre();
-                    genre.setName(name);
-                    genreRepository.save(genre);
-                }
-            }
-        }
-    }
 
+        Arrays.stream(GenreNamesEnum.values())
+                .filter(name -> genreRepository.findByName(name).isEmpty())
+                .map(name -> new Genre().setName(name)).
+                forEach(genreRepository::save);
+
+//        if (genreRepository.count() < GenreNamesEnum.values().length) {
+//            for (GenreNamesEnum name : GenreNamesEnum.values()) {
+//                if (genreRepository.findByName(name).isEmpty()){
+//                    Genre genre = new Genre();
+//                    genre.setName(name);
+//                    genreRepository.save(genre);
+//                }
+//            }
+//        }
+        
+
+    }
 }
 
